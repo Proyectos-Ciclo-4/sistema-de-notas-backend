@@ -4,10 +4,13 @@ import co.com.sofka.domain.generic.EventChange;
 import org.backend.domain.events.CursoAgregado;
 import org.backend.domain.events.ProfesorCreado;
 
-public class ProfesorEventChange extends EventChange {
-    public ProfesorEventChange(Profesor profesor){
+import java.util.HashSet;
+
+public class ProfesorChange extends EventChange {
+    public ProfesorChange(Profesor profesor){
         apply((ProfesorCreado event) -> {
             profesor.nombre = event.getNombre();
+            profesor.cursos = new HashSet<>();
         });
 
         apply((CursoAgregado event) -> {

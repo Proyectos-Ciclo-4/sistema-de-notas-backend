@@ -9,7 +9,7 @@ public class ProfesorCreado extends DomainEvent {
     private final Nombre nombre;
 
     public ProfesorCreado(ProfesorID id, Nombre nombre) {
-        super("profesorCreado");
+        super("unote.profesorCreado");
         this.id = id;
         this.nombre = nombre;
     }

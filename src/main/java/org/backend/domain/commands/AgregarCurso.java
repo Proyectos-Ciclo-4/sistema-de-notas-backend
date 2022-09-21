@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class AgregarCurso extends Command {
     private String ProfesorId;
-    private Set<CursoID> cursos;
+    private String cursoID;
 
     public String getProfesorId() {
         return ProfesorId;
@@ -17,11 +17,11 @@ public class AgregarCurso extends Command {
         ProfesorId = profesorId;
     }
 
-    public Set<CursoID> getCursos() {
-        return cursos;
+    public String getCursoID() {
+        return cursoID;
     }
 
-    public void setCursos(Set<CursoID> cursos) {
-        this.cursos = cursos;
+    public void setCursoID(String cursoID) {
+        this.cursoID = cursoID;
     }
 }

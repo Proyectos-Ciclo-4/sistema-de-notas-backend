@@ -7,20 +7,14 @@ import org.backend.domain.identifiers.ProfesorID;
 import java.util.Set;
 
 public class CursoAgregado extends DomainEvent {
-    private final ProfesorID profesorID;
-    private final Set<CursoID> cursoIDs;
+    private final CursoID cursoID;
 
-    public CursoAgregado(ProfesorID profesorID, Set<CursoID> cursoIDs) {
-        super("cursoAgregado");
-        this.profesorID = profesorID;
-        this.cursoIDs = cursoIDs;
+    public CursoAgregado(CursoID cursoID) {
+        super("unote.cursoAgregado");
+        this.cursoID = cursoID;
     }
 
-    public ProfesorID getProfesorID() {
-        return profesorID;
-    }
-
-    public Set<CursoID> getCursoIDs() {
-        return cursoIDs;
+    public CursoID getCursoID() {
+        return cursoID;
     }
 }

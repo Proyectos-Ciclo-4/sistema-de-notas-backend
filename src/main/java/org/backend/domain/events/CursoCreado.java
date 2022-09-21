@@ -13,7 +13,7 @@ public class CursoCreado extends DomainEvent {
     private final Set<TemaID> tema_id;
 
     public CursoCreado(Titulo titulo, ProfesorID profesorID, Set<TemaID> tema_id ) {
-        super("unote.cursocreado");
+        super("unote.cursoCreado");
 
         this.titulo = titulo;
         this.profesorID = profesorID;

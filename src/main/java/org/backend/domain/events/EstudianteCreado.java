@@ -13,11 +13,11 @@ public class EstudianteCreado extends DomainEvent {
     private HashMap<CursoID, Inscripcion> cursos;
 
     public EstudianteCreado() {
-        super("domain.estudianteCreado");
+        super("unote.estudianteCreado");
     }
 
     public EstudianteCreado(String nombre, HashMap<CursoID, Inscripcion> cursos) {
-        super("domain.estudianteCreado");
+        super("unote.estudianteCreado");
         this.nombre = nombre;
         this.cursos = cursos;
     }

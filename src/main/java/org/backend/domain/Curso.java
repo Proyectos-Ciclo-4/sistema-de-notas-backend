@@ -12,24 +12,31 @@ import java.util.Set;
 
 public class Curso extends AggregateEvent<CursoID> {
 
+    // Propiedades
     protected Titulo titulo;
 
-    public Curso(CursoID entityId, Titulo titulo, Set<TemaID> tema_id, ProfesorID profesorID) {
-        super(entityId);
-        appendChange(new CursoCreado(titulo,profesorID,tema_id)).apply();
-        subscribe(new CursoChange(this));
-    }
-
-    protected Set<TemaID> tema_id;
+    protected Set<TemaID> temas;
     protected Set<EstudianteID> estudianteId;
     protected ProfesorID profesorID;
 
-    public Titulo getTitulo() {
+    // Constructores
+    public Curso(CursoID entityId, Titulo titulo, Set<TemaID> temas, ProfesorID profesorID) {
+        super(entityId);
+        appendChange(new CursoCreado(titulo,profesorID,temas)).apply();
+        subscribe(new CursoChange(this));
+    }
+    public Curso(CursoID entityId) {
+        super(entityId);
+    }
+
+    // Getters sintácticos
+
+    public Titulo titulo() {
         return titulo;
     }
 
-    public Set<TemaID> tema_id() {
-        return tema_id;
+    public Set<TemaID> temas() {
+        return temas;
     }
 
     public Set<EstudianteID> estudianteId() {
@@ -40,7 +47,4 @@ public class Curso extends AggregateEvent<CursoID> {
         return profesorID;
     }
 
-    public Curso(CursoID entityId) {
-        super(entityId);
-    }
 }

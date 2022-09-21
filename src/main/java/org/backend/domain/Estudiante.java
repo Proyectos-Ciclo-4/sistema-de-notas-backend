@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Estudiante extends AggregateEvent<EstudianteID> {
+
+    // Propiedades
+
     protected Nombre nombre;
 
     // TODO: convertir este hashmap en un VO. Hay mucha repetición aquí, en EstudianteChagne y EstudianteCreado
@@ -81,7 +84,7 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
         ).apply();
     }
 
-    public void actualizarTaera(CursoID cursoID, TareaID tareaID, EstadoTarea estadoTarea) {
+    public void actualizarTarea(CursoID cursoID, TareaID tareaID, EstadoTarea estadoTarea) {
         Objects.requireNonNull(cursoID);
         Objects.requireNonNull(tareaID);
 
@@ -96,7 +99,6 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
                 )
         ).apply();
     }
-
 
     // Modificadores
 

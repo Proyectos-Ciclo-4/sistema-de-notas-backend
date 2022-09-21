@@ -7,7 +7,7 @@ public class PromedioActualizado extends DomainEvent {
     private Float promedio;
 
     public PromedioActualizado(String cursoID, Float promedio) {
-        super("domain.promedioActualizado");
+        super("unote.promedioActualizado");
         this.cursoID = cursoID;
         this.promedio = promedio;
     }

@@ -15,7 +15,7 @@ public class TareaActualizada extends DomainEvent {
     private Boolean estado;
 
     public TareaActualizada(String cursoID, String tareaID, Integer calificacion, Date fechaEntrega, File archivo, Boolean estado) {
-        super("domain.tareaActualizada");
+        super("unote.tareaActualizada");
         this.cursoID = cursoID;
         this.tareaID = tareaID;
         this.calificacion = calificacion;

@@ -1,8 +1,12 @@
 package org.backend.domain.events;
 
 import co.com.sofka.domain.generic.DomainEvent;
+import org.backend.domain.identifiers.CursoID;
+import org.backend.domain.identifiers.InscripcionID;
 import org.backend.domain.identifiers.TareaID;
+import org.backend.domain.valueobjects.Avance;
 import org.backend.domain.valueobjects.EstadoTarea;
+import org.backend.domain.valueobjects.Promedio;
 
 import java.awt.geom.FlatteningPathIterator;
 import java.util.HashMap;
@@ -11,17 +15,17 @@ import java.util.UUID;
 
 public class MatriculadoEnCurso extends DomainEvent {
 
-    private String inscripcionID;
-    private String cursoID;
-    private Float promedio;
-    private Float avance;
+    private InscripcionID inscripcionID;
+    private CursoID cursoID;
+    private Promedio promedio;
+    private Avance avance;
 
     private HashMap<TareaID, EstadoTarea> tareasCurso;
 
-    public MatriculadoEnCurso(String cursoID, Float promedio, Float avance, List<TareaID> tareasID) {
-        super("unote.MatriculadoEnCurso");
+    public MatriculadoEnCurso(CursoID cursoID, Promedio promedio, Avance avance, List<TareaID> tareasID) {
+        super("unote.matriculadoEnCurso");
 
-        this.inscripcionID = UUID.randomUUID().toString();
+        this.inscripcionID = InscripcionID.of( UUID.randomUUID().toString());
         this.cursoID = cursoID;
         this.promedio = promedio;
         this.avance = avance;
@@ -37,19 +41,19 @@ public class MatriculadoEnCurso extends DomainEvent {
         }
     }
 
-    public String getInscripcionID() {
+    public InscripcionID getInscripcionID() {
         return inscripcionID;
     }
 
-    public String getCursoID() {
+    public CursoID getCursoID() {
         return cursoID;
     }
 
-    public Float getPromedio() {
+    public Promedio getPromedio() {
         return promedio;
     }
 
-    public Float getAvance() {
+    public Avance getAvance() {
         return avance;
     }
 

@@ -3,12 +3,13 @@ package org.backend.domain.events;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.backend.domain.entities.Inscripcion;
 import org.backend.domain.identifiers.CursoID;
+import org.backend.domain.valueobjects.Nombre;
 
 import java.util.HashMap;
 
 public class EstudianteCreado extends DomainEvent {
 
-    private String nombre;
+    private Nombre nombre;
 
     private HashMap<CursoID, Inscripcion> cursos;
 
@@ -16,13 +17,13 @@ public class EstudianteCreado extends DomainEvent {
         super("unote.estudianteCreado");
     }
 
-    public EstudianteCreado(String nombre, HashMap<CursoID, Inscripcion> cursos) {
+    public EstudianteCreado(Nombre nombre, HashMap<CursoID, Inscripcion> cursos) {
         super("unote.estudianteCreado");
         this.nombre = nombre;
         this.cursos = cursos;
     }
 
-    public String getNombre() {
+    public Nombre getNombre() {
         return nombre;
     }
 

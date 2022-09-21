@@ -21,12 +21,13 @@ public class Profesor extends AggregateEvent<ProfesorID> {
     //constructores
     public Profesor(ProfesorID id,  Nombre nombre) {
         super(id);
+        subscribe(new ProfesorChange(this));
         appendChange(new ProfesorCreado(id, nombre)).apply();
     }
 
     public Profesor(ProfesorID id){
         super(id);
-        subscribe(new ProfesorEventChange(this));
+        subscribe(new ProfesorChange(this));
     }
 
     public static Profesor from(ProfesorID id, List<DomainEvent> events){

@@ -1,22 +1,24 @@
 package org.backend.domain.events;
 
 import co.com.sofka.domain.generic.DomainEvent;
+import org.backend.domain.identifiers.CursoID;
+import org.backend.domain.valueobjects.Avance;
 
 public class AvanceActualizado extends DomainEvent {
-    private String cursoID;
-    private Float avance;
+    private CursoID cursoID;
+    private Avance avance;
 
-    public AvanceActualizado(String cursoID, Float avance) {
-        super("domain.avanceActualizado");
+    public AvanceActualizado(CursoID cursoID, Avance avance) {
+        super("unote.avanceActualizado");
         this.cursoID = cursoID;
         this.avance = avance;
     }
 
-    public String getCursoID() {
+    public CursoID getCursoID() {
         return cursoID;
     }
 
-    public Float getAvance() {
+    public Avance getAvance() {
         return avance;
     }
 }

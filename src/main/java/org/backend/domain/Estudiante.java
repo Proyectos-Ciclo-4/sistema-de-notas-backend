@@ -24,8 +24,7 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
 
     protected Nombre nombre;
 
-    // TODO: convertir este hashmap en un VO. Hay mucha repetición aquí, en EstudianteChagne y EstudianteCreado
-    // TODO: Hacer lo mismo para hashmap de inscripción
+    // Esta propiedad no puede ser un VO, porque tendríamos que generar el HM cada vez que querramos cambiarlo.
     protected HashMap<CursoID, Inscripcion> cursos;
 
     // Constructores
@@ -34,7 +33,7 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
         super(entityId);
         subscribe(new EstudianteChange(this));
         appendChange(new EstudianteCreado(
-                nombre.value(),
+                nombre,
                 cursos
         )).apply();
     }
@@ -61,7 +60,7 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
 
         // Crear evento
         appendChange(
-                new MatriculadoEnCurso(cursoID.value(), promedio.value(), avance.value(), tareasID)
+                new MatriculadoEnCurso(cursoID, promedio, avance, tareasID)
         ).apply();
     }
 
@@ -71,7 +70,7 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
 
         // Crear evento
         appendChange(
-                new PromedioActualizado(cursoID.value(), promedio.value())
+                new PromedioActualizado(cursoID, promedio)
         ).apply();
     }
 
@@ -80,7 +79,7 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
         Objects.requireNonNull(avance);
 
         appendChange(
-                new AvanceActualizado(cursoID.value(), avance.value())
+                new AvanceActualizado(cursoID, avance)
         ).apply();
     }
 
@@ -90,8 +89,8 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
 
         appendChange(
                 new TareaActualizada(
-                        cursoID.value(),
-                        tareaID.value(),
+                        cursoID,
+                        tareaID,
                         estadoTarea.Calificacion(),
                         estadoTarea.FechaEntregado(),
                         estadoTarea.Archivo(),
@@ -121,7 +120,6 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
                 .TareasCurso()
                 .get(tareaID);
 
-        // TODO: refactor, crear función para no repetir tanto ternario
         EstadoTarea estadoTareaActualizado = new EstadoTarea(
                 estadoTareaEntrante.Calificacion() == null ? targetTareaActual.Calificacion() : estadoTareaEntrante.Calificacion(),
                 estadoTareaEntrante.FechaEntregado() == null ? targetTareaActual.FechaEntregado() : estadoTareaEntrante.FechaEntregado(),

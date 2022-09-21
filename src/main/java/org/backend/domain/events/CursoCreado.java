@@ -10,14 +10,14 @@ import java.util.Set;
 public class CursoCreado extends DomainEvent {
     private final Titulo titulo;
     private final ProfesorID profesorID;
-    private final Set<TemaID> tema_id;
+    private final Set<TemaID> temasIDS;
 
-    public CursoCreado(Titulo titulo, ProfesorID profesorID, Set<TemaID> tema_id ) {
+    public CursoCreado(Titulo titulo, ProfesorID profesorID, Set<TemaID> temasIDS ) {
         super("unote.cursoCreado");
 
         this.titulo = titulo;
         this.profesorID = profesorID;
-        this.tema_id = tema_id;
+        this.temasIDS = temasIDS;
     }
 
     public Titulo getTitulo() {
@@ -28,7 +28,7 @@ public class CursoCreado extends DomainEvent {
         return profesorID;
     }
 
-    public Set<TemaID> getTema_id() {
-        return tema_id;
+    public Set<TemaID> getTemasIDS() {
+        return temasIDS;
     }
 }

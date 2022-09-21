@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="sofka_final_challenge_backend" />
         <module name="sofka_unote_backend" />
       </profile>
     </annotationProcessing>

@@ -8,12 +8,11 @@ import org.backend.domain.valueobjects.Avance;
 import org.backend.domain.valueobjects.EstadoTarea;
 import org.backend.domain.valueobjects.Promedio;
 
-import java.awt.geom.FlatteningPathIterator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class MatriculadoEnCurso extends DomainEvent {
+public class InscritoEnCurso extends DomainEvent {
 
     private InscripcionID inscripcionID;
     private CursoID cursoID;
@@ -22,7 +21,7 @@ public class MatriculadoEnCurso extends DomainEvent {
 
     private HashMap<TareaID, EstadoTarea> tareasCurso;
 
-    public MatriculadoEnCurso(CursoID cursoID, Promedio promedio, Avance avance, List<TareaID> tareasID) {
+    public InscritoEnCurso(CursoID cursoID, Promedio promedio, Avance avance, List<TareaID> tareasID) {
         super("unote.matriculadoEnCurso");
 
         this.inscripcionID = InscripcionID.of( UUID.randomUUID().toString());

@@ -4,11 +4,8 @@ import co.com.sofka.domain.generic.EventChange;
 import org.backend.domain.entities.Inscripcion;
 import org.backend.domain.events.*;
 import org.backend.domain.identifiers.CursoID;
-import org.backend.domain.identifiers.InscripcionID;
-import org.backend.domain.identifiers.TareaID;
 import org.backend.domain.valueobjects.Avance;
 import org.backend.domain.valueobjects.EstadoTarea;
-import org.backend.domain.valueobjects.Nombre;
 import org.backend.domain.valueobjects.Promedio;
 
 public class EstudianteChange extends EventChange {
@@ -16,21 +13,21 @@ public class EstudianteChange extends EventChange {
     public EstudianteChange(Estudiante estudiante) {
         apply((EstudianteCreado estudianteCreado) -> {
             estudiante.nombre = estudianteCreado.getNombre();
-            estudiante.cursos = estudianteCreado.getCursos();
+            estudiante.inscripciones = estudianteCreado.getCursos();
         });
 
-        apply((MatriculadoEnCurso matriculadoEnCurso) -> {
-            CursoID cursoID = matriculadoEnCurso.getCursoID();
+        apply((InscritoEnCurso inscritoEnCurso) -> {
+            CursoID cursoID = inscritoEnCurso.getCursoID();
 
             Inscripcion inscripcion = new Inscripcion(
-                    matriculadoEnCurso.getInscripcionID(),
+                    inscritoEnCurso.getInscripcionID(),
                     cursoID,
-                    matriculadoEnCurso.getPromedio(),
-                    matriculadoEnCurso.getAvance(),
-                    matriculadoEnCurso.getTareasCurso()
+                    inscritoEnCurso.getPromedio(),
+                    inscritoEnCurso.getAvance(),
+                    inscritoEnCurso.getTareasCurso()
             );
 
-            estudiante.agregarCurso(cursoID, inscripcion);
+            estudiante.agregarCursoAInscripciones(cursoID, inscripcion);
         });
 
         apply((PromedioActualizado promedioActualizado) -> {

@@ -12,8 +12,6 @@ import org.backend.domain.valueobjects.EstadoTarea;
 import org.backend.domain.valueobjects.Nombre;
 import org.backend.domain.valueobjects.Promedio;
 
-import java.io.File;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -25,16 +23,16 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
     protected Nombre nombre;
 
     // Esta propiedad no puede ser un VO, porque tendríamos que generar el HM cada vez que querramos cambiarlo.
-    protected HashMap<CursoID, Inscripcion> cursos;
+    protected HashMap<CursoID, Inscripcion> inscripciones;
 
     // Constructores
 
-    public Estudiante(EstudianteID entityId, Nombre nombre, HashMap<CursoID, Inscripcion> cursos) {
+    public Estudiante(EstudianteID entityId, Nombre nombre, HashMap<CursoID, Inscripcion> inscripciones) {
         super(entityId);
         subscribe(new EstudianteChange(this));
         appendChange(new EstudianteCreado(
                 nombre,
-                cursos
+                inscripciones
         )).apply();
     }
 
@@ -52,7 +50,7 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
 
     // Comportamientos
 
-    public void matricularEnCurso(CursoID cursoID, Promedio promedio, Avance avance, List<TareaID> tareasID){
+    public void inscribirEnCurso(CursoID cursoID, Promedio promedio, Avance avance, List<TareaID> tareasID){
         Objects.requireNonNull(cursoID);
         Objects.requireNonNull(promedio);
         Objects.requireNonNull(avance);
@@ -60,7 +58,7 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
 
         // Crear evento
         appendChange(
-                new MatriculadoEnCurso(cursoID, promedio, avance, tareasID)
+                new InscritoEnCurso(cursoID, promedio, avance, tareasID)
         ).apply();
     }
 
@@ -101,21 +99,21 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
 
     // Modificadores
 
-    public void agregarCurso(CursoID newCursoID, Inscripcion newInscripcion) {
-        cursos.put(newCursoID, newInscripcion);
+    public void agregarCursoAInscripciones(CursoID newCursoID, Inscripcion newInscripcion) {
+        inscripciones.put(newCursoID, newInscripcion);
     }
 
     public void actualizarPromedioEnCurso(CursoID cursoID, Promedio newPromedio) {
-        cursos.get(cursoID).actualizarPromedio(newPromedio);
+        inscripciones.get(cursoID).actualizarPromedio(newPromedio);
     }
 
     public void actualizarAvanceEnCurso(CursoID cursoID, Avance newAvance) {
-        cursos.get(cursoID).actualizarAvance(newAvance);
+        inscripciones.get(cursoID).actualizarAvance(newAvance);
     }
 
     public void actualizarTareaEnCurso(CursoID cursoID, TareaID tareaID, EstadoTarea estadoTareaEntrante) {
         // Recuperar el estado de la tarea original, para así contrastarlo con el nuevo estado entrante
-        EstadoTarea targetTareaActual = cursos
+        EstadoTarea targetTareaActual = inscripciones
                 .get(cursoID)
                 .TareasCurso()
                 .get(tareaID);
@@ -127,7 +125,7 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
                 estadoTareaEntrante.Estado()
         );
 
-        cursos.get(cursoID).actualizarTarea(tareaID, estadoTareaActualizado);
+        inscripciones.get(cursoID).actualizarTarea(tareaID, estadoTareaActualizado);
     }
 
 }

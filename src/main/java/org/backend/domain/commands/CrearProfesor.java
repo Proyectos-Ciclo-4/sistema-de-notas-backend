@@ -7,7 +7,9 @@ public class CrearProfesor extends Command {
     private String ProfesorId;
     private String Nombre;
 
-    public CrearProfesor() {
+    public CrearProfesor(String profesorId, String nombre) {
+        ProfesorId = profesorId;
+        Nombre = nombre;
     }
 
     public String getNombre() {

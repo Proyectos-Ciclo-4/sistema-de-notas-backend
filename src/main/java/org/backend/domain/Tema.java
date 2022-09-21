@@ -3,7 +3,6 @@ package org.backend.domain;
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.backend.domain.entities.Tarea;
-import org.backend.domain.events.PorcentajeDeTareaActualizado;
 import org.backend.domain.events.TareaCreada;
 import org.backend.domain.events.TemaCreado;
 import org.backend.domain.identifiers.TareaID;
@@ -53,12 +52,6 @@ public class Tema extends AggregateEvent<TemaID> {
         Objects.requireNonNull(porcentaje);
 
         appendChange(new TareaCreada(titulo, fechaLimite, porcentaje)).apply();
-    }
-
-    public void actualizarPorcentajeTarea(TareaID id, Float porcentaje){
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(porcentaje);
-        appendChange(new PorcentajeDeTareaActualizado(id, porcentaje)).apply();
     }
 
     // Modificadores

@@ -2,7 +2,6 @@ package org.backend.domain;
 
 import co.com.sofka.domain.generic.EventChange;
 import org.backend.domain.entities.Tarea;
-import org.backend.domain.events.PorcentajeDeTareaActualizado;
 import org.backend.domain.events.TareaCreada;
 import org.backend.domain.events.TemaCreado;
 import org.backend.domain.valueobjects.Porcentaje;
@@ -26,12 +25,6 @@ public class TemaChange extends EventChange {
             );
 
             tema.agregarTarea(tarea);
-        });
-
-        apply((PorcentajeDeTareaActualizado event) ->{
-            var tarea = tema.encontrarTareaPorId(event.getTareaId())
-                            .orElseThrow(() -> new InaccessibleObjectException("no hay tareas con ese id"));
-            tarea.actualizarPorcentaje(new Porcentaje(event.getPorcentaje()));
         });
 
     }

@@ -16,7 +16,7 @@ public class Curso extends AggregateEvent<CursoID> {
     protected Titulo titulo;
 
     protected Set<TemaID> temas;
-    protected Set<EstudianteID> estudianteId;
+    protected Set<EstudianteID> estudianteID;
     protected ProfesorID profesorID;
 
     // Constructores
@@ -39,8 +39,8 @@ public class Curso extends AggregateEvent<CursoID> {
         return temas;
     }
 
-    public Set<EstudianteID> estudianteId() {
-        return estudianteId;
+    public Set<EstudianteID> estudianteID() {
+        return estudianteID;
     }
 
     public ProfesorID profesorID() {

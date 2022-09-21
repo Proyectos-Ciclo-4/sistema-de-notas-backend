@@ -9,7 +9,7 @@ public class AvanceActualizado extends DomainEvent {
     private Avance avance;
 
     public AvanceActualizado(CursoID cursoID, Avance avance) {
-        super("domain.avanceActualizado");
+        super("unote.avanceActualizado");
         this.cursoID = cursoID;
         this.avance = avance;
     }

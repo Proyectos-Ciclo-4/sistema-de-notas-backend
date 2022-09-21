@@ -23,7 +23,7 @@ public class MatriculadoEnCurso extends DomainEvent {
     private HashMap<TareaID, EstadoTarea> tareasCurso;
 
     public MatriculadoEnCurso(CursoID cursoID, Promedio promedio, Avance avance, List<TareaID> tareasID) {
-        super("unote.MatriculadoEnCurso");
+        super("unote.matriculadoEnCurso");
 
         this.inscripcionID = InscripcionID.of( UUID.randomUUID().toString());
         this.cursoID = cursoID;

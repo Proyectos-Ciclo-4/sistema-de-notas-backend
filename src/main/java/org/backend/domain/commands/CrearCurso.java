@@ -12,14 +12,14 @@ public class CrearCurso extends Command {
     private final CursoID cursoID;
     private final Titulo titulo;
     private final ProfesorID profesorID;
-    private final Set<TemaID> tema_id;
+    private final Set<CrearTema> temas;
 
 
-    public CrearCurso(CursoID cursoID, Titulo titulo, ProfesorID profesorID, Set<TemaID> tema_id) {
+    public CrearCurso(CursoID cursoID, Titulo titulo, ProfesorID profesorID, Set<CrearTema> temas) {
         this.cursoID = cursoID;
         this.titulo = titulo;
         this.profesorID = profesorID;
-        this.tema_id = tema_id;
+        this.temas = temas;
     }
 
     public CursoID getCursoID() {
@@ -34,7 +34,7 @@ public class CrearCurso extends Command {
         return profesorID;
     }
 
-    public Set<TemaID> getTema_id() {
-        return tema_id;
+    public Set<CrearTema> getTemas() {
+        return temas;
     }
 }

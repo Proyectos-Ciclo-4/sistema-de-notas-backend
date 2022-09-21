@@ -27,8 +27,6 @@ public class Inscripcion extends Entity<InscripcionID> {
     }
 
     // Getters sintácticos
-
-
     public CursoID CursoID() {
         return cursoID;
     }

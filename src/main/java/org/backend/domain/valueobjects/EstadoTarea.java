@@ -2,15 +2,25 @@ package org.backend.domain.valueobjects;
 
 import co.com.sofka.domain.generic.ValueObject;
 
-public class EstadoTarea implements ValueObject<Boolean> {
-    public final Boolean estadoTarea;
+import java.io.File;
+import java.util.Date;
 
-    public EstadoTarea(Boolean estadoTarea) {
-        this.estadoTarea = estadoTarea;
+public class EstadoTarea implements ValueObject<Object> {
+
+    private final Integer calificacion;
+    private final Date fechaEntregado;
+    private final File archivo;
+    private final Boolean estado;
+
+    public EstadoTarea(Integer calificacion, Date fechaEntregado, File archivo, Boolean estado) {
+        this.calificacion = calificacion;
+        this.fechaEntregado = fechaEntregado;
+        this.archivo = archivo;
+        this.estado = estado;
     }
 
     @Override
-    public Boolean value() {
-        return estadoTarea;
+    public Object value() {
+        return null;
     }
 }

@@ -23,4 +23,20 @@ public class EstadoTarea implements ValueObject<Object> {
     public Object value() {
         return null;
     }
+
+    public Integer Calificacion() {
+        return calificacion;
+    }
+
+    public Date FechaEntregado() {
+        return fechaEntregado;
+    }
+
+    public File Archivo() {
+        return archivo;
+    }
+
+    public Boolean Estado() {
+        return estado;
+    }
 }

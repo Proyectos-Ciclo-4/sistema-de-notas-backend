@@ -11,6 +11,6 @@ public class Promedio implements ValueObject<Float> {
 
     @Override
     public Float value() {
-        return null;
+        return promedio;
     }
 }

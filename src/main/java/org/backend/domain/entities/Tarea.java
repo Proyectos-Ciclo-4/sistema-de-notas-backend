@@ -6,6 +6,8 @@ import org.backend.domain.valueobjects.FechaLimite;
 import org.backend.domain.valueobjects.Porcentaje;
 import org.backend.domain.valueobjects.Titulo;
 
+import java.util.Objects;
+
 public class Tarea extends Entity<TareaID> {
 
     private Titulo titulo;
@@ -35,5 +37,9 @@ public class Tarea extends Entity<TareaID> {
 
     // Comportamientos
 
+    public void actualizarPorcentaje(Porcentaje porcentaje){
+        this.porcentaje = Objects.requireNonNull(porcentaje);
+    }
 
+    //public void actualizar
 }

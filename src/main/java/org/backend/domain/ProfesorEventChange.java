@@ -11,7 +11,7 @@ public class ProfesorEventChange extends EventChange {
         });
 
         apply((CursoAgregado event) -> {
-            //
+            profesor.agregarIdsDeCurso(event.getCursoID());
         });
     }
 }

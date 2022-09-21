@@ -5,7 +5,12 @@ import org.backend.domain.identifiers.CursoID;
 
 import java.util.Set;
 
+
 public class AgregarCurso extends Command {
+    // TODO: Este comando no es detonado directamente por el front.
+    //  El comando CrearCurso detona este comando para hacer
+    //  vincular al profesor con el ID del curso nuevo.
+
     private String ProfesorId;
     private String cursoID;
 

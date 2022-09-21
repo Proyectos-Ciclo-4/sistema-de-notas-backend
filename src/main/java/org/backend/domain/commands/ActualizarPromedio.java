@@ -3,6 +3,10 @@ package org.backend.domain.commands;
 import co.com.sofka.domain.generic.Command;
 
 public class ActualizarPromedio extends Command {
+    // TODO: Este comando no es detonado directamente por el front.
+    //  El comando ActualizarEstadoTarea detona este comando para hacer
+    //  el cálculo respectivo en el promedio en la inscripción.
+
     private String cursoID;
     private Float promedio;
 

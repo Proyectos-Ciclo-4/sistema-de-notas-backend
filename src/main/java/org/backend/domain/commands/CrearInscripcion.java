@@ -2,8 +2,16 @@ package org.backend.domain.commands;
 
 import co.com.sofka.domain.generic.Command;
 
+// Comando empleado para inscribir un Estudiante a un curso.
 public class CrearInscripcion extends Command {
-    private String inscripcionID;
+        /* Representación JSON:
+            {
+                estudianteID: ID del usuario en Firebase del estudiante.
+                cursoID: ID del curso al cual se inscribió el estudiante.
+            }
+        */
+
+    private String estudianteID;
     private String cursoID;
 
     // No es necesario crear la propiedad Map<tarea_id, estado_tarea> tareas_curso
@@ -13,13 +21,13 @@ public class CrearInscripcion extends Command {
     // la inscripción, serán iguales a 0.
 
 
-    public CrearInscripcion(String inscripcionID, String cursoID) {
-        this.inscripcionID = inscripcionID;
+    public CrearInscripcion(String estudianteID, String cursoID) {
+        this.estudianteID = estudianteID;
         this.cursoID = cursoID;
     }
 
-    public String getInscripcionID() {
-        return inscripcionID;
+    public String getEstudianteID() {
+        return estudianteID;
     }
 
     public String getCursoID() {

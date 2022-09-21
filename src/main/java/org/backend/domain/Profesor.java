@@ -12,10 +12,13 @@ import java.util.List;
 import java.util.Set;
 
 public class Profesor extends AggregateEvent<ProfesorID> {
+
+    //propiedades
     protected ProfesorID profesorID;
     protected Nombre nombre;
     protected Set<CursoID> cursos;
 
+    //constructores
     public Profesor(ProfesorID id,  Nombre nombre) {
         super(id);
         appendChange(new ProfesorCreado(id, nombre)).apply();
@@ -33,9 +36,14 @@ public class Profesor extends AggregateEvent<ProfesorID> {
     }
 
 
-    public void AgregarCurso(ProfesorID id, Set<CursoID> cursos){
-        appendChange(new CursoAgregado(profesorID, cursos)).apply();
+    //comportamientos
+    public void agregarCurso(CursoID cursoID){
+        appendChange(new CursoAgregado(cursoID)).apply();
     }
 
+    //modificadores
+    public void agregarIdsDeCurso(CursoID id){
+        cursos.add(id);
+    }
 
 }

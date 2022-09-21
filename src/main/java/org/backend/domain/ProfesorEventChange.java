@@ -11,8 +11,7 @@ public class ProfesorEventChange extends EventChange {
         });
 
         apply((CursoAgregado event) -> {
-            //Sacamos el id del curso agregado
-            // se lo mandamos al modificador respectivo en el AR
+            profesor.agregarIdsDeCurso(event.getCursoID());
         });
     }
 }

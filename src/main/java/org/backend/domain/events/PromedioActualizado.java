@@ -1,22 +1,24 @@
 package org.backend.domain.events;
 
 import co.com.sofka.domain.generic.DomainEvent;
+import org.backend.domain.identifiers.CursoID;
+import org.backend.domain.valueobjects.Promedio;
 
 public class PromedioActualizado extends DomainEvent {
-    private String cursoID;
-    private Float promedio;
+    private CursoID cursoID;
+    private Promedio promedio;
 
-    public PromedioActualizado(String cursoID, Float promedio) {
+    public PromedioActualizado(CursoID cursoID, Promedio promedio) {
         super("unote.promedioActualizado");
         this.cursoID = cursoID;
         this.promedio = promedio;
     }
 
-    public String getCursoID() {
+    public CursoID getCursoID() {
         return cursoID;
     }
 
-    public Float getPromedio() {
+    public Promedio getPromedio() {
         return promedio;
     }
 }

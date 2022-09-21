@@ -15,18 +15,18 @@ public class EstudianteChange extends EventChange {
 
     public EstudianteChange(Estudiante estudiante) {
         apply((EstudianteCreado estudianteCreado) -> {
-            estudiante.nombre = new Nombre(estudianteCreado.getNombre());
+            estudiante.nombre = estudianteCreado.getNombre();
             estudiante.cursos = estudianteCreado.getCursos();
         });
 
         apply((MatriculadoEnCurso matriculadoEnCurso) -> {
-            CursoID cursoID = CursoID.of(matriculadoEnCurso.getCursoID());
+            CursoID cursoID = matriculadoEnCurso.getCursoID();
 
             Inscripcion inscripcion = new Inscripcion(
-                    InscripcionID.of(matriculadoEnCurso.getInscripcionID()),
+                    matriculadoEnCurso.getInscripcionID(),
                     cursoID,
-                    new Promedio(matriculadoEnCurso.getPromedio()),
-                    new Avance(matriculadoEnCurso.getAvance()),
+                    matriculadoEnCurso.getPromedio(),
+                    matriculadoEnCurso.getAvance(),
                     matriculadoEnCurso.getTareasCurso()
             );
 
@@ -34,13 +34,13 @@ public class EstudianteChange extends EventChange {
         });
 
         apply((PromedioActualizado promedioActualizado) -> {
-            Promedio promedio = new Promedio(promedioActualizado.getPromedio());
-            estudiante.actualizarPromedioEnCurso(CursoID.of(promedioActualizado.getCursoID()), promedio);
+            Promedio promedio = promedioActualizado.getPromedio();
+            estudiante.actualizarPromedioEnCurso(promedioActualizado.getCursoID(), promedio);
         });
 
         apply((AvanceActualizado avanceActualizado) -> {
-            Avance avance = new Avance(avanceActualizado.getAvance());
-            estudiante.actualizarAvanceEnCurso(CursoID.of(avanceActualizado.getCursoID()), avance);
+            Avance avance = avanceActualizado.getAvance();
+            estudiante.actualizarAvanceEnCurso(avanceActualizado.getCursoID(), avance);
         });
 
         apply((TareaActualizada tareaActualizada) -> {
@@ -51,8 +51,8 @@ public class EstudianteChange extends EventChange {
                     tareaActualizada.getEstado());
 
             estudiante.actualizarTareaEnCurso(
-                    CursoID.of(tareaActualizada.getCursoID()),
-                    TareaID.of(tareaActualizada.getTareaID()),
+                    tareaActualizada.getCursoID(),
+                    tareaActualizada.getTareaID(),
                     estadoTarea
             );
         });

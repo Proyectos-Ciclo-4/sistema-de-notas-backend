@@ -2,8 +2,8 @@ package org.backend.domain;
 
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
-import com.mongodb.client.model.geojson.LineString;
 import org.backend.domain.entities.Tarea;
+import org.backend.domain.events.PorcentajeDeTareaActualizado;
 import org.backend.domain.events.TareaCreada;
 import org.backend.domain.events.TemaCreado;
 import org.backend.domain.identifiers.TareaID;
@@ -13,10 +13,7 @@ import org.backend.domain.valueobjects.Orden;
 import org.backend.domain.valueobjects.Porcentaje;
 import org.backend.domain.valueobjects.Titulo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Tema extends AggregateEvent<TemaID> {
 
@@ -58,10 +55,22 @@ public class Tema extends AggregateEvent<TemaID> {
         appendChange(new TareaCreada(titulo, fechaLimite, porcentaje)).apply();
     }
 
+    public void actualizarPorcentajeTarea(TareaID id, Float porcentaje){
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(porcentaje);
+        appendChange(new PorcentajeDeTareaActualizado(id, porcentaje)).apply();
+    }
+
     // Modificadores
 
     public void agregarTarea(Tarea tarea) {
         tareas.add(tarea);
+    }
+
+    public Optional<Tarea> encontrarTareaPorId(TareaID id){
+        return  tareas.stream()
+                .filter( tarea -> tarea.identity().equals(id))
+                .findFirst();
     }
 
 }

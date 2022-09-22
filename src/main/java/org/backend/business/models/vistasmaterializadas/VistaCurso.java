@@ -4,7 +4,7 @@ import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 
 import java.util.Set;
 
-public class VistaCurso {
+public class VistaCurso extends VistaMaterializada{
     private String cursoID;
     private String titulo;
     private Set<TemaGeneric> temas;

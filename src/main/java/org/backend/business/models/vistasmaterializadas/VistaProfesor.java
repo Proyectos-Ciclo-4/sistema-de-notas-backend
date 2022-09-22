@@ -3,7 +3,7 @@ package org.backend.business.models.vistasmaterializadas;
 import java.util.HashSet;
 import java.util.Set;
 
-public class VistaProfesor {
+public class VistaProfesor extends VistaMaterializada {
 
     private String firebaseID;
     private String nombre;

@@ -26,7 +26,14 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaProfesor> crearProfesor(VistaProfesor vistaProfesor) {
-        return null;
+        return this.reactiveMongoTemplate
+                .save(vistaProfesor)
+                .doOnError(
+                        throwable -> log.error(throwable.getMessage())
+                ).doOnSuccess(
+                        e -> log.info(String.format("Profesor %s creado", vistaProfesor.getFirebaseID()))
+                );
+
     }
 
     /* OPERACIONES CON VISTA MATERIALIZADA 'PROFESOR' */

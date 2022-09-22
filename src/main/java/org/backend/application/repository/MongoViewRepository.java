@@ -33,7 +33,13 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Flux<VistaProfesor> encontrarTodosProfesores() {
-        return null;
+        return reactiveMongoTemplate
+                .findAll(VistaProfesor.class)
+                .doOnComplete(
+                        () -> log.info("Base de datos regresó todos los profesores.")
+                ).doOnError(
+                        throwable -> log.error(throwable.getMessage())
+                );
     }
 
     @Override

@@ -2,7 +2,7 @@ package org.backend.business.models.vistasmaterializadas;
 
 import java.util.Date;
 
-public class VistaTarea {
+public class VistaTarea extends VistaMaterializada {
     private String tareaID;
     private Date fechaLimite;
     private Float porcentaje;

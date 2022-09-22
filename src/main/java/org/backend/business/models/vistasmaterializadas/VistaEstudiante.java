@@ -4,7 +4,7 @@ import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGene
 
 import java.util.Set;
 
-public class VistaEstudiante {
+public class VistaEstudiante extends VistaMaterializada {
     private String firebaseID;
     private Float promedio;
     private Float avance;

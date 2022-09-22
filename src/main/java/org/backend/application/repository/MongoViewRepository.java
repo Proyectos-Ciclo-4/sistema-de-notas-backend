@@ -55,7 +55,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaProfesor> encontrarProfesorPorID(String profesorID) {
-        Query query = generateQueryProfesor(profesorID);
+        Query query = generateFinderQuery("profesorID", profesorID);
 
         return reactiveMongoTemplate
                 .findOne(query, VistaProfesor.class)
@@ -187,6 +187,13 @@ public class MongoViewRepository implements ViewRepository {
         return null;
     }
 
+    private static Query generateFinderQuery(String objectKey, String targetValue) {
+        return new Query(Criteria
+                .where(objectKey)
+                .is(targetValue)
+        );
+    }
+
     private static Query generateQueryProfesor(String targetValue) {
         return new Query(Criteria
                 .where("profesorID")
@@ -207,6 +214,7 @@ public class MongoViewRepository implements ViewRepository {
                 .where("TareaID")
                 .is(targetValue));
     }
+
     private static void logSuccessfulOperation(String successMessage) {
         log.info(successMessage);
     }

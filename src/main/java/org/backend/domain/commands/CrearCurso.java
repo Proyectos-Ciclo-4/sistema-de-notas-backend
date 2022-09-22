@@ -15,7 +15,7 @@ public class CrearCurso extends Command {
         {
             titulo: Título de la tema.
             profesorID: ID de firebase del profesor que creó el curso
-            tareas: Arreglo de comandos CrearTema. Incluye los temas del curso, que a su vez
+            temas: Arreglo de comandos CrearTema. Incluye los temas del curso, que a su vez
                     pueden incluir tareas. Puede estar vacío.
         }
      */

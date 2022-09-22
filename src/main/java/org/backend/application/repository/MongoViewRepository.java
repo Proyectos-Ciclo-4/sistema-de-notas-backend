@@ -10,9 +10,13 @@ import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGene
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+
 
 @Slf4j
 @Repository
@@ -44,7 +48,14 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaProfesor> encontrarProfesorPorID(String profesorID) {
-        return null;
+        Query query = generateQueryProfesor(profesorID);
+
+        return reactiveMongoTemplate
+                .findOne(query, VistaProfesor.class)
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Profesor no encotrado")))
+                .doOnError(error -> logError(error))
+                .doOnSuccess(e -> logSuccessfulOperation("Profesor encontrado con exito"));
+
     }
 
     @Override
@@ -61,12 +72,21 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Flux<VistaEstudiante> encontrarTodosEstudiantes() {
-        return null;
+        return  reactiveMongoTemplate
+                .findAll(VistaEstudiante.class)
+                .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los estudiantes."))
+                .doOnError(MongoViewRepository::logError);
     }
 
     @Override
     public Mono<VistaEstudiante> encontrarEstudiantePorID(String estudianteID) {
-        return null;
+        Query query = generateQueryEstudiante(estudianteID);
+
+        return reactiveMongoTemplate
+                .findOne(query, VistaEstudiante.class)
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Estudiante no encotrado")))
+                .doOnError(error -> logError(error))
+                .doOnSuccess(e -> logSuccessfulOperation("Estudiante encontrado con exito"));
     }
 
     @Override
@@ -98,12 +118,21 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaCurso> encontrarCursoPorId(String cursoID) {
-        return null;
+        Query query = generateQueryCurso(cursoID);
+
+        return reactiveMongoTemplate
+                .findOne(query, VistaCurso.class)
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Curso no encotrado")))
+                .doOnError(error -> logError(error))
+                .doOnSuccess(e -> logSuccessfulOperation("Curso encontrado con exito"));
     }
 
     @Override
     public Flux<VistaCurso> listarCursos() {
-        return null;
+        return  reactiveMongoTemplate
+                .findAll(VistaCurso.class)
+                .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los Cursos."))
+                .doOnError(MongoViewRepository::logError);
     }
 
     @Override
@@ -125,16 +154,57 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaTarea> encontrarTareaPorID(String tareaID) {
-        return null;
+        Query query = generateQueryTarea(tareaID);
+
+        return reactiveMongoTemplate
+                .findOne(query, VistaTarea.class)
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Tarea no encotrada")))
+                .doOnError(error -> logError(error))
+                .doOnSuccess(e -> logSuccessfulOperation("Tarea encontrada con exito"));
     }
 
     @Override
     public Flux<VistaTarea> listarTareasPorCurso(String cursoID) {
-        return null;
+        Query query = generateQueryTarea(cursoID);
+
+        return reactiveMongoTemplate
+                .find(query, VistaTarea.class)
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Tareas no encotrada")))
+                .doOnError(error -> logError(error))
+                .doOnComplete( () -> logSuccessfulOperation("Tareas encontrada con exito"));
+
     }
 
     @Override
     public Mono<VistaTarea> crearTarea(VistaTarea vistaTarea) {
         return null;
     }
+
+    private static Query generateQueryProfesor(String targetValue) {
+        return new Query(Criteria
+                .where("profesorID")
+                .is(targetValue));
+    }
+    private static Query generateQueryCurso(String targetValue) {
+        return new Query(Criteria
+                .where("cursoID")
+                .is(targetValue));
+    }
+    private static Query generateQueryEstudiante(String targetValue) {
+        return new Query(Criteria
+                .where("estudianteID")
+                .is(targetValue));
+    }
+    private static Query generateQueryTarea(String targetValue) {
+        return new Query(Criteria
+                .where("TareaID")
+                .is(targetValue));
+    }
+    private static void logSuccessfulOperation(String successMessage) {
+        log.info(successMessage);
+    }
+    private static void logError(Throwable error) {
+        log.error(error.getMessage());
+    }
+
 }

@@ -18,7 +18,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 
@@ -43,7 +42,6 @@ public class MongoViewRepository implements ViewRepository {
                 ).doOnSuccess(
                         e -> logSuccessfulOperation(String.format("Profesor %s creado", vistaProfesor.get_id()))
                 );
-
     }
 
 
@@ -71,9 +69,20 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
-    public Mono<VistaProfesor> agregarNuevoCursoID(String profesorID, String cursoID) {
-        return null;
+    public void agregarCursoIDaProfesor(String profesorID, String cursoID) {
+        Query encontrarProfesor = generateFinderQuery("_id", profesorID);
+        Update agregarCursoIDaProfesor = new Update().addToSet("cursosIDS", cursoID);
+
+        this.reactiveMongoTemplate
+                .updateFirst(
+                        encontrarProfesor,
+                        agregarCursoIDaProfesor,
+                        VistaProfesor.class
+
+                );
     }
+
+    /* OPERACIONES CON VISTA MATERIALIZADA 'ESTUDIANTE' */
 
     @Override
     public Mono<VistaEstudiante> crearEstudiante(VistaEstudiante vistaEstudiante) {
@@ -86,7 +95,6 @@ public class MongoViewRepository implements ViewRepository {
                 );
     }
 
-    /* OPERACIONES CON VISTA MATERIALIZADA 'ESTUDIANTE' */
 
     @Override
     public Flux<VistaEstudiante> encontrarTodosEstudiantes() {
@@ -158,6 +166,7 @@ public class MongoViewRepository implements ViewRepository {
         return reactiveMongoTemplate
                 .save(curso)
                 .doOnError(MongoViewRepository::logError)
+                .doOnNext(vistaCurso -> this.agregarCursoIDaProfesor(vistaCurso.getProfesorID(), vistaCurso.get_id()))
                 .doOnSuccess(e -> logSuccessfulOperation(String.format("Curso %s creado", curso.get_id())));
 
     }

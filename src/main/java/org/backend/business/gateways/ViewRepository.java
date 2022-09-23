@@ -21,7 +21,7 @@ public interface ViewRepository {
 
     Mono<VistaProfesor> encontrarProfesorPorID(String profesorID);
 
-    Mono<VistaProfesor> agregarNuevoCursoID(String profesorID, String cursoID);
+    void agregarCursoIDaProfesor(String profesorID, String cursoID);
 
     // Vista para estudiante
 

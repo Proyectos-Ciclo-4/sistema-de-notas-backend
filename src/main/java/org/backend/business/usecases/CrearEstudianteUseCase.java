@@ -19,12 +19,12 @@ public class CrearEstudianteUseCase {
     public Mono<VistaEstudiante> apply(Mono<CrearEstudiante> crearEstudianteMono){
         return crearEstudianteMono.flatMap(command -> {
                     VistaEstudiante estudiante = new VistaEstudiante(
-                            command.getEstudianteID()
-
+                            command.getEstudianteID(),
+                            command.getNombre()
                     );
+
                     return mongoViewRepository.crearEstudiante(estudiante);
                 }
-
         );
     }
 }

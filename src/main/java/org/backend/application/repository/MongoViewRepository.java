@@ -91,7 +91,7 @@ public class MongoViewRepository implements ViewRepository {
                 .doOnError(
                         throwable -> log.error(throwable.getMessage())
                 ).doOnSuccess(
-                        e -> log.info(String.format("Profesor %s creado", vistaEstudiante.get_id()))
+                        e -> log.info(String.format("Estudiante %s creado", vistaEstudiante.get_id()))
                 );
     }
 

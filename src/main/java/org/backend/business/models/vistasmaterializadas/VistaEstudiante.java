@@ -7,7 +7,6 @@ import java.util.Set;
 
 public class VistaEstudiante {
     private String _id;
-
     private String nombre;
     private Float promedio;
     private Float avance;

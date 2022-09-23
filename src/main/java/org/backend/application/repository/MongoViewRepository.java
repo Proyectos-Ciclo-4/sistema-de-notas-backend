@@ -218,7 +218,7 @@ public class MongoViewRepository implements ViewRepository {
 
         Query encontrarCursoPadre = generateFinderQuery("_id", cursoID);
         Set<String> tareasIDS = new HashSet<>();
-
+        
         reactiveMongoTemplate
                 // Encontrar cursoPadre
                 .findOne(encontrarCursoPadre, VistaCurso.class)

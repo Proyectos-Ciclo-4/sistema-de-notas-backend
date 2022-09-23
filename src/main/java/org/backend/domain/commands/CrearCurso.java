@@ -19,23 +19,23 @@ public class CrearCurso extends Command {
                     pueden incluir tareas. Puede estar vacío.
         }
      */
-    private final Titulo titulo;
-    private final ProfesorID profesorID;
+    private final String titulo;
+    private final String profesorID;
     private final Set<CrearTema> temas;
 
 
-    public CrearCurso(Titulo titulo, ProfesorID profesorID, Set<CrearTema> temas) {
+    public CrearCurso(String titulo, String profesorID, Set<CrearTema> temas) {
         this.titulo = titulo;
         this.profesorID = profesorID;
         this.temas = temas;
     }
 
 
-    public Titulo getTitulo() {
+    public String getTitulo() {
         return titulo;
     }
 
-    public ProfesorID getProfesorID() {
+    public String getProfesorID() {
         return profesorID;
     }
 

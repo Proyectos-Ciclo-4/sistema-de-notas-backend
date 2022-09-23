@@ -1,11 +1,8 @@
 package org.backend.business.usecases;
 
-import com.mongodb.MongoNodeIsRecoveringException;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
-import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
-import org.backend.domain.commands.CrearTarea;
 import org.backend.domain.commands.CrearTema;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

@@ -31,7 +31,7 @@ public class CrearCursoUseCase {
                 .flatMap(command -> {
                     Set<TemaGeneric> temas = new HashSet<>();
 
-                    if (command.getTemas().isEmpty()) {
+                    if (!command.getTemas().isEmpty()) {
                         command.getTemas().forEach(
                                 crearTema -> agregarTemaUseCase
                                         .apply(Mono.just(crearTema))

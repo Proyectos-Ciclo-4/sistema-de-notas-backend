@@ -33,7 +33,7 @@ public class AgregarTemaUseCase {
                 .flatMap(command -> {
                     Set<String> tareasIDS = new HashSet<>();
 
-                    if (command.getTareas().isEmpty()) {
+                    if (!command.getTareas().isEmpty()) {
                         command.getTareas().forEach(
                                 crearTarea -> crearTareaUseCase
                                         .apply(Mono.just(crearTarea))

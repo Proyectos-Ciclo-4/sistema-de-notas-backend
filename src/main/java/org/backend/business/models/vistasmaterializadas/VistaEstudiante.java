@@ -2,6 +2,7 @@ package org.backend.business.models.vistasmaterializadas;
 
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class VistaEstudiante extends VistaMaterializada {
@@ -15,6 +16,12 @@ public class VistaEstudiante extends VistaMaterializada {
         this.promedio = promedio;
         this.avance = avance;
         this.estadosTarea = estadosTarea;
+    }
+    public VistaEstudiante(String firebaseID) {
+        this.firebaseID = firebaseID;
+        this.promedio = Float.valueOf(0);
+        this.avance = Float.valueOf(0);
+        this.estadosTarea = new HashSet<>();
     }
 
     public String getFirebaseID() {

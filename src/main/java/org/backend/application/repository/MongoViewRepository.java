@@ -16,6 +16,8 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Slf4j
@@ -73,7 +75,14 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaEstudiante> crearEstudiante(VistaEstudiante vistaEstudiante) {
-        return null;
+        return this.reactiveMongoTemplate
+                .save(vistaEstudiante)
+                .doOnError(
+                        throwable -> log.error(throwable.getMessage())
+                ).doOnSuccess(
+                        e -> log.info(String.format("Profesor %s creado", vistaEstudiante.getFirebaseID()))
+                );
+
     }
 
     /* OPERACIONES CON VISTA MATERIALIZADA 'ESTUDIANTE' */
@@ -88,7 +97,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaEstudiante> encontrarEstudiantePorID(String estudianteID) {
-        Query query = generateQueryEstudiante(estudianteID);
+        Query query = generateFinderQuery("firebaseID", estudianteID);
 
         return reactiveMongoTemplate
                 .findOne(query, VistaEstudiante.class)
@@ -126,7 +135,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaCurso> encontrarCursoPorId(String cursoID) {
-        Query query = generateQueryCurso(cursoID);
+        Query query = generateFinderQuery("cursoID", cursoID);
 
         return reactiveMongoTemplate
                 .findOne(query, VistaCurso.class)
@@ -170,7 +179,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaTarea> encontrarTareaPorID(String tareaID) {
-        Query query = generateQueryTarea(tareaID);
+        Query query = generateFinderQuery("tareaID", tareaID);
 
         return reactiveMongoTemplate
                 .findOne(query, VistaTarea.class)
@@ -181,13 +190,20 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Flux<VistaTarea> listarTareasPorCurso(String cursoID) {
-        Query query = generateQueryTarea(cursoID);
+        Query query = generateFinderQuery("cursoID", cursoID);
 
+        Set<String> tareasCurso = new HashSet<>();
         return reactiveMongoTemplate
-                .find(query, VistaTarea.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Tareas no encotrada")))
-                .doOnError(error -> logError(error))
-                .doOnComplete( () -> logSuccessfulOperation("Tareas encontrada con exito"));
+                .findOne(query, VistaCurso.class)
+                .map(vistaCurso -> vistaCurso.getTemas()
+                        .forEach(temaGeneric -> tareasCurso.addAll(temaGeneric.getTareasID()))
+
+                )
+
+
+
+
+
 
     }
 
@@ -200,29 +216,10 @@ public class MongoViewRepository implements ViewRepository {
         return new Query(Criteria
                 .where(objectKey)
                 .is(targetValue)
+
         );
     }
 
-    private static Query generateQueryProfesor(String targetValue) {
-        return new Query(Criteria
-                .where("profesorID")
-                .is(targetValue));
-    }
-    private static Query generateQueryCurso(String targetValue) {
-        return new Query(Criteria
-                .where("cursoID")
-                .is(targetValue));
-    }
-    private static Query generateQueryEstudiante(String targetValue) {
-        return new Query(Criteria
-                .where("estudianteID")
-                .is(targetValue));
-    }
-    private static Query generateQueryTarea(String targetValue) {
-        return new Query(Criteria
-                .where("TareaID")
-                .is(targetValue));
-    }
 
     private static void logSuccessfulOperation(String successMessage) {
         log.info(successMessage);

@@ -192,15 +192,15 @@ public class MongoViewRepository implements ViewRepository {
         Query query = generateFinderQuery("_id", cursoID);
 
         Set<String> tareasCurso = new HashSet<>();
-        return reactiveMongoTemplate
+        /*return reactiveMongoTemplate
                 .findOne(query, VistaCurso.class)
                 .map(vistaCurso -> vistaCurso.getTemas()
                         .forEach(temaGeneric -> tareasCurso.addAll(temaGeneric.getTareasID()))
 
-                );
+                );*/
 
 
-
+        return null;
 
 
 

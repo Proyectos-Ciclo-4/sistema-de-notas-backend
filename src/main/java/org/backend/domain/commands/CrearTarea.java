@@ -17,7 +17,6 @@ public class CrearTarea extends Command {
      */
 
     private final String cursoID;
-
     private final String temaID;
     private final String titulo;
     private final String fechaLimite;

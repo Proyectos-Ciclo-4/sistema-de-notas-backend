@@ -12,6 +12,7 @@ import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -41,7 +42,6 @@ public class MongoViewRepository implements ViewRepository {
                 ).doOnSuccess(
                         e -> logSuccessfulOperation(String.format("Profesor %s creado", vistaProfesor.get_id()))
                 );
-
     }
 
 
@@ -69,9 +69,20 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
-    public Mono<VistaProfesor> agregarNuevoCursoID(String profesorID, String cursoID) {
-        return null;
+    public void agregarCursoIDaProfesor(String profesorID, String cursoID) {
+        Query encontrarProfesor = generateFinderQuery("_id", profesorID);
+        Update agregarCursoIDaProfesor = new Update().addToSet("cursosIDS", cursoID);
+
+        this.reactiveMongoTemplate
+                .updateFirst(
+                        encontrarProfesor,
+                        agregarCursoIDaProfesor,
+                        VistaProfesor.class
+
+                );
     }
+
+    /* OPERACIONES CON VISTA MATERIALIZADA 'ESTUDIANTE' */
 
     @Override
     public Mono<VistaEstudiante> crearEstudiante(VistaEstudiante vistaEstudiante) {
@@ -84,7 +95,6 @@ public class MongoViewRepository implements ViewRepository {
                 );
     }
 
-    /* OPERACIONES CON VISTA MATERIALIZADA 'ESTUDIANTE' */
 
     @Override
     public Flux<VistaEstudiante> encontrarTodosEstudiantes() {
@@ -156,12 +166,28 @@ public class MongoViewRepository implements ViewRepository {
         return reactiveMongoTemplate
                 .save(curso)
                 .doOnError(MongoViewRepository::logError)
+                .doOnNext(vistaCurso -> this.agregarCursoIDaProfesor(vistaCurso.getProfesorID(), vistaCurso.get_id()))
                 .doOnSuccess(e -> logSuccessfulOperation(String.format("Curso %s creado", curso.get_id())));
 
     }
 
     @Override
     public Mono<TemaGeneric> agregarTema(TemaGeneric nuevoTema) {
+        Query encontrarCursoPadre = generateFinderQuery("_id", nuevoTema.getCursoID());
+        Update agregarTemaACurso = new Update();
+
+        reactiveMongoTemplate
+                .findOne(encontrarCursoPadre, VistaCurso.class)
+                .doOnNext(vistaCurso -> {
+                    Set<TemaGeneric> cursoTemas = vistaCurso.getTemas();
+                    cursoTemas.add(nuevoTema);
+
+                    agregarTemaACurso.set("temas", cursoTemas);
+
+                    reactiveMongoTemplate
+                            .findAndModify(encontrarCursoPadre, agregarTemaACurso, VistaCurso.class);
+                        });
+
         return reactiveMongoTemplate
                 .save(nuevoTema)
                 .doOnError(MongoViewRepository::logError)
@@ -189,26 +215,51 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Flux<VistaTarea> listarTareasPorCurso(String cursoID) {
-        Query query = generateFinderQuery("_id", cursoID);
 
-        Set<String> tareasCurso = new HashSet<>();
-        /*return reactiveMongoTemplate
-                .findOne(query, VistaCurso.class)
-                .map(vistaCurso -> vistaCurso.getTemas()
-                        .forEach(temaGeneric -> tareasCurso.addAll(temaGeneric.getTareasID()))
+        Query encontrarCursoPadre = generateFinderQuery("_id", cursoID);
+        Set<String> tareasIDS = new HashSet<>();
+        
+        reactiveMongoTemplate
+                // Encontrar cursoPadre
+                .findOne(encontrarCursoPadre, VistaCurso.class)
+                // Extraer el vistaCurso del Mono.
+                .doOnNext(vistaCurso -> vistaCurso.getTemas()
+                        // Por cada tema, recoger los IDs de las tareas en dichos temas
+                        .forEach(temaGeneric ->
+                                        tareasIDS.addAll(temaGeneric.getTareasID())));
 
-                );*/
+        Query encontrarTareasEnLista = new Query(Criteria
+                .where("_id").in(tareasIDS));
 
-
-        return null;
-
-
-
+        return reactiveMongoTemplate.find(encontrarTareasEnLista, VistaTarea.class);
     }
 
     @Override
     public Mono<VistaTarea> crearTarea(VistaTarea vistaTarea) {
+        reactiveMongoTemplate
+                .findAndModify(
+                        new Query(Criteria.where("temas.id").is(vistaTarea.getTemaID())),
+                        new Update().push("temas.$.tareasID", vistaTarea.get_id()),
+                        // Aquí va VistaTarea.class o TemaGeneric.class ?
+                        TemaGeneric.class
+                );
+
         return reactiveMongoTemplate.save(vistaTarea);
+               /*
+                .findOne(
+                        generateFinderQuery("_id", vistaTarea.getCursoID()), VistaCurso.class)
+                        .flatMap(
+                                vistaCurso -> {
+                                    vistaCurso.getTemas()
+                                            .stream()
+                                            .filter(temaGeneric -> Objects.equals(temaGeneric.getTemaID(), vistaTarea.getTemaID()))
+                                            .map(temaGeneric -> temaGeneric.getTareasID().add(vistaTarea.get_id()));
+
+                                }
+                        );
+                */
+
+
     }
 
     private static Query generateFinderQuery(String objectKey, String targetValue) {

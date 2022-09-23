@@ -7,18 +7,23 @@ import java.util.Set;
 
 public class VistaEstudiante {
     private String _id;
+
+    private String nombre;
     private Float promedio;
     private Float avance;
     private Set<EstadoTareaGeneric> estadosTarea;
 
-    public VistaEstudiante(String _id, Float promedio, Float avance, Set<EstadoTareaGeneric> estadosTarea) {
+    public VistaEstudiante(String _id, String nombre, Float promedio, Float avance, Set<EstadoTareaGeneric> estadosTarea) {
         this._id = _id;
+        this.nombre = nombre;
         this.promedio = promedio;
         this.avance = avance;
         this.estadosTarea = estadosTarea;
     }
-    public VistaEstudiante(String _id) {
+
+    public VistaEstudiante(String _id, String nombre) {
         this._id = _id;
+        this.nombre = nombre;
         this.promedio = Float.valueOf(0);
         this.avance = Float.valueOf(0);
         this.estadosTarea = new HashSet<>();

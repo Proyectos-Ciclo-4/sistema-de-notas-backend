@@ -1,15 +1,15 @@
 package org.backend.business.models.vistasmaterializadas;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class VistaTarea extends VistaMaterializada {
     private String tareaID;
-    private Date fechaLimite;
+    private LocalDate fechaLimite;
     private Float porcentaje;
 
-    public VistaTarea(String tareaID, Date fechaLimite, Float porcentaje) {
+    public VistaTarea(String tareaID, String fechaLimite, Float porcentaje) {
         this.tareaID = tareaID;
-        this.fechaLimite = fechaLimite;
+        this.fechaLimite = LocalDate.parse(fechaLimite);
         this.porcentaje = porcentaje;
     }
 
@@ -17,11 +17,12 @@ public class VistaTarea extends VistaMaterializada {
         return tareaID;
     }
 
-    public Date getFechaLimite() {
+    public LocalDate getFechaLimite() {
         return fechaLimite;
     }
 
     public Float getPorcentaje() {
         return porcentaje;
     }
+
 }

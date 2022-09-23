@@ -35,7 +35,7 @@ public class AgregarTemaUseCase {
                             command.getCursoID(),
                             command.getOrden(),
                             command.getTitulo(),
-                            new HashSet<>()
+                            tareasIDS
                     );
 
                     this.mongoViewRepository.agregarTema(newTema);

@@ -5,14 +5,20 @@ import org.backend.domain.identifiers.TareaID;
 import java.util.Set;
 
 public class TemaGeneric {
+    private String temaID;
     private Integer orden;
     private String titulo;
-    private Set<TareaID> tareasID;
+    private Set<String> tareasID;
 
-    public TemaGeneric(Integer orden, String titulo, Set<TareaID> tareasID) {
+    public TemaGeneric(String temaID, Integer orden, String titulo, Set<String> tareasID) {
+        this.temaID = temaID;
         this.orden = orden;
         this.titulo = titulo;
         this.tareasID = tareasID;
+    }
+
+    public String getTemaID() {
+        return temaID;
     }
 
     public Integer getOrden() {
@@ -23,7 +29,7 @@ public class TemaGeneric {
         return titulo;
     }
 
-    public Set<TareaID> getTareasID() {
+    public Set<String> getTareasID() {
         return tareasID;
     }
 }

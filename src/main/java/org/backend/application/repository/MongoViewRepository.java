@@ -149,8 +149,12 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
-    public Mono<VistaCurso> agregarTema(TemaGeneric nuevoTema) {
-        return null;
+    public Mono<TemaGeneric> agregarTema(TemaGeneric nuevoTema) {
+        return reactiveMongoTemplate
+                .save(nuevoTema)
+                .doOnError(MongoViewRepository::logError)
+                .doOnSuccess(e -> logSuccessfulOperation(String.format("Tema %s", nuevoTema.getTemaID())));
+
     }
 
     @Override

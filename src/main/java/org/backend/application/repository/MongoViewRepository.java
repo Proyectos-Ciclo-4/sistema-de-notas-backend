@@ -37,9 +37,9 @@ public class MongoViewRepository implements ViewRepository {
         return this.reactiveMongoTemplate
                 .save(vistaProfesor)
                 .doOnError(
-                        throwable -> log.error(throwable.getMessage())
+                        MongoViewRepository::logError
                 ).doOnSuccess(
-                        e -> log.info(String.format("Profesor %s creado", vistaProfesor.get_id()))
+                        e -> logSuccessfulOperation(String.format("Profesor %s creado", vistaProfesor.get_id()))
                 );
 
     }
@@ -49,20 +49,20 @@ public class MongoViewRepository implements ViewRepository {
     public Flux<VistaProfesor> encontrarTodosProfesores() {
         return reactiveMongoTemplate
                 .findAll(VistaProfesor.class)
+                .doOnError(
+                        MongoViewRepository::logError
+                )
                 .doOnComplete(
-                        () -> log.info("Base de datos regresó todos los profesores.")
-                ).doOnError(
-                        throwable -> log.error(throwable.getMessage())
-                );
+                        () -> logSuccessfulOperation("Base de datos regresó todos los profesores."));
     }
 
     @Override
     public Mono<VistaProfesor> encontrarProfesorPorID(String profesorID) {
-        Query query = generateFinderQuery("profesorID", profesorID);
+        Query query = generateFinderQuery("_id", profesorID);
 
         return reactiveMongoTemplate
                 .findOne(query, VistaProfesor.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Profesor no encotrado")))
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Profesor no encontrado")))
                 .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Profesor encontrado con exito"));
 
@@ -82,7 +82,6 @@ public class MongoViewRepository implements ViewRepository {
                 ).doOnSuccess(
                         e -> log.info(String.format("Profesor %s creado", vistaEstudiante.get_id()))
                 );
-
     }
 
     /* OPERACIONES CON VISTA MATERIALIZADA 'ESTUDIANTE' */
@@ -91,17 +90,17 @@ public class MongoViewRepository implements ViewRepository {
     public Flux<VistaEstudiante> encontrarTodosEstudiantes() {
         return  reactiveMongoTemplate
                 .findAll(VistaEstudiante.class)
-                .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los estudiantes."))
-                .doOnError(MongoViewRepository::logError);
+                .doOnError(MongoViewRepository::logError)
+                .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los estudiantes."));
     }
 
     @Override
     public Mono<VistaEstudiante> encontrarEstudiantePorID(String estudianteID) {
-        Query query = generateFinderQuery("firebaseID", estudianteID);
+        Query query = generateFinderQuery("_id", estudianteID);
 
         return reactiveMongoTemplate
                 .findOne(query, VistaEstudiante.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Estudiante no encotrado")))
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Estudiante no encontrado")))
                 .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Estudiante encontrado con exito"));
     }
@@ -135,11 +134,11 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaCurso> encontrarCursoPorId(String cursoID) {
-        Query query = generateFinderQuery("cursoID", cursoID);
+        Query query = generateFinderQuery("_id", cursoID);
 
         return reactiveMongoTemplate
                 .findOne(query, VistaCurso.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Curso no encotrado")))
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Curso no encontrado")))
                 .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Curso encontrado con exito"));
     }
@@ -179,7 +178,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaTarea> encontrarTareaPorID(String tareaID) {
-        Query query = generateFinderQuery("tareaID", tareaID);
+        Query query = generateFinderQuery("_id", tareaID);
 
         return reactiveMongoTemplate
                 .findOne(query, VistaTarea.class)
@@ -190,7 +189,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Flux<VistaTarea> listarTareasPorCurso(String cursoID) {
-        Query query = generateFinderQuery("cursoID", cursoID);
+        Query query = generateFinderQuery("_id", cursoID);
 
         Set<String> tareasCurso = new HashSet<>();
         return reactiveMongoTemplate

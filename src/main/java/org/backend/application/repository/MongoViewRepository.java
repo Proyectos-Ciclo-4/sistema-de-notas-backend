@@ -28,6 +28,8 @@ public class MongoViewRepository implements ViewRepository {
         this.reactiveMongoTemplate = reactiveMongoTemplate;
     }
 
+    /* OPERACIONES CON VISTA MATERIALIZADA 'PROFESOR' */
+
     @Override
     public Mono<VistaProfesor> crearProfesor(VistaProfesor vistaProfesor) {
         return this.reactiveMongoTemplate
@@ -40,7 +42,6 @@ public class MongoViewRepository implements ViewRepository {
 
     }
 
-    /* OPERACIONES CON VISTA MATERIALIZADA 'PROFESOR' */
 
     @Override
     public Flux<VistaProfesor> encontrarTodosProfesores() {
@@ -184,7 +185,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaTarea> crearTarea(VistaTarea vistaTarea) {
-        return null;
+        return reactiveMongoTemplate.save(vistaTarea);
     }
 
     private static Query generateFinderQuery(String objectKey, String targetValue) {

@@ -23,6 +23,9 @@ public class CrearProfesorUseCase {
         return crearProfesorMono
                 .flatMap(command -> {
                             VistaProfesor nuevoProfesor = new VistaProfesor(
+                                    // Profesor y Estudiante son los únicos que van a recibir el
+                                    // ID proveniente del frontend, en tanto que son los mismos IDs
+                                    // de sus usuarios correspondientes, generados por Firebase
                                     command.getProfesorID(),
                                     command.getNombre()
                             );

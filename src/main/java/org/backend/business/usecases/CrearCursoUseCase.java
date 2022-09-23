@@ -31,6 +31,15 @@ public class CrearCursoUseCase {
                 .flatMap(command -> {
                     Set<TemaGeneric> temas = new HashSet<>();
 
+                    VistaCurso newCurso = new VistaCurso(
+                            UUID.randomUUID().toString(),
+                            command.getTitulo(),
+                            command.getProfesorID(),
+                            temas
+                    );
+
+                    this.mongoViewRepository.crearCurso(newCurso);
+
                     if (!command.getTemas().isEmpty()) {
                         command.getTemas().forEach(
                                 crearTema -> agregarTemaUseCase
@@ -39,14 +48,7 @@ public class CrearCursoUseCase {
                         );
                     }
 
-                    VistaCurso newCurso = new VistaCurso(
-                            UUID.randomUUID().toString(),
-                            command.getTitulo(),
-                            command.getProfesorID(),
-                            temas
-                    );
-
-                    return mongoViewRepository.crearCurso(newCurso);
+                    return mongoViewRepository.encontrarCursoPorId(newCurso.get_id());
                 });
     }
 }

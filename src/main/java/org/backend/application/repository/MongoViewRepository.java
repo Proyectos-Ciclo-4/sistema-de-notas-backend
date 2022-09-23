@@ -91,7 +91,7 @@ public class MongoViewRepository implements ViewRepository {
                 .doOnError(
                         throwable -> log.error(throwable.getMessage())
                 ).doOnSuccess(
-                        e -> log.info(String.format("Profesor %s creado", vistaEstudiante.get_id()))
+                        e -> log.info(String.format("Estudiante %s creado", vistaEstudiante.get_id()))
                 );
     }
 
@@ -157,8 +157,8 @@ public class MongoViewRepository implements ViewRepository {
     public Flux<VistaCurso> listarCursos() {
         return reactiveMongoTemplate
                 .findAll(VistaCurso.class)
-                .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los Cursos."))
-                .doOnError(MongoViewRepository::logError);
+                .doOnError(MongoViewRepository::logError)
+                .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los Cursos."));
     }
 
     @Override
@@ -172,7 +172,11 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
-    public Mono<TemaGeneric> agregarTema(TemaGeneric nuevoTema) {
+    public void agregarTema(TemaGeneric nuevoTema) {
+        // Retorna void porque, al ser un documento incrustado, primero se crea el tema,
+        // con lista de tareasIDS vacío, luego se crean las tareas y es en su propio método de
+        // repositorio donde se añaden dichos IDs al array el tema.
+
         Query encontrarCursoPadre = generateFinderQuery("_id", nuevoTema.getCursoID());
         Update agregarTemaACurso = new Update();
 
@@ -188,10 +192,13 @@ public class MongoViewRepository implements ViewRepository {
                             .findAndModify(encontrarCursoPadre, agregarTemaACurso, VistaCurso.class);
                         });
 
-        return reactiveMongoTemplate
-                .save(nuevoTema)
-                .doOnError(MongoViewRepository::logError)
-                .doOnSuccess(e -> logSuccessfulOperation(String.format("Tema %s", nuevoTema.getTemaID())));
+        /*
+                return reactiveMongoTemplate
+                        .save(nuevoTema)
+                        .doOnError(MongoViewRepository::logError)
+                        .doOnSuccess(e -> logSuccessfulOperation(String.format("Tema %s", nuevoTema.getTemaID())));
+
+         */
 
     }
 
@@ -208,7 +215,7 @@ public class MongoViewRepository implements ViewRepository {
 
         return reactiveMongoTemplate
                 .findOne(query, VistaTarea.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Tarea no encotrada")))
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Tarea no encontrada")))
                 .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Tarea encontrada con exito"));
     }
@@ -238,7 +245,7 @@ public class MongoViewRepository implements ViewRepository {
     public Mono<VistaTarea> crearTarea(VistaTarea vistaTarea) {
         reactiveMongoTemplate
                 .findAndModify(
-                        new Query(Criteria.where("temas.id").is(vistaTarea.getTemaID())),
+                        new Query(Criteria.where("temas.temaID").is(vistaTarea.getTemaID())),
                         new Update().push("temas.$.tareasID", vistaTarea.get_id()),
                         // Aquí va VistaTarea.class o TemaGeneric.class ?
                         TemaGeneric.class
@@ -262,11 +269,18 @@ public class MongoViewRepository implements ViewRepository {
 
     }
 
+    public Mono<TemaGeneric> encontrarTema(String temaID) {
+        return reactiveMongoTemplate.
+                findOne(new Query(Criteria.where("temas.temaID").is(temaID)), TemaGeneric.class)
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Tema no encotrado")))
+                .doOnError(MongoViewRepository::logError)
+                .doOnSuccess(e -> logSuccessfulOperation("Tema encontrado con exito"));
+    }
+
     private static Query generateFinderQuery(String objectKey, String targetValue) {
         return new Query(Criteria
                 .where(objectKey)
                 .is(targetValue)
-
         );
     }
 

@@ -13,7 +13,7 @@ public class EncontrarProfesorPorIdUseCase {
         this.mongoViewRepository = mongoViewRepository;
     }
 
-    public Mono<VistaProfesor> encontrarProfesorPorID(String profesroID){
-        return this.mongoViewRepository.encontrarProfesorPorID(profesroID);
+    public Mono<VistaProfesor> encontrarProfesorPorID(String profesorID){
+        return this.mongoViewRepository.encontrarProfesorPorID(profesorID);
     }
 }

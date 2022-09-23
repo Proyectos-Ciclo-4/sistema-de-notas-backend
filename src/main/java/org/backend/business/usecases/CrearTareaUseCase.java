@@ -26,6 +26,7 @@ public class CrearTareaUseCase {
                             UUID.randomUUID().toString(),
                             command.getCursoID(),
                             command.getTemaID(),
+                            command.getTitulo(),
                             command.getFechaLimite(),
                             command.getPorcentaje()
                     );

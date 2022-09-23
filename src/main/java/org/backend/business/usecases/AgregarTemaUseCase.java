@@ -43,6 +43,7 @@ public class AgregarTemaUseCase {
 
                     TemaGeneric newTema = new TemaGeneric(
                             UUID.randomUUID().toString(),
+                            command.getCursoID(),
                             command.getOrden(),
                             command.getTitulo(),
                             tareasIDS

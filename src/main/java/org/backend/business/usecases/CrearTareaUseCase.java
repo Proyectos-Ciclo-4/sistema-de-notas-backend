@@ -24,6 +24,8 @@ public class CrearTareaUseCase {
                 .flatMap(command -> {
                     VistaTarea nuevaTarea = new VistaTarea(
                             UUID.randomUUID().toString(),
+                            command.getCursoID(),
+                            command.getTemaID(),
                             command.getFechaLimite(),
                             command.getPorcentaje()
                     );

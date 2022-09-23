@@ -6,12 +6,15 @@ import java.util.Set;
 
 public class TemaGeneric {
     private String temaID;
+
+    private String cursoID;
     private Integer orden;
     private String titulo;
     private Set<String> tareasID;
 
-    public TemaGeneric(String temaID, Integer orden, String titulo, Set<String> tareasID) {
+    public TemaGeneric(String temaID, String cursoID, Integer orden, String titulo, Set<String> tareasID) {
         this.temaID = temaID;
+        this.cursoID = cursoID;
         this.orden = orden;
         this.titulo = titulo;
         this.tareasID = tareasID;
@@ -19,6 +22,10 @@ public class TemaGeneric {
 
     public String getTemaID() {
         return temaID;
+    }
+
+    public String getCursoID() {
+        return cursoID;
     }
 
     public Integer getOrden() {

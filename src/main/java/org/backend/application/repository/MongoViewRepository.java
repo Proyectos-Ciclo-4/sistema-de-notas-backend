@@ -228,7 +228,17 @@ public class MongoViewRepository implements ViewRepository {
     @Override
     public Mono<VistaTarea> crearTarea(VistaTarea vistaTarea) {
         reactiveMongoTemplate
-                .findOne(generateFinderQuery("_id", vistaTarea.getCursoID()), VistaCurso.class)
+                .findAndModify(
+                        new Query(Criteria.where("temas.id").is(vistaTarea.getTemaID())),
+                        new Update().push("temas.$.tareasID", vistaTarea.get_id()),
+                        // Aquí va VistaTarea.class o TemaGeneric.class ?
+                        TemaGeneric.class
+                );
+
+        return reactiveMongoTemplate.save(vistaTarea);
+               /*
+                .findOne(
+                        generateFinderQuery("_id", vistaTarea.getCursoID()), VistaCurso.class)
                         .flatMap(
                                 vistaCurso -> {
                                     vistaCurso.getTemas()
@@ -238,11 +248,9 @@ public class MongoViewRepository implements ViewRepository {
 
                                 }
                         );
+                */
 
 
-        reactiveMongoTemplate
-                .findAndModify(encontrarCursoPadre, )
-        return reactiveMongoTemplate.save(vistaTarea);
     }
 
     private static Query generateFinderQuery(String objectKey, String targetValue) {

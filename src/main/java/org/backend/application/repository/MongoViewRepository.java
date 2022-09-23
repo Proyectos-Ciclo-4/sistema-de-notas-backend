@@ -137,7 +137,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Flux<VistaCurso> listarCursos() {
-        return  reactiveMongoTemplate
+        return reactiveMongoTemplate
                 .findAll(VistaCurso.class)
                 .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los Cursos."))
                 .doOnError(MongoViewRepository::logError);
@@ -145,7 +145,11 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaCurso> crearCurso(VistaCurso curso) {
-        return null;
+        return reactiveMongoTemplate
+                .save(curso)
+                .doOnError(MongoViewRepository::logError)
+                .doOnSuccess(e -> logSuccessfulOperation(String.format("Curso %s creado", curso.getCursoID())));
+
     }
 
     @Override

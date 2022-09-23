@@ -19,7 +19,6 @@ public class CrearTema extends Command {
     private final String cursoID;
     private final Integer orden;
     private final String titulo;
-
     private final Set<CrearTarea> tareas;
 
     public CrearTema(String cursoID, Integer orden, String titulo, Set<CrearTarea> tareas) {

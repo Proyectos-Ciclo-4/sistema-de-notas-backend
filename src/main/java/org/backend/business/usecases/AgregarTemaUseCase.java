@@ -30,6 +30,16 @@ public class AgregarTemaUseCase {
                 .flatMap(command -> {
                     Set<String> tareasIDS = new HashSet<>();
 
+                    TemaGeneric newTema = new TemaGeneric(
+                            UUID.randomUUID().toString(),
+                            command.getCursoID(),
+                            command.getOrden(),
+                            command.getTitulo(),
+                            new HashSet<>()
+                    );
+
+                    this.mongoViewRepository.agregarTema(newTema);
+
                     if (!command.getTareas().isEmpty()) {
                         command.getTareas().forEach(
                                 crearTarea -> crearTareaUseCase
@@ -38,15 +48,7 @@ public class AgregarTemaUseCase {
                                 );
                     }
 
-                    TemaGeneric newTema = new TemaGeneric(
-                            UUID.randomUUID().toString(),
-                            command.getCursoID(),
-                            command.getOrden(),
-                            command.getTitulo(),
-                            tareasIDS
-                    );
-
-                    return this.mongoViewRepository.agregarTema(newTema);
+                    return this.mongoViewRepository.encontrarTema(newTema.getTemaID());
                 });
     }
 }

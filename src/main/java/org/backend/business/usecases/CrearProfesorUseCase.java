@@ -29,7 +29,6 @@ public class CrearProfesorUseCase {
                                     command.getProfesorID(),
                                     command.getNombre()
                             );
-
                             return mongoViewRepository.crearProfesor(nuevoProfesor);
                         }
                 );

@@ -157,8 +157,8 @@ public class MongoViewRepository implements ViewRepository {
     public Flux<VistaCurso> listarCursos() {
         return reactiveMongoTemplate
                 .findAll(VistaCurso.class)
-                .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los Cursos."))
-                .doOnError(MongoViewRepository::logError);
+                .doOnError(MongoViewRepository::logError)
+                .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los Cursos."));
     }
 
     @Override
@@ -215,7 +215,7 @@ public class MongoViewRepository implements ViewRepository {
 
         return reactiveMongoTemplate
                 .findOne(query, VistaTarea.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Tarea no encotrada")))
+                .switchIfEmpty(Mono.error(new IllegalAccessException("Tarea no encontrada")))
                 .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Tarea encontrada con exito"));
     }

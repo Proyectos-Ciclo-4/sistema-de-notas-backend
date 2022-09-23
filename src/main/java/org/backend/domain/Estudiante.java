@@ -92,7 +92,8 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
                         estadoTarea.Calificacion(),
                         estadoTarea.FechaEntregado(),
                         estadoTarea.Archivo(),
-                        estadoTarea.Estado()
+                        estadoTarea.Estado(),
+                        estadoTarea.Retroalimentacion()
                 )
         ).apply();
     }
@@ -122,7 +123,8 @@ public class Estudiante extends AggregateEvent<EstudianteID> {
                 estadoTareaEntrante.Calificacion() == null ? targetTareaActual.Calificacion() : estadoTareaEntrante.Calificacion(),
                 estadoTareaEntrante.FechaEntregado() == null ? targetTareaActual.FechaEntregado() : estadoTareaEntrante.FechaEntregado(),
                 estadoTareaEntrante.Archivo() == null ? targetTareaActual.Archivo() : estadoTareaEntrante.Archivo(),
-                estadoTareaEntrante.Estado()
+                estadoTareaEntrante.Estado(),
+                estadoTareaEntrante.Retroalimentacion() == null ? targetTareaActual.Retroalimentacion() : estadoTareaEntrante.Retroalimentacion()
         );
 
         inscripciones.get(cursoID).actualizarTarea(tareaID, estadoTareaActualizado);

@@ -45,7 +45,9 @@ public class EstudianteChange extends EventChange {
                     tareaActualizada.getCalificacion(),
                     tareaActualizada.getFechaEntrega(),
                     tareaActualizada.getArchivo(),
-                    tareaActualizada.getEstado());
+                    tareaActualizada.getEstado(),
+                    tareaActualizada.getRetroalimentacion()
+            );
 
             estudiante.actualizarTareaEnCurso(
                     tareaActualizada.getCursoID(),

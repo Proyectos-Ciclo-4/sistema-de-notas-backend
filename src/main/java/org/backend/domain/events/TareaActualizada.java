@@ -16,7 +16,9 @@ public class TareaActualizada extends DomainEvent {
     private File archivo;
     private Boolean estado;
 
-    public TareaActualizada(CursoID cursoID, TareaID tareaID, Integer calificacion, Date fechaEntrega, File archivo, Boolean estado) {
+    private String retroalimentacion;
+
+    public TareaActualizada(CursoID cursoID, TareaID tareaID, Integer calificacion, Date fechaEntrega, File archivo, Boolean estado, String retroalimentacion) {
         super("unote.tareaActualizada");
         this.cursoID = cursoID;
         this.tareaID = tareaID;
@@ -24,6 +26,7 @@ public class TareaActualizada extends DomainEvent {
         this.fechaEntrega = fechaEntrega;
         this.archivo = archivo;
         this.estado = estado;
+        this.retroalimentacion = retroalimentacion;
     }
 
     public CursoID getCursoID() {
@@ -48,5 +51,9 @@ public class TareaActualizada extends DomainEvent {
 
     public Boolean getEstado() {
         return estado;
+    }
+
+    public String getRetroalimentacion() {
+        return retroalimentacion;
     }
 }

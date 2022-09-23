@@ -5,31 +5,31 @@ import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGene
 import java.util.HashSet;
 import java.util.Set;
 
-public class VistaEstudiante extends VistaMaterializada {
-    private String firebaseID;
+public class VistaEstudiante {
+    private String _id;
     private Float promedio;
     private Float avance;
     private Set<EstadoTareaGeneric> estadosTarea;
 
-    public VistaEstudiante(String firebaseID, Float promedio, Float avance, Set<EstadoTareaGeneric> estadosTarea) {
-        this.firebaseID = firebaseID;
+    public VistaEstudiante(String _id, Float promedio, Float avance, Set<EstadoTareaGeneric> estadosTarea) {
+        this._id = _id;
         this.promedio = promedio;
         this.avance = avance;
         this.estadosTarea = estadosTarea;
     }
-    public VistaEstudiante(String firebaseID) {
-        this.firebaseID = firebaseID;
+    public VistaEstudiante(String _id) {
+        this._id = _id;
         this.promedio = Float.valueOf(0);
         this.avance = Float.valueOf(0);
         this.estadosTarea = new HashSet<>();
     }
 
-    public String getFirebaseID() {
-        return firebaseID;
+    public String get_id() {
+        return _id;
     }
 
-    public void setFirebaseID(String firebaseID) {
-        this.firebaseID = firebaseID;
+    public void setFirebaseID(String _id) {
+        this._id = _id;
     }
 
     public Float getPromedio() {

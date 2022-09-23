@@ -4,22 +4,22 @@ import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 
 import java.util.Set;
 
-public class VistaCurso extends VistaMaterializada{
-    private String cursoID;
+public class VistaCurso {
+    private String _id;
     private String titulo;
 
     private String profesorID;
     private Set<TemaGeneric> temas;
 
-    public VistaCurso(String cursoID, String titulo, String profesorID, Set<TemaGeneric> temas) {
-        this.cursoID = cursoID;
+    public VistaCurso(String _id, String titulo, String profesorID, Set<TemaGeneric> temas) {
+        this._id = _id;
         this.titulo = titulo;
         this.profesorID = profesorID;
         this.temas = temas;
     }
 
-    public String getCursoID() {
-        return cursoID;
+    public String get_id() {
+        return _id;
     }
 
     public String getProfesorID() {

@@ -3,26 +3,26 @@ package org.backend.business.models.vistasmaterializadas;
 import java.util.HashSet;
 import java.util.Set;
 
-public class VistaProfesor extends VistaMaterializada {
+public class VistaProfesor {
 
-    private String firebaseID;
+    private String _id;
     private String nombre;
     private Set<String> cursosIDS;
 
     // Al crear un profesor nuevo, su lista de cursos estará vacía por defecto,
     // así que no tenemos que pasarle un Set ya armado al constructor
-    public VistaProfesor(String firebaseID, String nombre) {
-        this.firebaseID = firebaseID;
+    public VistaProfesor(String _id, String nombre) {
+        this._id = _id;
         this.nombre = nombre;
         this.cursosIDS = new HashSet<>();
     }
 
-    public String getFirebaseID() {
-        return firebaseID;
+    public String get_id() {
+        return _id;
     }
 
-    public void setFirebaseID(String firebaseID) {
-        this.firebaseID = firebaseID;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getNombre() {

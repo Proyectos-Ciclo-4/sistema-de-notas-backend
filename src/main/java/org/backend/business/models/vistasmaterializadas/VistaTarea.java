@@ -2,19 +2,19 @@ package org.backend.business.models.vistasmaterializadas;
 
 import java.time.LocalDate;
 
-public class VistaTarea extends VistaMaterializada {
-    private String tareaID;
+public class VistaTarea {
+    private String _id;
     private LocalDate fechaLimite;
     private Float porcentaje;
 
-    public VistaTarea(String tareaID, String fechaLimite, Float porcentaje) {
-        this.tareaID = tareaID;
+    public VistaTarea(String _id, String fechaLimite, Float porcentaje) {
+        this._id = _id;
         this.fechaLimite = LocalDate.parse(fechaLimite);
         this.porcentaje = porcentaje;
     }
 
-    public String getTareaID() {
-        return tareaID;
+    public String get_id() {
+        return _id;
     }
 
     public LocalDate getFechaLimite() {

@@ -37,7 +37,7 @@ public class AgregarTemaUseCase {
                         command.getTareas().forEach(
                                 crearTarea -> crearTareaUseCase
                                         .apply(Mono.just(crearTarea))
-                                        .subscribe(vistaTarea -> tareasIDS.add(vistaTarea.getTareaID()))
+                                        .subscribe(vistaTarea -> tareasIDS.add(vistaTarea.get_id()))
                                 );
                     }
 

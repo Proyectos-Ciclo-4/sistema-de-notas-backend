@@ -39,7 +39,7 @@ public class MongoViewRepository implements ViewRepository {
                 .doOnError(
                         throwable -> log.error(throwable.getMessage())
                 ).doOnSuccess(
-                        e -> log.info(String.format("Profesor %s creado", vistaProfesor.getFirebaseID()))
+                        e -> log.info(String.format("Profesor %s creado", vistaProfesor.get_id()))
                 );
 
     }
@@ -63,7 +63,7 @@ public class MongoViewRepository implements ViewRepository {
         return reactiveMongoTemplate
                 .findOne(query, VistaProfesor.class)
                 .switchIfEmpty(Mono.error(new IllegalAccessException("Profesor no encotrado")))
-                .doOnError(error -> logError(error))
+                .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Profesor encontrado con exito"));
 
     }
@@ -80,7 +80,7 @@ public class MongoViewRepository implements ViewRepository {
                 .doOnError(
                         throwable -> log.error(throwable.getMessage())
                 ).doOnSuccess(
-                        e -> log.info(String.format("Profesor %s creado", vistaEstudiante.getFirebaseID()))
+                        e -> log.info(String.format("Profesor %s creado", vistaEstudiante.get_id()))
                 );
 
     }
@@ -102,7 +102,7 @@ public class MongoViewRepository implements ViewRepository {
         return reactiveMongoTemplate
                 .findOne(query, VistaEstudiante.class)
                 .switchIfEmpty(Mono.error(new IllegalAccessException("Estudiante no encotrado")))
-                .doOnError(error -> logError(error))
+                .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Estudiante encontrado con exito"));
     }
 
@@ -140,7 +140,7 @@ public class MongoViewRepository implements ViewRepository {
         return reactiveMongoTemplate
                 .findOne(query, VistaCurso.class)
                 .switchIfEmpty(Mono.error(new IllegalAccessException("Curso no encotrado")))
-                .doOnError(error -> logError(error))
+                .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Curso encontrado con exito"));
     }
 
@@ -157,7 +157,7 @@ public class MongoViewRepository implements ViewRepository {
         return reactiveMongoTemplate
                 .save(curso)
                 .doOnError(MongoViewRepository::logError)
-                .doOnSuccess(e -> logSuccessfulOperation(String.format("Curso %s creado", curso.getCursoID())));
+                .doOnSuccess(e -> logSuccessfulOperation(String.format("Curso %s creado", curso.get_id())));
 
     }
 
@@ -184,7 +184,7 @@ public class MongoViewRepository implements ViewRepository {
         return reactiveMongoTemplate
                 .findOne(query, VistaTarea.class)
                 .switchIfEmpty(Mono.error(new IllegalAccessException("Tarea no encotrada")))
-                .doOnError(error -> logError(error))
+                .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Tarea encontrada con exito"));
     }
 
@@ -198,7 +198,7 @@ public class MongoViewRepository implements ViewRepository {
                 .map(vistaCurso -> vistaCurso.getTemas()
                         .forEach(temaGeneric -> tareasCurso.addAll(temaGeneric.getTareasID()))
 
-                )
+                );
 
 
 

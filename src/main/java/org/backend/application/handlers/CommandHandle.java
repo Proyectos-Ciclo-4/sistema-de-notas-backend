@@ -4,7 +4,9 @@ import co.com.sofka.domain.generic.DomainEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.business.usecases.CrearEstudianteUseCase;
+import org.backend.business.usecases.CrearProfesorUseCase;
 import org.backend.domain.commands.CrearEstudiante;
+import org.backend.domain.commands.CrearProfesor;
 import org.backend.domain.events.EstudianteCreado;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +36,25 @@ public class CommandHandle {
 
                         ))
         );
-
-
     }
+
+    @Bean
+    public  RouterFunction<ServerResponse> crearProfesor(CrearProfesorUseCase crearProfesorUseCase) {
+        return route(
+                POST("/crearProfesor")
+                        .and(accept(MediaType.APPLICATION_JSON)),
+                request -> crearProfesorUseCase.apply(request.bodyToMono(CrearProfesor.class))
+                        .flatMap(vistaProfesor -> {
+                            return ServerResponse.ok()
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .bodyValue(vistaProfesor);
+                        })
+                        .onErrorResume(throwable -> {
+                            log.error(throwable.getMessage());
+                            return ServerResponse.badRequest().build();
+                        })
+        );
+    }
+
+
 }

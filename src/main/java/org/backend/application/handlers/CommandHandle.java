@@ -28,13 +28,14 @@ public class CommandHandle {
         return route(
                 POST("/crearEstudiante")
                         .and(accept(MediaType.APPLICATION_JSON)),
-                request -> ServerResponse
-                        .ok().contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromPublisher(
-                                crearEstudianteUseCase.apply(
-                                        request.bodyToMono(CrearEstudiante.class)), VistaEstudiante.class
-
-                        ))
+                request -> crearEstudianteUseCase.apply(request.bodyToMono(CrearEstudiante.class))
+                                .flatMap(vistaEstudiante -> ServerResponse.ok()
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .bodyValue(vistaEstudiante))
+                        .onErrorResume(throwable -> {
+                            log.error(throwable.getMessage());
+                            return ServerResponse.badRequest().build();
+                        })
         );
     }
 
@@ -44,11 +45,9 @@ public class CommandHandle {
                 POST("/crearProfesor")
                         .and(accept(MediaType.APPLICATION_JSON)),
                 request -> crearProfesorUseCase.apply(request.bodyToMono(CrearProfesor.class))
-                        .flatMap(vistaProfesor -> {
-                            return ServerResponse.ok()
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .bodyValue(vistaProfesor);
-                        })
+                        .flatMap(vistaProfesor -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .bodyValue(vistaProfesor))
                         .onErrorResume(throwable -> {
                             log.error(throwable.getMessage());
                             return ServerResponse.badRequest().build();

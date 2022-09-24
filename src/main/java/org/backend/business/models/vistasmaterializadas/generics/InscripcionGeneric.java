@@ -15,6 +15,13 @@ public class InscripcionGeneric {
         this.estadosTarea = estadosTarea;
     }
 
+    public InscripcionGeneric(String cursoID, Set<EstadoTareaGeneric> estadosTarea) {
+        this.cursoID = cursoID;
+        this.promedio = (float) 0;
+        this.avance = (float) 0;
+        this.estadosTarea = estadosTarea;
+    }
+
     public String getCursoID() {
         return cursoID;
     }

@@ -7,7 +7,6 @@ import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
-import org.backend.domain.identifiers.TareaID;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -53,6 +52,8 @@ public interface ViewRepository {
     Flux<VistaTarea> listarTareasPorCurso(String cursoID);
 
     Mono<VistaTarea> crearTarea(VistaTarea vistaTarea);
+
+    Mono<TemaGeneric> encontrarTema(String temaID);
 
 
 }

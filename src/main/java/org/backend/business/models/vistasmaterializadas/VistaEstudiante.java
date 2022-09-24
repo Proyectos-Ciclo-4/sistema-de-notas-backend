@@ -1,6 +1,7 @@
 package org.backend.business.models.vistasmaterializadas;
 
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
+import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,14 +11,15 @@ public class VistaEstudiante {
     private String nombre;
     private Float promedio;
     private Float avance;
-    private Set<EstadoTareaGeneric> estadosTarea;
 
-    public VistaEstudiante(String _id, String nombre, Float promedio, Float avance, Set<EstadoTareaGeneric> estadosTarea) {
+    private Set<InscripcionGeneric> inscripciones;
+
+    public VistaEstudiante(String _id, String nombre, Float promedio, Float avance) {
         this._id = _id;
         this.nombre = nombre;
         this.promedio = promedio;
         this.avance = avance;
-        this.estadosTarea = estadosTarea;
+        this.inscripciones = new HashSet<>();
     }
 
     public VistaEstudiante(String _id, String nombre) {
@@ -25,38 +27,25 @@ public class VistaEstudiante {
         this.nombre = nombre;
         this.promedio = Float.valueOf(0);
         this.avance = Float.valueOf(0);
-        this.estadosTarea = new HashSet<>();
     }
 
     public String get_id() {
         return _id;
     }
 
-    public void setFirebaseID(String _id) {
-        this._id = _id;
+    public String getNombre() {
+        return nombre;
     }
 
     public Float getPromedio() {
         return promedio;
     }
 
-    public void setPromedio(Float promedio) {
-        this.promedio = promedio;
-    }
-
     public Float getAvance() {
         return avance;
     }
 
-    public void setAvance(Float avance) {
-        this.avance = avance;
-    }
-
-    public Set<EstadoTareaGeneric> getEstadosTarea() {
-        return estadosTarea;
-    }
-
-    public void setEstadosTarea(Set<EstadoTareaGeneric> estadosTarea) {
-        this.estadosTarea = estadosTarea;
+    public Set<InscripcionGeneric> getInscripciones() {
+        return inscripciones;
     }
 }

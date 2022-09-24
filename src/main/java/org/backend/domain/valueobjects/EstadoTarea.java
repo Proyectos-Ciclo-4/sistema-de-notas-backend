@@ -12,11 +12,14 @@ public class EstadoTarea implements ValueObject<Object> {
     private final File archivo;
     private final Boolean estado;
 
-    public EstadoTarea(Integer calificacion, Date fechaEntregado, File archivo, Boolean estado) {
+    private final String retroalimentacion;
+
+    public EstadoTarea(Integer calificacion, Date fechaEntregado, File archivo, Boolean estado, String retroalimentacion) {
         this.calificacion = calificacion;
         this.fechaEntregado = fechaEntregado;
         this.archivo = archivo;
         this.estado = estado;
+        this.retroalimentacion = retroalimentacion;
     }
 
     @Override
@@ -38,5 +41,9 @@ public class EstadoTarea implements ValueObject<Object> {
 
     public Boolean Estado() {
         return estado;
+    }
+
+    public String Retroalimentacion() {
+        return retroalimentacion;
     }
 }

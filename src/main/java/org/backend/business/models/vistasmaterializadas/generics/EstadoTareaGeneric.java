@@ -12,7 +12,7 @@ public class EstadoTareaGeneric {
     // Constructor para crear objeto EstadoTareaGeneric por primera vez
     public EstadoTareaGeneric(String tareaID) {
         this.tareaID = tareaID;
-        this.calificacion = null;
+        this.calificacion = 0;
         this.fechaEntregado = null;
         this.URLArchivo = null;
         this.estado = false;
@@ -24,6 +24,8 @@ public class EstadoTareaGeneric {
         this.URLArchivo = URLArchivo;
         this.estado = true;
     }
+
+
 
     public String getTareaID() {
         return tareaID;

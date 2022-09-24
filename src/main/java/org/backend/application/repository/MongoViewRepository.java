@@ -117,7 +117,13 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaEstudiante> agregarInscripcion(InscripcionGeneric inscripcionGeneric, String estudianteID) {
-        return null;
+
+    return this.reactiveMongoTemplate
+                .findAndModify(
+                        generateFinderQuery("_id", estudianteID),
+                        new Update().addToSet("inscripciones", inscripcionGeneric),
+                        VistaEstudiante.class
+                );
     }
 
     @Override
@@ -223,9 +229,15 @@ public class MongoViewRepository implements ViewRepository {
     @Override
     public Flux<VistaTarea> listarTareasPorCurso(String cursoID) {
 
+        Query encontrarTareaPorCursoID = generateFinderQuery("cursoID", cursoID);
+
+        return reactiveMongoTemplate.find(encontrarTareaPorCursoID, VistaTarea.class);
+
+        // La implementación de abajo puede ser correcta, pero es más complicada
+        /*
         Query encontrarCursoPadre = generateFinderQuery("_id", cursoID);
         Set<String> tareasIDS = new HashSet<>();
-        
+
         reactiveMongoTemplate
                 // Encontrar cursoPadre
                 .findOne(encontrarCursoPadre, VistaCurso.class)
@@ -237,8 +249,10 @@ public class MongoViewRepository implements ViewRepository {
 
         Query encontrarTareasEnLista = new Query(Criteria
                 .where("_id").in(tareasIDS));
+        *
+        * */
 
-        return reactiveMongoTemplate.find(encontrarTareasEnLista, VistaTarea.class);
+
     }
 
     @Override

@@ -1,10 +1,13 @@
 package org.backend.application.handlers;
 
 
+import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.business.usecases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -18,17 +21,29 @@ public class QueryHandler {
     @Bean
     public RouterFunction<ServerResponse> encontrarTodosLosEstudiantes(EncontrarTodosEstudiantesUseCase encontrarTodosEstudiantesUseCase) {
         return route(
-
                 GET("/buscarAlumnos"),
-                request ->  encontrarTodosEstudiantesUseCase.encontrarTodosEstudiantes()
-                        .collectList()
+                request -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                encontrarTodosEstudiantesUseCase.encontrarTodosEstudiantes(),
+                                VistaEstudiante.class))
+                        .onErrorResume(throwable ->
+                                ServerResponse.status(HttpStatus.NOT_FOUND).build())
+        );
+    }
+
+
+
+                        /*
+                        encontrarTodosEstudiantesUseCase.encontrarTodosEstudiantes()
                         .flatMap(vistaEstudiantes ->
                                     ServerResponse.ok()
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .bodyValue(Mono.just(vistaEstudiantes))
+                                            .bodyValue(vistaEstudiantes)
                                 )
-        );
-    }
+
+                         */
     @Bean
     public RouterFunction<ServerResponse> encontrarEstudiantePorID(EncontrarEstudiantePorIDUseCase encontrarEstudiantePorIDUseCase){
         return route(

@@ -33,8 +33,6 @@ public class InscritoEnCurso extends DomainEvent {
         for (TareaID tareaID : tareasID) {
             tareasCurso.put(tareaID, new EstadoTarea(
                     0,
-                    null,
-                    null,
                     false
             ));
         }

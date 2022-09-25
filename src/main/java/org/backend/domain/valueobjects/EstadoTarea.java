@@ -14,6 +14,14 @@ public class EstadoTarea implements ValueObject<Object> {
 
     private final String retroalimentacion;
 
+    public EstadoTarea(Integer calificacion, Boolean estado) {
+        this.calificacion = calificacion;
+        this.fechaEntregado = null;
+        this.archivo = null;
+        this.estado = estado;
+        this.retroalimentacion = null;
+    }
+
     public EstadoTarea(Integer calificacion, Date fechaEntregado, File archivo, Boolean estado, String retroalimentacion) {
         this.calificacion = calificacion;
         this.fechaEntregado = fechaEntregado;

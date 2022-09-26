@@ -14,6 +14,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
+import java.awt.*;
+
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -38,9 +40,8 @@ public class QueryHandler {
     @Bean
     public RouterFunction<ServerResponse> encontrarEstudiantePorID(EncontrarEstudiantePorIDUseCase encontrarEstudiantePorIDUseCase){
         return route(
-
                 GET("/buscarAlumno/{_id}"),
-               request -> ServerResponse
+                request -> ServerResponse
                        .ok()
                        .contentType(MediaType.APPLICATION_JSON)
                        .body(BodyInserters.fromPublisher(
@@ -68,6 +69,40 @@ public class QueryHandler {
                                 ServerResponse.status(HttpStatus.NOT_FOUND).build())
         );
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> encontrarCursoPorTitulo(EncontrarCursoPorRegexUseCase encontrarCursoPorRegexUseCase) {
+        return route(
+                GET("/buscarTituloCurso/{regex}"),
+                request -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                encontrarCursoPorRegexUseCase.encontrarCursoPorRegexUseCase(request.pathVariable("regex")),
+                                VistaCurso.class
+                        )).onErrorResume(throwable ->
+                                ServerResponse.status(HttpStatus.NOT_FOUND).build())
+        );
+    }
+
+    @Bean RouterFunction<ServerResponse> encontrarCursoPorTituloYProfesor(BuscarCursoPorTituloYProfesorUseCase buscarCursoPorTituloYProfesorUseCase) {
+        return route(
+                GET("/buscarCursoTituloProfesor/{regex}/{profesorID}"),
+                request -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                buscarCursoPorTituloYProfesorUseCase
+                                        .buscarCursoPorTituloYProfesorUseCase(
+                                                request.pathVariable("regex"),
+                                                request.pathVariable("profesorID")),
+                                VistaCurso.class
+
+                        )).onErrorResume(throwable ->
+                                ServerResponse.status(HttpStatus.NOT_FOUND).build())
+        );
+    }
+
 
     @Bean
     public RouterFunction<ServerResponse> encontrarProfesroPorId(EncontrarProfesorPorIdUseCase encontrarProfesorPorIdUseCase){

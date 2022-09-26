@@ -28,7 +28,17 @@ public class CrearTema extends Command {
         this.tareas = tareas;
     }
 
+    public CrearTema(Integer orden, String titulo, Set<CrearTarea> tareas) {
+        this.orden = orden;
+        this.titulo = titulo;
+        this.tareas = tareas;
+    }
+
     public CrearTema() {
+    }
+
+    public void setCursoID(String cursoID) {
+        this.cursoID = cursoID;
     }
 
     public String getCursoID() {

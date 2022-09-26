@@ -19,6 +19,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 
 @Slf4j
@@ -150,6 +151,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaCurso> encontrarCursoPorId(String cursoID) {
+        System.out.println(cursoID);
         Query query = generateFinderQuery("_id", cursoID);
 
         return reactiveMongoTemplate
@@ -157,6 +159,19 @@ public class MongoViewRepository implements ViewRepository {
                 .switchIfEmpty(Mono.error(new IllegalAccessException("Curso no encontrado")))
                 .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Curso encontrado con exito"));
+    }
+
+    @Override
+    public Flux<VistaCurso> encontrarCursoPorRegex(String regex) {
+        Query encontrarRegex = new Query(
+                Criteria
+                        .where("titulo")
+                        .regex(Pattern.compile(regex, Pattern.CASE_INSENSITIVE))
+        );
+
+        return reactiveMongoTemplate
+                .find(encontrarRegex, VistaCurso.class);
+
     }
 
     @Override
@@ -178,25 +193,26 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
-    public void agregarTema(TemaGeneric nuevoTema) {
-        // Retorna void porque, al ser un documento incrustado, primero se crea el tema,
-        // con lista de tareasIDS vacío, luego se crean las tareas y es en su propio método de
-        // repositorio donde se añaden dichos IDs al array el tema.
-
+    public Mono<TemaGeneric> agregarTema(TemaGeneric nuevoTema) {
         Query encontrarCursoPadre = generateFinderQuery("_id", nuevoTema.getCursoID());
         Update agregarTemaACurso = new Update();
 
-        reactiveMongoTemplate
+        return reactiveMongoTemplate
                 .findOne(encontrarCursoPadre, VistaCurso.class)
                 .doOnNext(vistaCurso -> {
                     Set<TemaGeneric> cursoTemas = vistaCurso.getTemas();
                     cursoTemas.add(nuevoTema);
+                    //System.out.println(vistaCurso.getTemas());
 
                     agregarTemaACurso.set("temas", cursoTemas);
 
                     reactiveMongoTemplate
-                            .findAndModify(encontrarCursoPadre, agregarTemaACurso, VistaCurso.class);
-                        });
+                            .findAndModify(encontrarCursoPadre, agregarTemaACurso, VistaCurso.class)
+                            .subscribe();
+                        })
+                .thenReturn(nuevoTema);
+
+
 
         /*
                 return reactiveMongoTemplate

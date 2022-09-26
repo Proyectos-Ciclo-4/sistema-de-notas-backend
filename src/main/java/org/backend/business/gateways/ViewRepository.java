@@ -42,9 +42,11 @@ public interface ViewRepository {
 
     //Vista para curso
     Mono<VistaCurso> encontrarCursoPorId(String cursoID);
+
+    Flux<VistaCurso> encontrarCursoPorRegex(String regex);
     Flux<VistaCurso> listarCursos();
     Mono<VistaCurso> crearCurso(VistaCurso curso);
-    void agregarTema(TemaGeneric nuevoTema);
+    Mono<TemaGeneric> agregarTema(TemaGeneric nuevoTema);
     Mono<VistaCurso> agregarTareaID(String tareaID);
 
     //Vista para tarea

@@ -27,6 +27,7 @@ public class VistaEstudiante {
         this.nombre = nombre;
         this.promedio = Float.valueOf(0);
         this.avance = Float.valueOf(0);
+        this.inscripciones = new HashSet<>();
     }
 
     public VistaEstudiante() {

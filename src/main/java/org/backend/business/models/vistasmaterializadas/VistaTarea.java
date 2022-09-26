@@ -1,6 +1,7 @@
 package org.backend.business.models.vistasmaterializadas;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class VistaTarea {
     private String _id;
@@ -24,7 +25,8 @@ public class VistaTarea {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.orden = orden;
-        this.fechaLimite = LocalDate.parse(fechaLimite);
+        // TODO: fechaLimite debe ser regresada al front en formato dd/mm/yyy. Arreglar
+        this.fechaLimite = LocalDate.parse(fechaLimite, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.porcentaje = porcentaje;
     }
 

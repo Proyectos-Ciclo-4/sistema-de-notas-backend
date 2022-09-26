@@ -33,8 +33,9 @@ public class CrearTareaUseCase {
     public Mono<VistaTarea> apply(Mono<CrearTarea> crearTareaMono) {
         return crearTareaMono
                 .flatMap(command -> {
+                    String uuid = UUID.randomUUID().toString();
 
-                    var uuid = UUID.randomUUID().toString();
+                    /*
                     Tema temaAR = new Tema(TemaID.of(command.getTemaID()));
                     temaAR.crearTarea(
                             new Titulo(command.getTitulo()),
@@ -46,6 +47,9 @@ public class CrearTareaUseCase {
                     );
 
                     List<DomainEvent> events = temaAR.getUncommittedChanges();
+                     */
+
+                    System.out.println(command.getTitulo());
 
                     VistaTarea nuevaTarea = new VistaTarea(
                             uuid,
@@ -57,6 +61,7 @@ public class CrearTareaUseCase {
                             command.getFechaLimite(),
                             command.getPorcentaje()
                     );
+
 
                     return  mongoViewRepository.crearTarea(nuevaTarea);
                 });

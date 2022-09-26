@@ -38,9 +38,8 @@ public class QueryHandler {
     @Bean
     public RouterFunction<ServerResponse> encontrarEstudiantePorID(EncontrarEstudiantePorIDUseCase encontrarEstudiantePorIDUseCase){
         return route(
-
                 GET("/buscarAlumno/{_id}"),
-               request -> ServerResponse
+                request -> ServerResponse
                        .ok()
                        .contentType(MediaType.APPLICATION_JSON)
                        .body(BodyInserters.fromPublisher(

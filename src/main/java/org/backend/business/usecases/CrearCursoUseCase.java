@@ -38,17 +38,15 @@ public class CrearCursoUseCase {
                             temas
                     );
 
-                    this.mongoViewRepository.crearCurso(newCurso);
-
-                    if (!command.getTemas().isEmpty()) {
-                        command.getTemas().forEach(
-                                crearTema -> agregarTemaUseCase
-                                        .apply(Mono.just(crearTema))
-                                        .subscribe(temaGeneric -> temas.add(temaGeneric))
-                        );
-                    }
-
-                    return mongoViewRepository.encontrarCursoPorId(newCurso.get_id());
+                    return this.mongoViewRepository.crearCurso(newCurso)
+                            .doOnNext(vistaCurso -> {
+                                if (!command.getTemas().isEmpty()) {
+                                    command.getTemas().forEach(
+                                            crearTema -> agregarTemaUseCase
+                                                    .apply(Mono.just(crearTema))
+                                                    .subscribe(temas::add));
+                                }
+                            });
                 });
     }
 }

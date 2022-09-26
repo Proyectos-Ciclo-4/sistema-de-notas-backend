@@ -6,6 +6,8 @@ import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.domain.commands.CrearEstudiante;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+
 @Service
 public class CrearEstudianteUseCase {
     private final MongoViewRepository mongoViewRepository;

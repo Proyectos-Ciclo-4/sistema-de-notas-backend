@@ -150,6 +150,7 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaCurso> encontrarCursoPorId(String cursoID) {
+        System.out.println(cursoID);
         Query query = generateFinderQuery("_id", cursoID);
 
         return reactiveMongoTemplate

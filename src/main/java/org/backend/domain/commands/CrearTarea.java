@@ -30,7 +30,21 @@ public class CrearTarea extends Command {
         this.porcentaje = porcentaje;
     }
 
+    public CrearTarea(String titulo, String fechaLimite, Float porcentaje) {
+        this.titulo = titulo;
+        this.fechaLimite = fechaLimite;
+        this.porcentaje = porcentaje;
+    }
+
     public CrearTarea() {
+    }
+
+    public void setCursoID(String cursoID) {
+        this.cursoID = cursoID;
+    }
+
+    public void setTemaID(String temaID) {
+        this.temaID = temaID;
     }
 
     public String getCursoID() {

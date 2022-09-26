@@ -38,17 +38,20 @@ public class AgregarTemaUseCase {
                             tareasIDS
                     );
 
-                    this.mongoViewRepository.agregarTema(newTema);
+                    return this.mongoViewRepository.agregarTema(newTema)
+                            .doOnNext(temaGeneric -> {
+                                if (!command.getTareas().isEmpty()) {
+                                    command.getTareas().forEach(
+                                            crearTarea -> {
+                                                crearTarea.setCursoID(temaGeneric.getCursoID());
+                                                crearTarea.setTemaID(temaGeneric.getTemaID());
 
-                    if (!command.getTareas().isEmpty()) {
-                        command.getTareas().forEach(
-                                crearTarea -> crearTareaUseCase
-                                        .apply(Mono.just(crearTarea))
-                                        .subscribe(vistaTarea -> tareasIDS.add(vistaTarea.get_id()))
-                                );
-                    }
-
-                    return this.mongoViewRepository.encontrarTema(newTema.getTemaID());
+                                                crearTareaUseCase
+                                                        .apply(Mono.just(crearTarea))
+                                                        .subscribe(vistaTarea -> tareasIDS.add(vistaTarea.get_id()));
+                                            });
+                                }
+                            });
                 });
     }
 }

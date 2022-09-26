@@ -36,4 +36,12 @@ public class VistaCurso {
     public Set<TemaGeneric> getTemas() {
         return temas;
     }
+
+    public void setTemas(Set<TemaGeneric> temas) {
+        this.temas = temas;
+    }
+
+    public void agregarTema(TemaGeneric temaGeneric) {
+        this.temas.add(temaGeneric);
+    }
 }

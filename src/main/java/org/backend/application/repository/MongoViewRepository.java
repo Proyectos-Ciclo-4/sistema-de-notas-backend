@@ -19,6 +19,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 
 @Slf4j
@@ -158,6 +159,19 @@ public class MongoViewRepository implements ViewRepository {
                 .switchIfEmpty(Mono.error(new IllegalAccessException("Curso no encontrado")))
                 .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Curso encontrado con exito"));
+    }
+
+    @Override
+    public Flux<VistaCurso> encontrarCursoPorRegex(String regex) {
+        Query encontrarRegex = new Query(
+                Criteria
+                        .where("titulo")
+                        .regex(Pattern.compile(regex, Pattern.CASE_INSENSITIVE))
+        );
+
+        return reactiveMongoTemplate
+                .find(encontrarRegex, VistaCurso.class);
+
     }
 
     @Override

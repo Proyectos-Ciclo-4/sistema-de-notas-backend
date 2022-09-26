@@ -1,15 +1,21 @@
 package org.backend.business.usecases;
 
+import co.com.sofka.domain.generic.DomainEvent;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaCurso;
 import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
+import org.backend.domain.Curso;
 import org.backend.domain.commands.CrearCurso;
+import org.backend.domain.identifiers.CursoID;
+import org.backend.domain.identifiers.ProfesorID;
+import org.backend.domain.valueobjects.Titulo;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,9 +36,23 @@ public class CrearCursoUseCase {
         return crearCursoMono
                 .flatMap(command -> {
                     Set<TemaGeneric> temas = new HashSet<>();
+                    var uuid =  UUID.randomUUID().toString();
+
+                    Curso cursoAR = new Curso(
+                            CursoID.of(uuid),
+                            new Titulo(command.getTitulo()),
+                            temas,
+                            ProfesorID.of(command.getProfesorID())
+
+                    );
+
+                    List<DomainEvent> events =  cursoAR.getUncommittedChanges();
+                    events.forEach(
+                            mongoEventRepository::saveEvent
+                    );
 
                     VistaCurso newCurso = new VistaCurso(
-                            UUID.randomUUID().toString(),
+                            uuid,
                             command.getTitulo(),
                             command.getProfesorID(),
                             temas

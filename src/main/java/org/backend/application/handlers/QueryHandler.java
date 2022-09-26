@@ -85,6 +85,24 @@ public class QueryHandler {
         );
     }
 
+    @Bean RouterFunction<ServerResponse> encontrarCursoPorTituloYProfesor(BuscarCursoPorTituloYProfesorUseCase buscarCursoPorTituloYProfesorUseCase) {
+        return route(
+                GET("/buscarCursoTituloProfesor/{regex}/{profesorID}"),
+                request -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                buscarCursoPorTituloYProfesorUseCase
+                                        .buscarCursoPorTituloYProfesorUseCase(
+                                                request.pathVariable("regex"),
+                                                request.pathVariable("profesorID")),
+                                VistaCurso.class
+
+                        )).onErrorResume(throwable ->
+                                ServerResponse.status(HttpStatus.NOT_FOUND).build())
+        );
+    }
+
 
     @Bean
     public RouterFunction<ServerResponse> encontrarProfesroPorId(EncontrarProfesorPorIdUseCase encontrarProfesorPorIdUseCase){

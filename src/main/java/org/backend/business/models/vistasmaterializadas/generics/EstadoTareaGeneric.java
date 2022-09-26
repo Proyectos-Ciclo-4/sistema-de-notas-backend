@@ -32,7 +32,8 @@ public class EstadoTareaGeneric {
         this.estado = "entregada";
     }
 
-
+    public EstadoTareaGeneric() {
+    }
 
     public String getTareaID() {
         return tareaID;

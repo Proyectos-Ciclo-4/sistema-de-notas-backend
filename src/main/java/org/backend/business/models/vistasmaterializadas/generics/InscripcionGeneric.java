@@ -22,6 +22,9 @@ public class InscripcionGeneric {
         this.estadosTarea = estadosTarea;
     }
 
+    public InscripcionGeneric() {
+    }
+
     public String getCursoID() {
         return cursoID;
     }

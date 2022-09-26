@@ -20,6 +20,9 @@ public class TemaGeneric {
         this.tareasID = tareasID;
     }
 
+    public TemaGeneric() {
+    }
+
     public String getTemaID() {
         return temaID;
     }

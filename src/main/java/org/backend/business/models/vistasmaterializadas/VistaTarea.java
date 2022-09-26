@@ -22,6 +22,9 @@ public class VistaTarea {
         this.porcentaje = porcentaje;
     }
 
+    public VistaTarea() {
+    }
+
     public String getCursoID() {
         return cursoID;
     }

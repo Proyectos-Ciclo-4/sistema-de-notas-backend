@@ -29,6 +29,9 @@ public class ActualizarEstadoTarea extends Command {
         this.entregado = entregado;
     }
 
+    public ActualizarEstadoTarea() {
+    }
+
     public Integer getCalificacion() {
         return calificacion;
     }

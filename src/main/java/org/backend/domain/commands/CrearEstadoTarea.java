@@ -12,6 +12,9 @@ public class CrearEstadoTarea extends Command {
         this.tareaID = tareaID;
     }
 
+    public CrearEstadoTarea() {
+    }
+
     public String getEstudianteID() {
         return estudianteID;
     }

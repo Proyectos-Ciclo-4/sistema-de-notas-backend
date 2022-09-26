@@ -16,16 +16,19 @@ public class CrearTema extends Command {
             tareas: Arreglo de comandos CrearTarea. Incluye las tareas del tema. Puede estar vacío.
         }
      */
-    private final String cursoID;
-    private final Integer orden;
-    private final String titulo;
-    private final Set<CrearTarea> tareas;
+    private String cursoID;
+    private Integer orden;
+    private String titulo;
+    private Set<CrearTarea> tareas;
 
     public CrearTema(String cursoID, Integer orden, String titulo, Set<CrearTarea> tareas) {
         this.cursoID = cursoID;
         this.orden = orden;
         this.titulo = titulo;
         this.tareas = tareas;
+    }
+
+    public CrearTema() {
     }
 
     public String getCursoID() {

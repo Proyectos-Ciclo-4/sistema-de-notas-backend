@@ -15,6 +15,9 @@ public class ActualizarAvance extends Command {
         this.avance = avance;
     }
 
+    public ActualizarAvance() {
+    }
+
     public String getCursoID() {
         return cursoID;
     }

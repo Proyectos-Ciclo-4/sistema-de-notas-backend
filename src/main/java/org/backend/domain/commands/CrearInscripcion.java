@@ -26,6 +26,9 @@ public class CrearInscripcion extends Command {
         this.cursoID = cursoID;
     }
 
+    public CrearInscripcion() {
+    }
+
     public String getEstudianteID() {
         return estudianteID;
     }

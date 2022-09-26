@@ -14,9 +14,11 @@ public class CrearProfesor extends Command {
     private String profesorID;
     private String nombre;
 
-    public CrearProfesor(String profesorId, String nombre) {
-        this.profesorID = profesorId;
-        this.nombre = nombre;
+    public CrearProfesor() {
+    }
+
+    public CrearProfesor(String profesorID) {
+        this.profesorID = profesorID;
     }
 
     public String getNombre() {

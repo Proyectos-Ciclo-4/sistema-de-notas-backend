@@ -29,6 +29,9 @@ public class VistaEstudiante {
         this.avance = Float.valueOf(0);
     }
 
+    public VistaEstudiante() {
+    }
+
     public String get_id() {
         return _id;
     }

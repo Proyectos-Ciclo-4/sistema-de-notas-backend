@@ -15,6 +15,9 @@ public class ActualizarPromedio extends Command {
         this.promedio = promedio;
     }
 
+    public ActualizarPromedio() {
+    }
+
     public String getCursoID() {
         return cursoID;
     }

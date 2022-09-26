@@ -11,15 +11,20 @@ public class AgregarCurso extends Command {
     //  El comando CrearCurso detona este comando para hacer
     //  vincular al profesor con el ID del curso nuevo.
 
-    private String ProfesorId;
+    private String profesorID;
     private String cursoID;
 
-    public String getProfesorId() {
-        return ProfesorId;
+    public AgregarCurso(String profesorId, String cursoID) {
+        this.profesorID = profesorId;
+        this.cursoID = cursoID;
     }
 
-    public void setProfesorId(String profesorId) {
-        ProfesorId = profesorId;
+    public String getProfesorID() {
+        return profesorID;
+    }
+
+    public void setProfesorID(String profesorId) {
+        profesorID = profesorId;
     }
 
     public String getCursoID() {

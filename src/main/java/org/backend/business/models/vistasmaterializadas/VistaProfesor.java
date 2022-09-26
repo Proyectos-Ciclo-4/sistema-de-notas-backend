@@ -17,6 +17,9 @@ public class VistaProfesor {
         this.cursosIDS = new HashSet<>();
     }
 
+    public VistaProfesor() {
+    }
+
     public String get_id() {
         return _id;
     }

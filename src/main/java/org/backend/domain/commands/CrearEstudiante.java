@@ -22,6 +22,9 @@ public class CrearEstudiante extends Command {
         this.nombre = nombre;
     }
 
+    public CrearEstudiante() {
+    }
+
     public String getEstudianteID() {
         return estudianteID;
     }

@@ -18,6 +18,9 @@ public class VistaCurso {
         this.temas = temas;
     }
 
+    public VistaCurso() {
+    }
+
     public String get_id() {
         return _id;
     }

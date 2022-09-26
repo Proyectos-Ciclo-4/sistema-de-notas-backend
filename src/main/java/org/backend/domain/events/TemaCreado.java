@@ -1,6 +1,7 @@
 package org.backend.domain.events;
 
 import co.com.sofka.domain.generic.DomainEvent;
+import org.backend.domain.commands.CrearTarea;
 import org.backend.domain.entities.Tarea;
 import org.backend.domain.identifiers.TemaID;
 import org.backend.domain.valueobjects.Orden;
@@ -11,13 +12,13 @@ import java.util.Set;
 public class TemaCreado extends DomainEvent {
     private Orden orden;
     private Titulo titulo;
-    private Set<Tarea> tareas;
+    private Set<CrearTarea> tareas;
 
     public TemaCreado() {
         super("unote.temaCreado");
     }
 
-    public TemaCreado(Orden orden, Titulo titulo, Set<Tarea> tareas) {
+    public TemaCreado(Orden orden, Titulo titulo, Set<CrearTarea> tareas) {
         super("unote.temaCreado");
         this.orden = orden;
         this.titulo = titulo;
@@ -32,7 +33,7 @@ public class TemaCreado extends DomainEvent {
         return titulo;
     }
 
-    public Set<Tarea> getTareas() {
+    public Set<CrearTarea> getTareas() {
         return tareas;
     }
 }

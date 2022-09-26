@@ -1,6 +1,7 @@
 package org.backend.domain;
 
 import co.com.sofka.domain.generic.AggregateEvent;
+import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 import org.backend.domain.events.CursoCreado;
 import org.backend.domain.identifiers.CursoID;
 import org.backend.domain.identifiers.EstudianteID;
@@ -15,12 +16,12 @@ public class Curso extends AggregateEvent<CursoID> {
     // Propiedades
     protected Titulo titulo;
 
-    protected Set<TemaID> temas;
+    protected Set<TemaGeneric> temas;
     protected Set<EstudianteID> estudianteID;
     protected ProfesorID profesorID;
 
     // Constructores
-    public Curso(CursoID entityId, Titulo titulo, Set<TemaID> temas, ProfesorID profesorID) {
+    public Curso(CursoID entityId, Titulo titulo, Set<TemaGeneric> temas, ProfesorID profesorID) {
         super(entityId);
         appendChange(new CursoCreado(titulo,profesorID,temas)).apply();
         subscribe(new CursoChange(this));
@@ -35,7 +36,7 @@ public class Curso extends AggregateEvent<CursoID> {
         return titulo;
     }
 
-    public Set<TemaID> temas() {
+    public Set<TemaGeneric> temas() {
         return temas;
     }
 

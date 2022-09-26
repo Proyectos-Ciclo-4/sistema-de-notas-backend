@@ -2,9 +2,11 @@ package org.backend.domain;
 
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
+import org.backend.domain.commands.CrearTarea;
 import org.backend.domain.entities.Tarea;
 import org.backend.domain.events.TareaCreada;
 import org.backend.domain.events.TemaCreado;
+import org.backend.domain.identifiers.CursoID;
 import org.backend.domain.identifiers.TareaID;
 import org.backend.domain.identifiers.TemaID;
 import org.backend.domain.valueobjects.FechaLimite;
@@ -21,23 +23,23 @@ public class Tema extends AggregateEvent<TemaID> {
     protected Orden orden;
     protected Titulo titulo;
 
-    protected Set<Tarea> tareas;
+    protected Set<CrearTarea> tareas;
 
     // Constructores
 
-    public Tema(TemaID temaID, Orden orden, Titulo titulo, Set<Tarea> tareas) {
+    public Tema(TemaID temaID, Orden orden, Titulo titulo, Set<CrearTarea> tareas) {
         super(temaID);
         subscribe(new TemaChange(this));
 
         appendChange(new TemaCreado(orden, titulo, tareas)).apply();
     }
 
-    private Tema(TemaID temaID) {
+    public Tema(TemaID temaID) {
         super(temaID);
         subscribe((new TemaChange(this)));
     }
 
-    private Tema from(TemaID temaID, List<DomainEvent> temaEvents) {
+    public static Tema from(TemaID temaID, List<DomainEvent> temaEvents) {
         Tema tema = new Tema(temaID);
         temaEvents.forEach(tema::applyEvent);
 
@@ -46,23 +48,24 @@ public class Tema extends AggregateEvent<TemaID> {
 
     // Comportamientos
 
-    public void crearTarea(Titulo titulo, FechaLimite fechaLimite, Porcentaje porcentaje) {
+    public void crearTarea(Titulo titulo, FechaLimite fechaLimite, Float porcentaje, CursoID cursoID) {
         Objects.requireNonNull(titulo);
         Objects.requireNonNull(fechaLimite);
         Objects.requireNonNull(porcentaje);
+        Objects.requireNonNull(cursoID);
 
-        appendChange(new TareaCreada(titulo, fechaLimite, porcentaje)).apply();
+        appendChange(new TareaCreada(titulo.toString(), fechaLimite.toString(), porcentaje, cursoID.toString())).apply();
     }
 
     // Modificadores
 
-    public void agregarTarea(Tarea tarea) {
+    public void agregarTarea(CrearTarea tarea) {
         tareas.add(tarea);
     }
 
-    public Optional<Tarea> encontrarTareaPorId(TareaID id){
+    public Optional<CrearTarea> encontrarTareaPorId(TareaID id){
         return  tareas.stream()
-                .filter( tarea -> tarea.identity().equals(id))
+                .filter( tarea -> tarea.uuid().equals(id))
                 .findFirst();
     }
 

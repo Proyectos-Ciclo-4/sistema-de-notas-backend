@@ -1,6 +1,7 @@
 package org.backend.domain;
 
 import co.com.sofka.domain.generic.EventChange;
+import org.backend.domain.commands.CrearTarea;
 import org.backend.domain.entities.Tarea;
 import org.backend.domain.events.TareaCreada;
 import org.backend.domain.events.TemaCreado;
@@ -17,11 +18,13 @@ public class TemaChange extends EventChange {
         });
 
         apply((TareaCreada tareaCreada) -> {
-            Tarea tarea = new Tarea(
+            CrearTarea tarea = new CrearTarea(
+                    tareaCreada.getCursoID(),
                     tareaCreada.getTareaID(),
                     tareaCreada.getTitulo(),
                     tareaCreada.getFechaLimite(),
                     tareaCreada.getPorcentaje()
+
             );
 
             tema.agregarTarea(tarea);

@@ -12,7 +12,7 @@ public class CursoChange extends EventChange {
         apply((CursoCreado event) -> {
             curso.titulo = event.getTitulo();
             curso.profesorID = event.getProfesorID();
-            curso.temas = event.getTemasIDS();
+            curso.temas = event.getTemas();
         });
 
     }

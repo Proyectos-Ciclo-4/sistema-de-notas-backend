@@ -4,15 +4,15 @@ import co.com.sofka.domain.generic.ValueObject;
 
 import java.util.Date;
 
-public class FechaLimite implements ValueObject<Date> {
-    private final Date fechaLimite;
+public class FechaLimite implements ValueObject<String> {
+    private final String fechaLimite;
 
-    public FechaLimite(Date fechaLimite) {
+    public FechaLimite(String fechaLimite) {
         this.fechaLimite = fechaLimite;
     }
 
     @Override
-    public Date value() {
+    public String value() {
         return fechaLimite;
     }
 }

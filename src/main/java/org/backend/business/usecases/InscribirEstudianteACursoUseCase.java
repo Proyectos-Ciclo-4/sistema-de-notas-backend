@@ -29,20 +29,22 @@ public class InscribirEstudianteACursoUseCase {
     public Mono<VistaEstudiante> apply(Mono<CrearInscripcion> crearInscripcionMono) {
         return crearInscripcionMono
                 .flatMap(command -> {
-                    InscripcionGeneric inscripcionGeneric = new InscripcionGeneric(
-                            command.getCursoID(),
-                            this.mongoViewRepository
-                                    .listarTareasPorCurso(command.getCursoID())
-                                    .map(vistaTarea -> new EstadoTareaGeneric(
-                                            vistaTarea.get_id(),
-                                            vistaTarea.getTitulo(),
-                                            vistaTarea.getFechaLimite()))
-                                    .collect(Collectors.toSet())
-                                    // Es válido emplear .block() acá, porque es necesario
-                                    // tener todos los items para armar la lista y poder usarla
-                                    // en el constructor.
-                                    .block()
-                    );
+                    InscripcionGeneric inscripcionGeneric = new InscripcionGeneric();
+
+                    inscripcionGeneric.setCursoID(command.getCursoID());
+                    inscripcionGeneric.setPromedio((float) 0);
+                    inscripcionGeneric.setAvance((float) 0);
+
+
+                    this.mongoViewRepository
+                            .listarTareasPorCurso(command.getCursoID())
+                            .map(vistaTarea -> new EstadoTareaGeneric(
+                                    vistaTarea.get_id(),
+                                    vistaTarea.getTitulo(),
+                                    vistaTarea.getFechaLimite()))
+                            .collect(Collectors.toSet())
+                            .subscribe(estadoTareaGenerics -> inscripcionGeneric.setEstadosTarea(estadoTareaGenerics));
+
 
                     return this.mongoViewRepository.agregarInscripcion(inscripcionGeneric, command.getEstudianteID());
                 });

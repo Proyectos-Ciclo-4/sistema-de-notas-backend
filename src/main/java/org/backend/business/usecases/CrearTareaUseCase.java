@@ -35,6 +35,22 @@ public class CrearTareaUseCase {
                 .flatMap(command -> {
                     String uuid = UUID.randomUUID().toString();
 
+                    VistaTarea nuevaTarea = new VistaTarea(
+                            uuid,
+                            command.getCursoID(),
+                            command.getTemaID(),
+                            command.getTitulo(),
+                            command.getDescripcion(),
+                            command.getOrden(),
+                            command.getFechaLimite(),
+                            command.getPorcentaje()
+                    );
+
+                    return mongoViewRepository
+                            .crearTarea(nuevaTarea)
+                            .doOnNext(vistaTarea ->
+                                    mongoViewRepository.agregarTareaATema(nuevaTarea));
+
                     /*
                     Tema temaAR = new Tema(TemaID.of(command.getTemaID()));
                     temaAR.crearTarea(
@@ -48,22 +64,6 @@ public class CrearTareaUseCase {
 
                     List<DomainEvent> events = temaAR.getUncommittedChanges();
                      */
-
-                    System.out.println(command.getTitulo());
-
-                    VistaTarea nuevaTarea = new VistaTarea(
-                            uuid,
-                            command.getCursoID(),
-                            command.getTemaID(),
-                            command.getTitulo(),
-                            command.getDescripcion(),
-                            command.getOrden(),
-                            command.getFechaLimite(),
-                            command.getPorcentaje()
-                    );
-
-
-                    return  mongoViewRepository.crearTarea(nuevaTarea);
                 });
     }
 }

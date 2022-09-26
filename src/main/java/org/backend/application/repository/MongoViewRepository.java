@@ -9,6 +9,7 @@ import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -124,6 +125,7 @@ public class MongoViewRepository implements ViewRepository {
                 .findAndModify(
                         generateFinderQuery("_id", estudianteID),
                         new Update().addToSet("inscripciones", inscripcionGeneric),
+                        new FindAndModifyOptions().returnNew(true),
                         VistaEstudiante.class
                 );
     }

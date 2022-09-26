@@ -9,10 +9,7 @@ import org.backend.domain.events.TemaCreado;
 import org.backend.domain.identifiers.CursoID;
 import org.backend.domain.identifiers.TareaID;
 import org.backend.domain.identifiers.TemaID;
-import org.backend.domain.valueobjects.FechaLimite;
-import org.backend.domain.valueobjects.Orden;
-import org.backend.domain.valueobjects.Porcentaje;
-import org.backend.domain.valueobjects.Titulo;
+import org.backend.domain.valueobjects.*;
 
 import java.util.*;
 
@@ -48,13 +45,15 @@ public class Tema extends AggregateEvent<TemaID> {
 
     // Comportamientos
 
-    public void crearTarea(Titulo titulo, FechaLimite fechaLimite, Float porcentaje, CursoID cursoID) {
+    public void crearTarea(Titulo titulo, Descripcion descripcion, Orden orden, FechaLimite fechaLimite, Float porcentaje, CursoID cursoID) {
         Objects.requireNonNull(titulo);
+        Objects.requireNonNull(descripcion);
+        Objects.requireNonNull(orden);
         Objects.requireNonNull(fechaLimite);
         Objects.requireNonNull(porcentaje);
         Objects.requireNonNull(cursoID);
 
-        appendChange(new TareaCreada(titulo.toString(), fechaLimite.toString(), porcentaje, cursoID.toString())).apply();
+        appendChange(new TareaCreada(titulo.toString(), descripcion.value(), orden.value(), fechaLimite.toString(), porcentaje, cursoID.toString())).apply();
     }
 
     // Modificadores

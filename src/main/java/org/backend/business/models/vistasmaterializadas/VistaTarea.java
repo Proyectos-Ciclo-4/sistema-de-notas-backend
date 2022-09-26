@@ -10,14 +10,20 @@ public class VistaTarea {
     private String temaID;
 
     private String titulo;
+    
+    private String descripcion;
+
+    private Integer orden;
     private LocalDate fechaLimite;
     private Float porcentaje;
 
-    public VistaTarea(String _id, String cursoID, String temaID, String titulo, String fechaLimite, Float porcentaje) {
+    public VistaTarea(String _id, String cursoID, String temaID, String titulo, String descripcion, Integer orden, String fechaLimite, Float porcentaje) {
         this._id = _id;
         this.cursoID = cursoID;
         this.temaID = temaID;
         this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.orden = orden;
         this.fechaLimite = LocalDate.parse(fechaLimite);
         this.porcentaje = porcentaje;
     }

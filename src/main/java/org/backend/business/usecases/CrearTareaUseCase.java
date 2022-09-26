@@ -10,7 +10,9 @@ import org.backend.domain.entities.Tarea;
 import org.backend.domain.identifiers.CursoID;
 import org.backend.domain.identifiers.TareaID;
 import org.backend.domain.identifiers.TemaID;
+import org.backend.domain.valueobjects.Descripcion;
 import org.backend.domain.valueobjects.FechaLimite;
+import org.backend.domain.valueobjects.Orden;
 import org.backend.domain.valueobjects.Titulo;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -36,6 +38,8 @@ public class CrearTareaUseCase {
                     Tema temaAR = new Tema(TemaID.of(command.getTemaID()));
                     temaAR.crearTarea(
                             new Titulo(command.getTitulo()),
+                            new Descripcion(command.getDescripcion()),
+                            new Orden(command.getOrden()),
                             new FechaLimite(command.getFechaLimite()),
                             command.getPorcentaje(),
                             CursoID.of(command.getCursoID())
@@ -48,6 +52,8 @@ public class CrearTareaUseCase {
                             command.getCursoID(),
                             command.getTemaID(),
                             command.getTitulo(),
+                            command.getDescripcion(),
+                            command.getOrden(),
                             command.getFechaLimite(),
                             command.getPorcentaje()
                     );

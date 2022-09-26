@@ -28,7 +28,7 @@ public class MongoEventRepository implements EventRepository {
     }
 
     @Override
-    public Flux<DomainEvent> findById( String id) {
+    public Flux<DomainEvent> findById(String id) {
        var findByIdQuery = new Query(Criteria
                 .where("estudiante")
                 .is(id));

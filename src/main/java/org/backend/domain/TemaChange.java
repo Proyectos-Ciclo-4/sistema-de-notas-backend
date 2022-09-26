@@ -22,6 +22,8 @@ public class TemaChange extends EventChange {
                     tareaCreada.getCursoID(),
                     tareaCreada.getTareaID(),
                     tareaCreada.getTitulo(),
+                    tareaCreada.getDescripcion(),
+                    tareaCreada.getOrden(),
                     tareaCreada.getFechaLimite(),
                     tareaCreada.getPorcentaje()
 

@@ -37,21 +37,24 @@ class CrearEstudianteUseCaseTest {
     @Test
     void crearEstudianteTest(){
 
-        CrearEstudiante command = new CrearEstudiante(
-                "2222",
-                "Jose"
-        );
+      EstudianteCreado estudianteCreado = new EstudianteCreado(
+              new Nombre("Maria"), new HashMap<>()
+      );
+      VistaEstudiante estudiante = new VistaEstudiante("222", "Maria", Float.valueOf(0),Float.valueOf(0));
+      estudianteCreado.setAggregateRootId("222");
+
+      Mono<VistaEstudiante> expectedMono = Mono.just(
+              new VistaEstudiante("222", "Maria", Float.valueOf(0),Float.valueOf(0))
+      );
+
+      Mockito.when(mongoViewRepository.crearEstudiante(estudiante)).thenReturn(expectedMono);
+
+      var useCaseExecuted = mongoViewRepository.crearEstudiante(estudiante);
+
+      StepVerifier.create(useCaseExecuted).expectNextMatches(
+              vistaEstudiante -> vistaEstudiante.getNombre().equals("Maria")
+      ).verifyComplete();
 
 
-
-        StepVerifier.create(crearEstudianteUseCase.apply(Mono.just(command)))
-                .expectNextMatches(
-                        event -> {
-
-                            return "Jose".equals(event.getNombre());
-
-                        }
-                ).expectComplete()
-                .verify();
     }
 }

@@ -64,4 +64,9 @@ public class VistaEstudiante {
     public Set<InscripcionGeneric> getInscripciones() {
         return inscripciones;
     }
+
+    public InscripcionGeneric encontrarInscripcion(String cursoID) {
+        return inscripciones.stream().filter(inscripcionGeneric ->
+                inscripcionGeneric.getCursoID().equals(cursoID)).findFirst().get();
+    }
 }

@@ -5,6 +5,7 @@ import org.backend.business.models.vistasmaterializadas.VistaCurso;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.business.models.vistasmaterializadas.VistaProfesor;
 import org.backend.business.models.vistasmaterializadas.VistaTarea;
+import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.business.usecases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -85,7 +86,8 @@ public class QueryHandler {
         );
     }
 
-    @Bean RouterFunction<ServerResponse> encontrarCursoPorTituloYProfesor(BuscarCursoPorTituloYProfesorUseCase buscarCursoPorTituloYProfesorUseCase) {
+    @Bean
+    RouterFunction<ServerResponse> encontrarCursoPorTituloYProfesor(BuscarCursoPorTituloYProfesorUseCase buscarCursoPorTituloYProfesorUseCase) {
         return route(
                 GET("/buscarCursoTituloProfesor/{regex}/{profesorID}"),
                 request -> ServerResponse
@@ -103,9 +105,27 @@ public class QueryHandler {
         );
     }
 
+    @Bean
+    RouterFunction<ServerResponse> encontrarInscripcion(EncontrarInscripcionPorCursoUseCase encontrarInscripcionPorCursoUseCase) {
+        return route(
+                GET("/encontrarInscripcion/{regex}/{estudianteID}"),
+                request -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                encontrarInscripcionPorCursoUseCase
+                                        .encontrarInscripcionPorCursoUseCase(
+                                                request.pathVariable("regex"),
+                                                request.pathVariable("estudianteID")),
+                                InscripcionGeneric.class
+                        )).onErrorResume(throwable ->
+                                ServerResponse.status(HttpStatus.NOT_FOUND).build())
+        );
+    }
+
 
     @Bean
-    public RouterFunction<ServerResponse> encontrarProfesroPorId(EncontrarProfesorPorIdUseCase encontrarProfesorPorIdUseCase){
+    public RouterFunction<ServerResponse> encontrarProfesorPorId(EncontrarProfesorPorIdUseCase encontrarProfesorPorIdUseCase){
         return route(
                 GET("/buscarProfesor/{_id}"),
                 request -> ServerResponse

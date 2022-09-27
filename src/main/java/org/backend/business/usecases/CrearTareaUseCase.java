@@ -39,6 +39,7 @@ public class CrearTareaUseCase {
                             uuid,
                             command.getCursoID(),
                             command.getTemaID(),
+                            command.getTemaNombre(),
                             command.getTitulo(),
                             command.getDescripcion(),
                             command.getOrden(),

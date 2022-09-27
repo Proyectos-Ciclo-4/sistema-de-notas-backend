@@ -18,8 +18,10 @@ public class EstadoTareaGeneric {
     private String estado;
 
     // Constructor para crear objeto EstadoTareaGeneric por primera vez
-    public EstadoTareaGeneric(String tareaID, String titulo, LocalDate fechaLimite) {
+    public EstadoTareaGeneric(String tareaID, String titulo, String temaID, String temaNombre, LocalDate fechaLimite) {
         this.tareaID = tareaID;
+        this.temaID = temaID;
+        this.temaNombre = temaNombre;
         this.titulo = titulo;
         this.fechaLimite = fechaLimite;
         this.calificacion = 0;

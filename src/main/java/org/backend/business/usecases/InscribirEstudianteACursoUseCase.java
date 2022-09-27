@@ -46,6 +46,8 @@ public class InscribirEstudianteACursoUseCase {
                             .listarTareasPorCurso(command.getCursoID())
                             .map(vistaTarea -> new EstadoTareaGeneric(
                                     vistaTarea.get_id(),
+                                    vistaTarea.getTemaID(),
+                                    vistaTarea.getTemaNombre(),
                                     vistaTarea.getTitulo(),
                                     vistaTarea.getFechaLimite())
                             )

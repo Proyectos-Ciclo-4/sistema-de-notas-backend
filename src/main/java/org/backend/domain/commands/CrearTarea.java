@@ -18,6 +18,8 @@ public class CrearTarea extends Command {
 
     private String cursoID;
     private String temaID;
+
+    private String temaNombre;
     private String titulo;
 
     private String descripcion;
@@ -48,6 +50,10 @@ public class CrearTarea extends Command {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public String getTemaNombre() {
+        return temaNombre;
     }
 
     public Integer getOrden() {

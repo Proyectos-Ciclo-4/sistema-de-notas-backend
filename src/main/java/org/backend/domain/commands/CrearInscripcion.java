@@ -23,7 +23,7 @@ public class CrearInscripcion extends Command {
     // la inscripción, serán iguales a 0.
 
 
-    public CrearInscripcion(String estudianteID, String cursoID, String cursoNombre) {
+    public CrearInscripcion(String estudianteID, String cursoID, String nombreCurso) {
         this.estudianteID = estudianteID;
         this.cursoID = cursoID;
         this.nombreCurso = nombreCurso;
@@ -40,7 +40,7 @@ public class CrearInscripcion extends Command {
         return cursoID;
     }
 
-    public String getCursoNombre() {
+    public String getNombreCurso() {
         return nombreCurso;
     }
 }

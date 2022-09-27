@@ -31,7 +31,7 @@ public class InscribirEstudianteACursoUseCase {
                     inscripcionGeneric.setCursoID(command.getCursoID());
                     inscripcionGeneric.setPromedio((float) 0);
                     inscripcionGeneric.setAvance((float) 0);
-                    inscripcionGeneric.setNombreCurso(command.getCursoNombre());
+                    inscripcionGeneric.setNombreCurso(command.getNombreCurso());
                     inscripcionGeneric.setFechaInscripcion(LocalDate.now());
 
                     inscripcionGeneric.setEstadosTarea(new HashSet<>());

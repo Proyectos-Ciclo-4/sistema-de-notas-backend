@@ -69,6 +69,10 @@ public class InscripcionGeneric {
         return nombreCurso;
     }
 
+    public LocalDate getFechaInscripcion() {
+        return fechaInscripcion;
+    }
+
     public void setAvance(Float avance) {
         this.avance = avance;
     }

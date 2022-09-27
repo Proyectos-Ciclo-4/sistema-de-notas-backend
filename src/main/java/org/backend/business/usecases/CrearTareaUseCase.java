@@ -4,6 +4,7 @@ import co.com.sofka.domain.generic.DomainEvent;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaTarea;
+import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.domain.Tema;
 import org.backend.domain.commands.CrearTarea;
 import org.backend.domain.entities.Tarea;
@@ -51,9 +52,17 @@ public class CrearTareaUseCase {
                             .crearTarea(nuevaTarea)
                             .doOnNext(vistaTarea ->
                                     mongoViewRepository.agregarTareaATema(nuevaTarea))
-                            //.doOnSuccess(vistaTarea -> )
-
-                            ;
+                            .doOnSuccess(vistaTarea ->
+                                    mongoViewRepository.agregarTareaAInscripcion(
+                                            vistaTarea.getCursoID(),
+                                            new EstadoTareaGeneric(
+                                                    vistaTarea.get_id(),
+                                                    vistaTarea.getTemaID(),
+                                                    vistaTarea.getTemaNombre(),
+                                                    vistaTarea.getTitulo(),
+                                                    vistaTarea.getFechaLimite()
+                                            ))
+                            );
 
                     /*
                     Tema temaAR = new Tema(TemaID.of(command.getTemaID()));

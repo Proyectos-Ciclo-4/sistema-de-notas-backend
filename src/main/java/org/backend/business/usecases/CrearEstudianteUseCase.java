@@ -29,7 +29,7 @@ public class CrearEstudianteUseCase {
     public Mono<VistaEstudiante> apply(Mono<CrearEstudiante> crearEstudianteMono){
         return crearEstudianteMono.flatMap(command -> {
 
-            Estudiante estudinateAR = new Estudiante(
+            /*Estudiante estudinateAR = new Estudiante(
                     EstudianteID.of(command.getEstudianteID()),
                     new Nombre(command.getNombre()),
                     new HashMap<>()
@@ -37,7 +37,7 @@ public class CrearEstudianteUseCase {
             List<DomainEvent> events = estudinateAR.getUncommittedChanges();
             events.forEach(
                     mongoEventRepository::saveEvent
-            );
+            );*/
                     VistaEstudiante estudiante = new VistaEstudiante(
                             command.getEstudianteID(),
                             command.getNombre()

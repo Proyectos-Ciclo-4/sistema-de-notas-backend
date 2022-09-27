@@ -27,10 +27,11 @@ public class InscribirEstudianteACursoUseCase {
         return crearInscripcionMono
                 .flatMap(command -> {
                     InscripcionGeneric inscripcionGeneric = new InscripcionGeneric();
-
                     inscripcionGeneric.setCursoID(command.getCursoID());
                     inscripcionGeneric.setPromedio((float) 0);
                     inscripcionGeneric.setAvance((float) 0);
+                    inscripcionGeneric.setNombreCurso(command.getCursoNombre());
+
                     inscripcionGeneric.setEstadosTarea(new HashSet<>());
 
                     return this.mongoViewRepository
@@ -43,6 +44,9 @@ public class InscribirEstudianteACursoUseCase {
                             .collect(Collectors.toSet())
                             .flatMap(estadoTareaGenerics -> {
                                 inscripcionGeneric.setEstadosTarea(estadoTareaGenerics);
+
+                                System.out.println(inscripcionGeneric.getNombreCurso());
+
 
                                 return this.mongoViewRepository
                                         .agregarInscripcion(inscripcionGeneric, command.getEstudianteID());

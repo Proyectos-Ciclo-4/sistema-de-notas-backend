@@ -14,6 +14,8 @@ public class CrearInscripcion extends Command {
     private String estudianteID;
     private String cursoID;
 
+    private String cursoNombre;
+
     // No es necesario crear la propiedad Map<tarea_id, estado_tarea> tareas_curso
     // porque las tareas se asignan en el backend y luego se regresan.
 
@@ -21,9 +23,10 @@ public class CrearInscripcion extends Command {
     // la inscripción, serán iguales a 0.
 
 
-    public CrearInscripcion(String estudianteID, String cursoID) {
+    public CrearInscripcion(String estudianteID, String cursoID, String cursoNombre) {
         this.estudianteID = estudianteID;
         this.cursoID = cursoID;
+        this.cursoNombre = cursoNombre;
     }
 
     public CrearInscripcion() {
@@ -35,5 +38,9 @@ public class CrearInscripcion extends Command {
 
     public String getCursoID() {
         return cursoID;
+    }
+
+    public String getCursoNombre() {
+        return cursoNombre;
     }
 }

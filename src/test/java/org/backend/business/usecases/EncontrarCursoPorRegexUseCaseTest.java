@@ -29,7 +29,7 @@ class EncontrarCursoPorRegexUseCaseTest {
     void init(){useCase = new EncontrarCursoPorRegexUseCase(mongoViewRepository);}
 
     @Test
-    void encontrarUrsoPorRegexTest(){
+    void encontrarCursoPorRegexTest(){
         CursoCreado cursoCreado = new CursoCreado(new Titulo("C#"),
                 ProfesorID.of("8989"),
                 new HashSet<>());
@@ -47,8 +47,6 @@ class EncontrarCursoPorRegexUseCaseTest {
         StepVerifier.create(useCaseExecuted).expectNextMatches(
                 vistaCurso -> vistaCurso.getTitulo().equals("C#")
         ).verifyComplete();
-
-
 
     }
 

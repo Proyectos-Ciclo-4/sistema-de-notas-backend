@@ -37,7 +37,7 @@ class EncontrarCursoPorRegexUseCaseTest {
         cursoCreado.setAggregateRootId("09090");
 
         Flux<VistaCurso> expectedMono = Flux.just(
-                new VistaCurso("09090", "C#", "8989", new HashSet<>()));
+                new VistaCurso("09090", "C#", "8989"));
 
         Mockito.when(mongoViewRepository.encontrarCursoPorRegex(Mockito.anyString()))
                 .thenReturn(expectedMono);

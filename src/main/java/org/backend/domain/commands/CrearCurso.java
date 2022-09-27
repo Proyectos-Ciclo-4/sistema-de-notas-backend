@@ -6,6 +6,7 @@ import org.backend.domain.identifiers.ProfesorID;
 import org.backend.domain.identifiers.TemaID;
 import org.backend.domain.valueobjects.Titulo;
 
+import java.util.HashSet;
 import java.util.Set;
 
 // Comando empleado para crear un curso nuevo en la base de datos, por parte de un profesor.
@@ -30,6 +31,12 @@ public class CrearCurso extends Command {
         this.temas = temas;
     }
 
+    public CrearCurso(String titulo, String profesorID) {
+        this.titulo = titulo;
+        this.profesorID = profesorID;
+        this.temas = new HashSet<>();
+    }
+
     public CrearCurso() {
     }
 
@@ -43,5 +50,9 @@ public class CrearCurso extends Command {
 
     public Set<CrearTema> getTemas() {
         return temas;
+    }
+
+    public boolean checkTemasExists() {
+        return this.temas != null;
     }
 }

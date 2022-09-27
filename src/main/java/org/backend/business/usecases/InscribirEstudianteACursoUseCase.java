@@ -27,14 +27,17 @@ public class InscribirEstudianteACursoUseCase {
     public Mono<VistaEstudiante> apply(Mono<CrearInscripcion> crearInscripcionMono) {
         return crearInscripcionMono
                 .flatMap(command -> {
-                    InscripcionGeneric inscripcionGeneric = new InscripcionGeneric();
-                    inscripcionGeneric.setCursoID(command.getCursoID());
-                    inscripcionGeneric.setPromedio((float) 0);
-                    inscripcionGeneric.setAvance((float) 0);
-                    inscripcionGeneric.setNombreCurso(command.getNombreCurso());
-                    inscripcionGeneric.setFechaInscripcion(LocalDate.now());
+                    InscripcionGeneric inscripcionGeneric = new InscripcionGeneric(
+                            command.getCursoID(),
+                            command.getNombreCurso()
+                    );
 
-                    inscripcionGeneric.setEstadosTarea(new HashSet<>());
+                    // inscripcionGeneric.setCursoID(command.getCursoID());
+                    // inscripcionGeneric.setPromedio((float) 0);
+                    // inscripcionGeneric.setAvance((float) 0);
+                    // inscripcionGeneric.setNombreCurso(command.getNombreCurso());
+                    // inscripcionGeneric.setFechaInscripcion(LocalDate.now());
+                    // inscripcionGeneric.setEstadosTarea(new HashSet<>());
 
                     return this.mongoViewRepository
                             .listarTareasPorCurso(command.getCursoID())

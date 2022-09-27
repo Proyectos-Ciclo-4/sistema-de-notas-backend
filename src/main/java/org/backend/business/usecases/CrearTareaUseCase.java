@@ -50,7 +50,10 @@ public class CrearTareaUseCase {
                     return mongoViewRepository
                             .crearTarea(nuevaTarea)
                             .doOnNext(vistaTarea ->
-                                    mongoViewRepository.agregarTareaATema(nuevaTarea));
+                                    mongoViewRepository.agregarTareaATema(nuevaTarea))
+                            //.doOnSuccess(vistaTarea -> )
+
+                            ;
 
                     /*
                     Tema temaAR = new Tema(TemaID.of(command.getTemaID()));

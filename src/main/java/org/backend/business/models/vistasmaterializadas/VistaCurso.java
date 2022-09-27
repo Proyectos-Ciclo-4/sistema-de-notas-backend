@@ -41,6 +41,10 @@ public class VistaCurso {
         return temas;
     }
 
+    public Set<String> getInscritos() {
+        return inscritos;
+    }
+
     public void setTemas(Set<TemaGeneric> temas) {
         this.temas = temas;
     }

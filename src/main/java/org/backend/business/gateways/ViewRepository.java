@@ -7,6 +7,7 @@ import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
+import org.backend.domain.valueobjects.EstadoTarea;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -31,6 +32,8 @@ public interface ViewRepository {
     Mono<VistaEstudiante> encontrarEstudiantePorID(String estudianteID);
 
     Mono<VistaEstudiante> agregarInscripcion(InscripcionGeneric inscripcionGeneric, String estudianteID);
+
+    void agregarTareaAInscripcion(String cursoID, EstadoTareaGeneric estadoTareaGeneric);
 
     Mono<VistaEstudiante> actualizarPromedio(String cursoID, Float promedio);
 

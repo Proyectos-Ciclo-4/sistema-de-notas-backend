@@ -5,17 +5,11 @@ import java.time.format.DateTimeFormatter;
 
 public class VistaTarea {
     private String _id;
-
     private String cursoID;
-
     private String temaID;
-
     private String temaNombre;
-
     private String titulo;
-    
     private String descripcion;
-
     private Integer orden;
     private LocalDate fechaLimite;
     private Float porcentaje;
@@ -36,6 +30,10 @@ public class VistaTarea {
     public VistaTarea() {
     }
 
+    public String get_id() {
+        return _id;
+    }
+
     public String getCursoID() {
         return cursoID;
     }
@@ -48,12 +46,16 @@ public class VistaTarea {
         return temaNombre;
     }
 
-    public String get_id() {
-        return _id;
-    }
-
     public String getTitulo() {
         return titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public Integer getOrden() {
+        return orden;
     }
 
     public LocalDate getFechaLimite() {
@@ -63,5 +65,4 @@ public class VistaTarea {
     public Float getPorcentaje() {
         return porcentaje;
     }
-
 }

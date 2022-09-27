@@ -88,18 +88,6 @@ public class MongoViewRepository implements ViewRepository {
     /* OPERACIONES CON VISTA MATERIALIZADA 'ESTUDIANTE' */
 
     @Override
-    public Mono<VistaEstudiante> crearEstudiante(VistaEstudiante vistaEstudiante) {
-        return this.reactiveMongoTemplate
-                .save(vistaEstudiante)
-                .doOnError(
-                        throwable -> log.error(throwable.getMessage())
-                ).doOnSuccess(
-                        e -> log.info(String.format("Estudiante %s creado", vistaEstudiante.get_id()))
-                );
-    }
-
-
-    @Override
     public Flux<VistaEstudiante> encontrarTodosEstudiantes() {
         return  reactiveMongoTemplate
                 .findAll(VistaEstudiante.class)
@@ -119,6 +107,17 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
+    public Mono<VistaEstudiante> crearEstudiante(VistaEstudiante vistaEstudiante) {
+        return this.reactiveMongoTemplate
+                .save(vistaEstudiante)
+                .doOnError(
+                        throwable -> log.error(throwable.getMessage())
+                ).doOnSuccess(
+                        e -> log.info(String.format("Estudiante %s creado", vistaEstudiante.get_id()))
+                );
+    }
+
+    @Override
     public Mono<VistaEstudiante> agregarInscripcion(InscripcionGeneric inscripcionGeneric, String estudianteID) {
 
     return this.reactiveMongoTemplate
@@ -128,6 +127,31 @@ public class MongoViewRepository implements ViewRepository {
                         new FindAndModifyOptions().returnNew(true),
                         VistaEstudiante.class
                 );
+    }
+
+    @Override
+    public void agregarTareaAInscripcion(String cursoID, EstadoTareaGeneric estadoTareaGeneric) {
+        this.encontrarCursoPorId(cursoID)
+                .subscribe(vistaCurso ->
+                        vistaCurso.getInscritos()
+                                .forEach(inscritoID -> {
+                                    this.reactiveMongoTemplate.findAndModify(
+                                            new Query(Criteria
+                                                    .where("_id")
+                                                    .is(inscritoID)
+                                                    .andOperator(Criteria
+                                                            .where("inscripciones.cursoID")
+                                                            .is(cursoID))),
+                                                    new Update().addToSet("inscripciones.$.estadosTarea", estadoTareaGeneric),
+                                                            VistaEstudiante.class)
+                                                    .subscribe(vistaEstudiante ->
+                                                            logSuccessfulOperation(String.format(
+                                                                    "Tarea %s añadida al estudiante %s",
+                                                                    estadoTareaGeneric.getTareaID(),
+                                                                    vistaEstudiante.getNombre()))
+                                                    );
+                                        }
+                                ));
     }
 
     @Override
@@ -154,7 +178,6 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaCurso> encontrarCursoPorId(String cursoID) {
-        System.out.println(cursoID);
         Query query = generateFinderQuery("_id", cursoID);
 
         return reactiveMongoTemplate

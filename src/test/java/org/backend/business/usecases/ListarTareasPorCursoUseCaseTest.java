@@ -53,7 +53,7 @@ class ListarTareasPorCursoUseCaseTest {
          cursoCreado.setAggregateName("7878");
 
         Flux<VistaTarea> expectedMono = Flux.just(
-                new VistaTarea("2222", "7878", "0000","Quiz#1","ENtregar a tiempo",
+                new VistaTarea("3434","2222", "7878", "0000","Quiz#1","ENtregar a tiempo",
                         1, "02/02/2023", Float.valueOf(0)
                 )
         );
@@ -64,7 +64,7 @@ class ListarTareasPorCursoUseCaseTest {
         var useCaseExecuted = mongoViewRepository.listarTareasPorCurso("7878");
 
         StepVerifier.create(useCaseExecuted).expectNextMatches(
-                vistaTarea -> vistaTarea.get_id().equals("2222")
+                vistaTarea -> vistaTarea.get_id().equals("3434")
         ).verifyComplete();
     }
 }

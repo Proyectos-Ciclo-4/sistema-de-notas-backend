@@ -37,7 +37,7 @@ class EncontrarCursoPorIdUseCaseTest {
 
         cursoCreado.setAggregateRootId("456");
 
-        Mono<VistaCurso> expectedMono = Mono.just(new VistaCurso("456", "Testing", "123", new HashSet<>()));
+        Mono<VistaCurso> expectedMono = Mono.just(new VistaCurso("456", "Testing", "123"));
 
         Mockito
                 .when(mongoViewRepository

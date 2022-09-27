@@ -31,16 +31,16 @@ class CrearTareaUseCaseTest {
         );
         tareaCreada.setAggregateRootId("333");
 
-        VistaTarea tarea =  new VistaTarea("1212","2323","333","Quiz#1","Crear un CRUD",1,"02/02/2023",Float.valueOf(0));
+        VistaTarea tarea =  new VistaTarea("3434","1212","2323","333","Quiz#1","Crear un CRUD",1,"02/02/2023",Float.valueOf(0));
         Mono<VistaTarea> expectedMono = Mono.just(
-                new VistaTarea("1212","2323","333","Quiz#1","Crear un CRUD",1,"02/02/2023",Float.valueOf(0))
+                new VistaTarea("3434","1212","2323","333","Quiz#1","Crear un CRUD",1,"02/02/2023",Float.valueOf(0))
         );
         Mockito.when(mongoViewRepository.crearTarea(tarea)).thenReturn(expectedMono);
 
         var useCaseExecuted = mongoViewRepository.crearTarea(tarea);
 
         StepVerifier.create(useCaseExecuted).expectNextMatches(
-                vistaTarea -> vistaTarea.get_id().equals("1212") && vistaTarea.getTitulo().equals("Quiz#1")
+                vistaTarea -> vistaTarea.get_id().equals("3434") && vistaTarea.getTitulo().equals("Quiz#1")
         ).verifyComplete();
 
     }

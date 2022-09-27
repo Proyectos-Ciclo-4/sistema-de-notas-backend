@@ -34,7 +34,7 @@ class ListarCursosUseCaseTest {
     cursoCreado.setAggregateRootId("1212");
 
         Flux<VistaCurso> expectedMono = Flux.just(
-               new VistaCurso("1212", "JavaScript","2323",new HashSet<>())
+               new VistaCurso("1212", "JavaScript","2323")
         );
 
         Mockito.when(mongoViewRepository.listarCursos()).thenReturn(expectedMono);

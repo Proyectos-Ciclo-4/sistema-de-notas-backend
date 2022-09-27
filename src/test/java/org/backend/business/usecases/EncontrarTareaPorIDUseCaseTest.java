@@ -31,7 +31,7 @@ class EncontrarTareaPorIDUseCaseTest {
         tareaCreada.setAggregateRootId("111");
 
         Mono<VistaTarea> expectedMono = Mono.just(new VistaTarea(
-               "111", "222", "444", "Quiz#1", "Esta tarea deba contener...",1, "02/02/2020"
+               "3434","111", "222", "444", "Quiz#1", "Esta tarea deba contener...",1, "02/02/2020"
                 ,Float.valueOf(0)
         ));
 

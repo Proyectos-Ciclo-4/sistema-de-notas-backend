@@ -48,4 +48,8 @@ public class VistaCurso {
     public void agregarTema(TemaGeneric temaGeneric) {
         this.temas.add(temaGeneric);
     }
+
+    public boolean revisarInscripcion(String estudianteID) {
+        return inscritos.contains(estudianteID);
+    }
 }

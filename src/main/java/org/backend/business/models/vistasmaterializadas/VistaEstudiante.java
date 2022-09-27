@@ -2,6 +2,7 @@ package org.backend.business.models.vistasmaterializadas;
 
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
+import org.backend.domain.events.EstudianteCreado;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +30,17 @@ public class VistaEstudiante {
         this.avance = Float.valueOf(0);
         this.inscripciones = new HashSet<>();
     }
+
+    public VistaEstudiante(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public static VistaEstudiante fromCreationEvent(EstudianteCreado estudianteCreado) {
+        return new VistaEstudiante(
+                estudianteCreado.getNombre().toString()
+        );
+    }
+
 
     public VistaEstudiante() {
     }

@@ -1,5 +1,7 @@
 package org.backend.business.models.vistasmaterializadas.generics;
 
+import org.backend.domain.valueobjects.EstadoTarea;
+
 import java.util.Set;
 
 public class InscripcionGeneric {
@@ -55,5 +57,9 @@ public class InscripcionGeneric {
 
     public void setEstadosTarea(Set<EstadoTareaGeneric> estadosTarea) {
         this.estadosTarea = estadosTarea;
+    }
+
+    public void agregarEstadoTarea(EstadoTareaGeneric estadoTareaGeneric) {
+        this.estadosTarea.add(estadoTareaGeneric);
     }
 }

@@ -3,16 +3,13 @@ package org.backend.business.usecases;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
-import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.domain.commands.CrearInscripcion;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Set;
-import java.util.stream.Collector;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,19 +31,22 @@ public class InscribirEstudianteACursoUseCase {
                     inscripcionGeneric.setCursoID(command.getCursoID());
                     inscripcionGeneric.setPromedio((float) 0);
                     inscripcionGeneric.setAvance((float) 0);
+                    inscripcionGeneric.setEstadosTarea(new HashSet<>());
 
-
-                    this.mongoViewRepository
+                    return this.mongoViewRepository
                             .listarTareasPorCurso(command.getCursoID())
                             .map(vistaTarea -> new EstadoTareaGeneric(
                                     vistaTarea.get_id(),
                                     vistaTarea.getTitulo(),
-                                    vistaTarea.getFechaLimite()))
+                                    vistaTarea.getFechaLimite())
+                            )
                             .collect(Collectors.toSet())
-                            .subscribe(estadoTareaGenerics -> inscripcionGeneric.setEstadosTarea(estadoTareaGenerics));
+                            .flatMap(estadoTareaGenerics -> {
+                                inscripcionGeneric.setEstadosTarea(estadoTareaGenerics);
 
-
-                    return this.mongoViewRepository.agregarInscripcion(inscripcionGeneric, command.getEstudianteID());
+                                return this.mongoViewRepository
+                                        .agregarInscripcion(inscripcionGeneric, command.getEstudianteID());
+                            });
                 });
     }
 }

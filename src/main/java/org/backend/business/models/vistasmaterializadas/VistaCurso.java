@@ -14,11 +14,11 @@ public class VistaCurso {
 
     private Set<String> inscritos;
 
-    public VistaCurso(String _id, String titulo, String profesorID, Set<TemaGeneric> temas) {
+    public VistaCurso(String _id, String titulo, String profesorID) {
         this._id = _id;
         this.titulo = titulo;
         this.profesorID = profesorID;
-        this.temas = temas;
+        this.temas = new HashSet<>();
         this.inscritos = new HashSet<>();
     }
 

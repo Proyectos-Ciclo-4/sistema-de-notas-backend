@@ -9,6 +9,7 @@ import org.backend.domain.commands.CrearInscripcion;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,7 @@ public class InscribirEstudianteACursoUseCase {
                     inscripcionGeneric.setPromedio((float) 0);
                     inscripcionGeneric.setAvance((float) 0);
                     inscripcionGeneric.setNombreCurso(command.getCursoNombre());
+                    inscripcionGeneric.setFechaInscripcion(LocalDate.now());
 
                     inscripcionGeneric.setEstadosTarea(new HashSet<>());
 

@@ -29,7 +29,7 @@ class EncontrarTodosEstudiantesUseCaseTest {
     }
 
     @Test
-    void encontrarEstudiantesTes(){
+    void encontrarEstudiantesTest(){
         EstudianteCreado estudianteCreado = new EstudianteCreado(
              new Nombre("Julian"),
              new HashMap<CursoID, Inscripcion>()

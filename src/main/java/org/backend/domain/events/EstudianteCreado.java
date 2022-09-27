@@ -30,4 +30,12 @@ public class EstudianteCreado extends DomainEvent {
     public HashMap<CursoID, Inscripcion> getCursos() {
         return cursos;
     }
+
+    @Override
+    public String toString() {
+        return "EstudianteCreado{" +
+                "nombre=" + nombre +
+                ", cursos=" + cursos +
+                '}';
+    }
 }

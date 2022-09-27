@@ -302,7 +302,7 @@ public class MongoViewRepository implements ViewRepository {
     public void agregarTareaATema(VistaTarea vistaTarea) {
         Query encontrarTemaPadre = generateFinderQuery("temas.temaID", vistaTarea.getTemaID());
         Update agregarTareaATema = new Update().addToSet("temas.$.tareasID", vistaTarea.get_id());
-
+        agregarTareaATema.addToSet("temas.$.tareas",vistaTarea);
         reactiveMongoTemplate
                 .findAndModify(
                             encontrarTemaPadre,

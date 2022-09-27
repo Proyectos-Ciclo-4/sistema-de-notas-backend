@@ -1,5 +1,6 @@
 package org.backend.business.models.vistasmaterializadas.generics;
 
+import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.domain.identifiers.TareaID;
 
 import java.util.Set;
@@ -11,6 +12,16 @@ public class TemaGeneric {
     private Integer orden;
     private String titulo;
     private Set<String> tareasID;
+
+    private Set<VistaTarea> tareas;
+
+    public Set<VistaTarea> getTareas() {
+        return tareas;
+    }
+
+    public void setTareas(Set<VistaTarea> tareas) {
+        this.tareas = tareas;
+    }
 
     public TemaGeneric(String temaID, String cursoID, Integer orden, String titulo, Set<String> tareasID) {
         this.temaID = temaID;

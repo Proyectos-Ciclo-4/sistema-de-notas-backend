@@ -54,14 +54,13 @@ public class CrearCursoUseCase {
                     VistaCurso newCurso = new VistaCurso(
                             uuid,
                             command.getTitulo(),
-                            command.getProfesorID(),
-                            temas
+                            command.getProfesorID()
                     );
 
                     return this.mongoViewRepository
                             .crearCurso(newCurso)
                             .doOnNext(vistaCurso -> {
-                                if (!command.getTemas().isEmpty()) {
+                                if (command.checkTemasExists()) {
                                     command.getTemas().forEach(
                                             crearTema -> {
                                                 crearTema.setCursoID(vistaCurso.get_id());

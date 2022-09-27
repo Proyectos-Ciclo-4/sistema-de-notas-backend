@@ -196,6 +196,18 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
+    public void agregarInscritoACurso(String estudianteID, String cursoID) {
+        reactiveMongoTemplate
+                .findAndModify(
+                        generateFinderQuery("_id", cursoID),
+                        new Update().addToSet("inscritos", estudianteID),
+                        new FindAndModifyOptions().returnNew(true),
+                        VistaCurso.class
+                ).subscribe();
+
+    }
+
+    @Override
     public Mono<TemaGeneric> agregarTema(TemaGeneric nuevoTema) {
         Query encontrarCursoPadre = generateFinderQuery("_id", nuevoTema.getCursoID());
         Update agregarTemaACurso = new Update();

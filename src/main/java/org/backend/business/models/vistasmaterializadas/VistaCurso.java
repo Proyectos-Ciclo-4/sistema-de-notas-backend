@@ -2,6 +2,7 @@ package org.backend.business.models.vistasmaterializadas;
 
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class VistaCurso {
@@ -11,11 +12,14 @@ public class VistaCurso {
     private String profesorID;
     private Set<TemaGeneric> temas;
 
-    public VistaCurso(String _id, String titulo, String profesorID, Set<TemaGeneric> temas) {
+    private Set<String> inscritos;
+
+    public VistaCurso(String _id, String titulo, String profesorID) {
         this._id = _id;
         this.titulo = titulo;
         this.profesorID = profesorID;
-        this.temas = temas;
+        this.temas = new HashSet<>();
+        this.inscritos = new HashSet<>();
     }
 
     public VistaCurso() {

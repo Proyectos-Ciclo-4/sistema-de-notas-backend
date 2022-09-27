@@ -4,8 +4,11 @@ import java.time.LocalDate;
 
 public class EstadoTareaGeneric {
     private String tareaID;
-
     private String titulo;
+
+    private String temaID;
+
+    private String temaNombre;
 
     private Integer calificacion;
 

@@ -3,16 +3,16 @@ package org.backend.business.models.vistasmaterializadas.generics;
 import org.backend.domain.valueobjects.EstadoTarea;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 public class InscripcionGeneric {
     private String cursoID;
+    private String nombreCurso;
     private Float promedio;
     private Float avance;
-
     private LocalDate fechaInscripcion;
 
-    private String nombreCurso;
     private Set<EstadoTareaGeneric> estadosTarea;
 
     public InscripcionGeneric(String cursoID, Float promedio, Float avance, String nombreCurso, Set<EstadoTareaGeneric> estadosTarea) {
@@ -32,6 +32,15 @@ public class InscripcionGeneric {
         this.fechaInscripcion = LocalDate.now();
 
         this.estadosTarea = estadosTarea;
+    }
+
+    public InscripcionGeneric(String cursoID, String nombreCurso) {
+        this.cursoID = cursoID;
+        this.nombreCurso = nombreCurso;
+        this.promedio = (float) 0;
+        this.avance = (float) 0;
+        this.fechaInscripcion = LocalDate.now();
+        this.estadosTarea = new HashSet<>();
     }
 
     public InscripcionGeneric() {

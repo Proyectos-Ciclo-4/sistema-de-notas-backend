@@ -82,7 +82,7 @@ public class MongoViewRepository implements ViewRepository {
                         agregarCursoIDaProfesor,
                         VistaProfesor.class
 
-                );
+                ).subscribe();
     }
 
     /* OPERACIONES CON VISTA MATERIALIZADA 'ESTUDIANTE' */
@@ -213,7 +213,8 @@ public class MongoViewRepository implements ViewRepository {
         return reactiveMongoTemplate
                 .save(curso)
                 .doOnError(MongoViewRepository::logError)
-                .doOnNext(vistaCurso -> this.agregarCursoIDaProfesor(vistaCurso.getProfesorID(), vistaCurso.get_id()))
+                .doOnNext(vistaCurso ->
+                        this.agregarCursoIDaProfesor(vistaCurso.getProfesorID(), vistaCurso.get_id()))
                 .doOnSuccess(e -> logSuccessfulOperation(String.format("Curso %s creado", curso.get_id())));
 
     }

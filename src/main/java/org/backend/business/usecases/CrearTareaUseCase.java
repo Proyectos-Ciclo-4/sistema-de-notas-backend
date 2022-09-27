@@ -33,19 +33,7 @@ public class CrearTareaUseCase {
     public Mono<VistaTarea> apply(Mono<CrearTarea> crearTareaMono) {
         return crearTareaMono
                 .flatMap(command -> {
-
-                    var uuid = UUID.randomUUID().toString();
-                    Tema temaAR = new Tema(TemaID.of(command.getTemaID()));
-                    temaAR.crearTarea(
-                            new Titulo(command.getTitulo()),
-                            new Descripcion(command.getDescripcion()),
-                            new Orden(command.getOrden()),
-                            new FechaLimite(command.getFechaLimite()),
-                            command.getPorcentaje(),
-                            CursoID.of(command.getCursoID())
-                    );
-
-                    List<DomainEvent> events = temaAR.getUncommittedChanges();
+                    String uuid = UUID.randomUUID().toString();
 
                     VistaTarea nuevaTarea = new VistaTarea(
                             uuid,
@@ -58,7 +46,24 @@ public class CrearTareaUseCase {
                             command.getPorcentaje()
                     );
 
-                    return  mongoViewRepository.crearTarea(nuevaTarea);
+                    return mongoViewRepository
+                            .crearTarea(nuevaTarea)
+                            .doOnNext(vistaTarea ->
+                                    mongoViewRepository.agregarTareaATema(nuevaTarea));
+
+                    /*
+                    Tema temaAR = new Tema(TemaID.of(command.getTemaID()));
+                    temaAR.crearTarea(
+                            new Titulo(command.getTitulo()),
+                            new Descripcion(command.getDescripcion()),
+                            new Orden(command.getOrden()),
+                            new FechaLimite(command.getFechaLimite()),
+                            command.getPorcentaje(),
+                            CursoID.of(command.getCursoID())
+                    );
+
+                    List<DomainEvent> events = temaAR.getUncommittedChanges();
+                     */
                 });
     }
 }

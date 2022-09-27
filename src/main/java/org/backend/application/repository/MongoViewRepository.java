@@ -9,6 +9,7 @@ import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -18,6 +19,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -123,6 +125,7 @@ public class MongoViewRepository implements ViewRepository {
                 .findAndModify(
                         generateFinderQuery("_id", estudianteID),
                         new Update().addToSet("inscripciones", inscripcionGeneric),
+                        new FindAndModifyOptions().returnNew(true),
                         VistaEstudiante.class
                 );
     }
@@ -202,7 +205,6 @@ public class MongoViewRepository implements ViewRepository {
                 .doOnNext(vistaCurso -> {
                     Set<TemaGeneric> cursoTemas = vistaCurso.getTemas();
                     cursoTemas.add(nuevoTema);
-                    //System.out.println(vistaCurso.getTemas());
 
                     agregarTemaACurso.set("temas", cursoTemas);
 
@@ -211,17 +213,6 @@ public class MongoViewRepository implements ViewRepository {
                             .subscribe();
                         })
                 .thenReturn(nuevoTema);
-
-
-
-        /*
-                return reactiveMongoTemplate
-                        .save(nuevoTema)
-                        .doOnError(MongoViewRepository::logError)
-                        .doOnSuccess(e -> logSuccessfulOperation(String.format("Tema %s", nuevoTema.getTemaID())));
-
-         */
-
     }
 
     @Override
@@ -271,31 +262,23 @@ public class MongoViewRepository implements ViewRepository {
 
     }
 
-    @Override
-    public Mono<VistaTarea> crearTarea(VistaTarea vistaTarea) {
+
+    public void agregarTareaATema(VistaTarea vistaTarea) {
+        Query encontrarTemaPadre = generateFinderQuery("temas.temaID", vistaTarea.getTemaID());
+        Update agregarTareaATema = new Update().addToSet("temas.$.tareasID", vistaTarea.get_id());
+
         reactiveMongoTemplate
                 .findAndModify(
-                        new Query(Criteria.where("temas.temaID").is(vistaTarea.getTemaID())),
-                        new Update().push("temas.$.tareasID", vistaTarea.get_id()),
-                        // Aquí va VistaTarea.class o TemaGeneric.class ?
-                        TemaGeneric.class
-                );
+                            encontrarTemaPadre,
+                            agregarTareaATema,
+                            VistaCurso.class
+                ).subscribe();
+        ;
+    }
 
+    @Override
+    public Mono<VistaTarea> crearTarea(VistaTarea vistaTarea) {
         return reactiveMongoTemplate.save(vistaTarea);
-               /*
-                .findOne(
-                        generateFinderQuery("_id", vistaTarea.getCursoID()), VistaCurso.class)
-                        .flatMap(
-                                vistaCurso -> {
-                                    vistaCurso.getTemas()
-                                            .stream()
-                                            .filter(temaGeneric -> Objects.equals(temaGeneric.getTemaID(), vistaTarea.getTemaID()))
-                                            .map(temaGeneric -> temaGeneric.getTareasID().add(vistaTarea.get_id()));
-
-                                }
-                        );
-                */
-
 
     }
 

@@ -1,28 +1,48 @@
 package org.backend.business.models.vistasmaterializadas.generics;
 
+import org.backend.domain.valueobjects.EstadoTarea;
+
+import java.time.LocalDate;
 import java.util.Set;
 
 public class InscripcionGeneric {
     private String cursoID;
     private Float promedio;
     private Float avance;
+
+    private LocalDate fechaInscripcion;
+
+    private String nombreCurso;
     private Set<EstadoTareaGeneric> estadosTarea;
 
-    public InscripcionGeneric(String cursoID, Float promedio, Float avance, Set<EstadoTareaGeneric> estadosTarea) {
+    public InscripcionGeneric(String cursoID, Float promedio, Float avance, String nombreCurso, Set<EstadoTareaGeneric> estadosTarea) {
         this.cursoID = cursoID;
         this.promedio = promedio;
         this.avance = avance;
+        this.nombreCurso = nombreCurso;
+        this.fechaInscripcion = LocalDate.now();
         this.estadosTarea = estadosTarea;
     }
 
-    public InscripcionGeneric(String cursoID, Set<EstadoTareaGeneric> estadosTarea) {
+    public InscripcionGeneric(String cursoID, String nombreCurso, Set<EstadoTareaGeneric> estadosTarea) {
         this.cursoID = cursoID;
         this.promedio = (float) 0;
         this.avance = (float) 0;
+        this.nombreCurso = nombreCurso;
+        this.fechaInscripcion = LocalDate.now();
+
         this.estadosTarea = estadosTarea;
     }
 
     public InscripcionGeneric() {
+    }
+
+    public void setFechaInscripcion(LocalDate fechaInscripcion) {
+        this.fechaInscripcion = fechaInscripcion;
+    }
+
+    public void setNombreCurso(String nombreCurso) {
+        this.nombreCurso = nombreCurso;
     }
 
     public String getCursoID() {
@@ -45,6 +65,10 @@ public class InscripcionGeneric {
         return avance;
     }
 
+    public String getNombreCurso() {
+        return nombreCurso;
+    }
+
     public void setAvance(Float avance) {
         this.avance = avance;
     }
@@ -55,5 +79,9 @@ public class InscripcionGeneric {
 
     public void setEstadosTarea(Set<EstadoTareaGeneric> estadosTarea) {
         this.estadosTarea = estadosTarea;
+    }
+
+    public void agregarEstadoTarea(EstadoTareaGeneric estadoTareaGeneric) {
+        this.estadosTarea.add(estadoTareaGeneric);
     }
 }

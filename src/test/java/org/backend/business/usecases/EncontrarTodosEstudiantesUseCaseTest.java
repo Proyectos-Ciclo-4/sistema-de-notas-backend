@@ -10,8 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
 import java.util.HashMap;
 
@@ -35,9 +37,17 @@ class EncontrarTodosEstudiantesUseCaseTest {
 
         estudianteCreado.setAggregateRootId("2222");
 
-        /*Flux<VistaEstudiante> expectedFlux = Flux.just(
-                //VistaEstudiante(estudianteCreado)
-        );*/
+        Flux<VistaEstudiante> expectedFlux = Flux.just(
+                new VistaEstudiante("2222","Julian", Float.valueOf(0),Float.valueOf(0))
+        );
+
+        Mockito.when(mongoViewRepository.encontrarTodosEstudiantes()).thenReturn(expectedFlux);
+
+        var useCaseExecuted = mongoViewRepository.encontrarTodosEstudiantes();
+
+        StepVerifier.create(useCaseExecuted).expectNextMatches(
+                vistaEstudiante -> vistaEstudiante.get_id().equals("2222")
+        ).verifyComplete();
 
     }
 

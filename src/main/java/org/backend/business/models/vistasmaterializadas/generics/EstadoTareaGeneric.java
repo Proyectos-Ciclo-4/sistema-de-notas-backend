@@ -1,5 +1,6 @@
 package org.backend.business.models.vistasmaterializadas.generics;
 
+import java.awt.font.TextHitInfo;
 import java.time.LocalDate;
 
 public class EstadoTareaGeneric {
@@ -118,5 +119,13 @@ public class EstadoTareaGeneric {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public EstadoTareaGeneric actualizarTarea(String URLArchivo) {
+        this.setURLArchivo(URLArchivo);
+        this.setFechaEntregado(LocalDate.now());
+        this.setEstado("entregado");
+
+        return this;
     }
 }

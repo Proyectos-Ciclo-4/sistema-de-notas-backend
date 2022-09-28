@@ -97,4 +97,9 @@ public class InscripcionGeneric {
     public void agregarEstadoTarea(EstadoTareaGeneric estadoTareaGeneric) {
         this.estadosTarea.add(estadoTareaGeneric);
     }
+
+    public EstadoTareaGeneric encontrarEstadoTarea(String tareaID) {
+        return estadosTarea.stream().filter(estadoTareaGeneric ->
+                estadoTareaGeneric.getTareaID().equals(tareaID)).findFirst().get();
+    }
 }

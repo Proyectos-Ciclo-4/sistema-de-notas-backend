@@ -155,13 +155,19 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
-    public Mono<EstadoTareaGeneric> entregarTarea(String estadoTareaID, String archivoID) {
-        return this.reactiveMongoTemplate.findAndModify(
-                new Query(Criteria
-                        .where("estadoTareaID")
-                        .is(estadoTareaID)),
-                new Update().set("URLArchivo", archivoID),
-                EstadoTareaGeneric.class);
+    public Mono<VistaEstudiante> entregarTarea(String estudianteID, String cursoID, String tareaID, String URLArchivo) {
+        this.encontrarEstudiantePorID(estudianteID)
+                .doOnSuccess(vistaEstudiante ->
+                        vistaEstudiante.encontrarInscripcion(cursoID)
+                                .encontrarEstadoTarea(tareaID)
+                                .actualizarTarea(URLArchivo));
+
+        return this.reactiveMongoTemplate.save(this.encontrarEstudiantePorID(estudianteID)
+                .doOnSuccess(vistaEstudiante ->
+                        vistaEstudiante.encontrarInscripcion(cursoID)
+                                .encontrarEstadoTarea(tareaID)
+                                .actualizarTarea(URLArchivo)));
+
     }
 
     @Override

@@ -57,6 +57,23 @@ public class QueryHandler {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> encontrarEstudiantesEnCurso(EncontrarEstudiantesEnCursoUseCase encontrarEstudiantesEnCursoUseCase) {
+        return route(
+                GET("/encontrarEstudiantesEnCurso/{cursoID}"),
+                request -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                encontrarEstudiantesEnCursoUseCase.encontrarEstudiantesEnCursoUseCase(
+                                        request.pathVariable("cursoID")
+                                ), VistaEstudiante.class
+                        ))
+                        .onErrorResume(throwable ->
+                                ServerResponse.status(HttpStatus.NOT_FOUND).build())
+        );
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> encontrarCursoPorId(EncontrarCursoPorIdUseCase encontrarCursoPorIdUseCase){
         return route(
                 GET("/buscarCurso/{_id}"),

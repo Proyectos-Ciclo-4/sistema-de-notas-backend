@@ -5,7 +5,6 @@ import java.time.LocalDate;
 
 public class EstadoTareaGeneric {
 
-    private String estadoTareaID;
     private String tareaID;
     private String titulo;
 
@@ -21,8 +20,7 @@ public class EstadoTareaGeneric {
     private String estado;
 
     // Constructor para crear objeto EstadoTareaGeneric por primera vez
-    public EstadoTareaGeneric(String estadoTareaID, String tareaID, String titulo, String temaID, String temaNombre, LocalDate fechaLimite) {
-        this.estadoTareaID = estadoTareaID;
+    public EstadoTareaGeneric(String tareaID, String titulo, String temaID, String temaNombre, LocalDate fechaLimite) {
         this.tareaID = tareaID;
         this.temaID = temaID;
         this.temaNombre = temaNombre;
@@ -30,23 +28,17 @@ public class EstadoTareaGeneric {
         this.fechaLimite = fechaLimite;
         this.calificacion = 0;
         this.fechaEntregado = null;
-        this.URLArchivo = null;
+        this.URLArchivo = "";
         this.estado = "sin entregar";
     }
 
-    public EstadoTareaGeneric(String estadoTareaID, String tareaID, String URLArchivo) {
-        this.estadoTareaID = estadoTareaID;
-        this.tareaID = tareaID;
+    public EstadoTareaGeneric(String tareaID, String URLArchivo) {
         this.fechaEntregado = LocalDate.now();
         this.URLArchivo = URLArchivo;
         this.estado = "entregada";
     }
 
     public EstadoTareaGeneric() {
-    }
-
-    public String getEstadoTareaID() {
-        return estadoTareaID;
     }
 
     public String getTareaID() {

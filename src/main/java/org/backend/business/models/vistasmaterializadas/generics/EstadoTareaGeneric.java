@@ -16,7 +16,7 @@ public class EstadoTareaGeneric {
 
     private LocalDate fechaLimite;
     private LocalDate fechaEntregado;
-    private String URLArchivo;
+    private String archivoURL;
     private String estado;
 
     // Constructor para crear objeto EstadoTareaGeneric por primera vez
@@ -28,13 +28,13 @@ public class EstadoTareaGeneric {
         this.fechaLimite = fechaLimite;
         this.calificacion = 0;
         this.fechaEntregado = null;
-        this.URLArchivo = "";
+        this.archivoURL = "";
         this.estado = "sin entregar";
     }
 
-    public EstadoTareaGeneric(String tareaID, String URLArchivo) {
+    public EstadoTareaGeneric(String tareaID, String archivoURL) {
         this.fechaEntregado = LocalDate.now();
-        this.URLArchivo = URLArchivo;
+        this.archivoURL = archivoURL;
         this.estado = "entregada";
     }
 
@@ -97,12 +97,12 @@ public class EstadoTareaGeneric {
         this.fechaEntregado = fechaEntregado;
     }
 
-    public String getURLArchivo() {
-        return URLArchivo;
+    public String getArchivoURL() {
+        return archivoURL;
     }
 
-    public void setURLArchivo(String URLArchivo) {
-        this.URLArchivo = URLArchivo;
+    public void setArchivoURL(String archivoURL) {
+        this.archivoURL = archivoURL;
     }
 
     public String getEstado() {
@@ -113,11 +113,13 @@ public class EstadoTareaGeneric {
         this.estado = estado;
     }
 
-    public EstadoTareaGeneric actualizarTarea(String URLArchivo) {
-        this.setURLArchivo(URLArchivo);
+    public EstadoTareaGeneric actualizarTarea(String archivoURL) {
+        this.setArchivoURL(archivoURL);
         this.setFechaEntregado(LocalDate.now());
         this.setEstado("entregado");
 
         return this;
     }
+
+
 }

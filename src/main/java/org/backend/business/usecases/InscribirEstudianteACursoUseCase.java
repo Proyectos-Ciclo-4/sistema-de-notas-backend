@@ -33,16 +33,6 @@ public class InscribirEstudianteACursoUseCase {
                             command.getNombreCurso()
                     );
 
-                    // inscripcionGeneric.setCursoID(command.getCursoID());
-                    // inscripcionGeneric.setPromedio((float) 0);
-                    // inscripcionGeneric.setAvance((float) 0);
-                    // inscripcionGeneric.setNombreCurso(command.getNombreCurso());
-                    // inscripcionGeneric.setFechaInscripcion(LocalDate.now());
-                    // inscripcionGeneric.setEstadosTarea(new HashSet<>());
-
-
-                    //this.mongoViewRepository.agregarInscritoACurso(command.getEstudianteID(), command.getCursoID())
-
                     return this.mongoViewRepository
                             .listarTareasPorCurso(command.getCursoID())
                             .map(vistaTarea -> new EstadoTareaGeneric(

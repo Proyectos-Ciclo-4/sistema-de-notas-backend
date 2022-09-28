@@ -22,7 +22,7 @@ public class EntregarTareaUseCase {
                                 entregarTarea.getEstudianteID(),
                                 entregarTarea.getCursoID(),
                                 entregarTarea.getTareaID(),
-                                entregarTarea.getURLArchivo()
+                                entregarTarea.getArchivoURL()
                         ));
 
     }

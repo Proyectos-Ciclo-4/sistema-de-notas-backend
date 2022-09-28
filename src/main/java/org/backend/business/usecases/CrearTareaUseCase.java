@@ -57,9 +57,9 @@ public class CrearTareaUseCase {
                                             vistaTarea.getCursoID(),
                                             new EstadoTareaGeneric(
                                                     vistaTarea.get_id(),
+                                                    vistaTarea.getTitulo(),
                                                     vistaTarea.getTemaID(),
                                                     vistaTarea.getTemaNombre(),
-                                                    vistaTarea.getTitulo(),
                                                     vistaTarea.getFechaLimite()
                                             ))
                             );

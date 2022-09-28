@@ -15,6 +15,6 @@ public class EncontrarEstudiantesEnCursoUseCase {
     }
 
     public Flux<VistaEstudiante> encontrarEstudiantesEnCursoUseCase(String cursoID) {
-        return this.mongoViewRepository
+        return this.mongoViewRepository.listarEstudiantesEnCurso(cursoID);
     }
 }

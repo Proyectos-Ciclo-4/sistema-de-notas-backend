@@ -31,6 +31,8 @@ public interface ViewRepository {
 
     Mono<VistaEstudiante> encontrarEstudiantePorID(String estudianteID);
 
+    Flux<VistaEstudiante> listarEstudiantesEnCurso(String cursoID);
+
     Mono<VistaEstudiante> agregarInscripcion(InscripcionGeneric inscripcionGeneric, String estudianteID);
 
     void agregarTareaAInscripcion(String cursoID, EstadoTareaGeneric estadoTareaGeneric);

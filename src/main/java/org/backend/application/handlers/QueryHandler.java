@@ -70,7 +70,7 @@ public class QueryHandler {
                         ))
                         .onErrorResume(throwable ->
                                 ServerResponse.status(HttpStatus.NOT_FOUND).build())
-        )
+        );
     }
 
     @Bean

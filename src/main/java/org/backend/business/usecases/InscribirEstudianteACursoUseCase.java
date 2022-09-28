@@ -16,40 +16,41 @@ import java.util.stream.Collectors;
 @Service
 public class InscribirEstudianteACursoUseCase {
 
-    private final MongoEventRepository mongoEventRepository;
-    private final MongoViewRepository mongoViewRepository;
+  private final MongoEventRepository mongoEventRepository;
+  private final MongoViewRepository mongoViewRepository;
 
-    public InscribirEstudianteACursoUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository) {
-        this.mongoEventRepository = mongoEventRepository;
-        this.mongoViewRepository = mongoViewRepository;
-    }
+  public InscribirEstudianteACursoUseCase(MongoEventRepository mongoEventRepository,
+      MongoViewRepository mongoViewRepository) {
+    this.mongoEventRepository = mongoEventRepository;
+    this.mongoViewRepository = mongoViewRepository;
+  }
 
-    public Mono<VistaEstudiante> apply(Mono<CrearInscripcion> crearInscripcionMono) {
-        return crearInscripcionMono
-                .flatMap(command -> {
-                    InscripcionGeneric inscripcionGeneric = new InscripcionGeneric(
-                            command.getCursoID(),
-                            command.getNombreCurso()
-                    );
+  public Mono<VistaEstudiante> apply(Mono<CrearInscripcion> crearInscripcionMono) {
+    return crearInscripcionMono
+        .flatMap(command -> {
+          InscripcionGeneric inscripcionGeneric = new InscripcionGeneric(
+              command.getCursoID(),
+              command.getNombreCurso()
+          );
 
-                    return this.mongoViewRepository
-                            .listarTareasPorCurso(command.getCursoID())
-                            .map(vistaTarea -> new EstadoTareaGeneric(
-                                    vistaTarea.get_id(),
-                                    vistaTarea.getTitulo(),
-                                    vistaTarea.getTemaID(),
-                                    vistaTarea.getTemaNombre(),
-                                    vistaTarea.getFechaLimite())
-                            )
-                            .collect(Collectors.toSet())
-                            .flatMap(estadoTareaGenerics -> {
-                                inscripcionGeneric.setEstadosTarea(estadoTareaGenerics);
+          return this.mongoViewRepository
+              .listarTareasPorCurso(command.getCursoID())
+              .map(vistaTarea -> new EstadoTareaGeneric(
+                  vistaTarea.get_id(),
+                  vistaTarea.getTitulo(),
+                  vistaTarea.getTemaID(),
+                  vistaTarea.getTemaNombre(),
+                  vistaTarea.getFechaLimite(), vistaTarea.getOrden())
+              )
+              .collect(Collectors.toSet())
+              .flatMap(estadoTareaGenerics -> {
+                inscripcionGeneric.setEstadosTarea(estadoTareaGenerics);
 
-                                return this.mongoViewRepository
-                                        .agregarInscripcion(inscripcionGeneric, command.getEstudianteID())
-                                        .doOnTerminate(() -> this.mongoViewRepository
-                                                .agregarInscritoACurso(command.getEstudianteID(), command.getCursoID()));
-                            });
-                });
-    }
+                return this.mongoViewRepository
+                    .agregarInscripcion(inscripcionGeneric, command.getEstudianteID())
+                    .doOnTerminate(() -> this.mongoViewRepository
+                        .agregarInscritoACurso(command.getEstudianteID(), command.getCursoID()));
+              });
+        });
+  }
 }

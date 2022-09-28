@@ -17,10 +17,19 @@ public class EstadoTareaGeneric {
     private String URLArchivo;
     private String estado;
 
-    // Constructor para crear objeto EstadoTareaGeneric por primera vez
+    private Integer orden;
+
+    public Integer getorden() {
+        return orden;
+    }
+
+    public void setNumero(Integer numero) {
+        this.orden = numero;
+    }
+// Constructor para crear objeto EstadoTareaGeneric por primera vez
 
 
-    public EstadoTareaGeneric(String tareaID, String titulo, String temaID, String temaNombre, LocalDate fechaLimite) {
+    public EstadoTareaGeneric(String tareaID, String titulo, String temaID, String temaNombre, LocalDate fechaLimite, Integer orden) {
         this.tareaID = tareaID;
         this.titulo = titulo;
         this.temaID = temaID;
@@ -30,6 +39,7 @@ public class EstadoTareaGeneric {
         this.fechaEntregado = null;
         this.URLArchivo = null;
         this.estado = "sin entregar";
+        this.orden = orden;
     }
 
     public EstadoTareaGeneric(String tareaID, String URLArchivo) {

@@ -40,7 +40,9 @@ public class InscribirEstudianteACursoUseCase {
                                     vistaTarea.getTemaID(),
                                     vistaTarea.getTemaNombre(),
                                     vistaTarea.getTitulo(),
-                                    vistaTarea.getFechaLimite())
+                                    vistaTarea.getFechaLimite(),
+                                    vistaTarea.getOrden()
+                                    )
                             )
                             .collect(Collectors.toSet())
                             .flatMap(estadoTareaGenerics -> {

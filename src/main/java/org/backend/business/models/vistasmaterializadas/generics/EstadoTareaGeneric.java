@@ -19,17 +19,29 @@ public class EstadoTareaGeneric {
     private String archivoURL;
     private String estado;
 
-    // Constructor para crear objeto EstadoTareaGeneric por primera vez
-    public EstadoTareaGeneric(String tareaID, String titulo, String temaID, String temaNombre, LocalDate fechaLimite) {
+    private Integer orden;
+
+    public Integer getorden() {
+        return orden;
+    }
+
+    public void setNumero(Integer numero) {
+        this.orden = numero;
+    }
+// Constructor para crear objeto EstadoTareaGeneric por primera vez
+
+
+    public EstadoTareaGeneric(String tareaID, String titulo, String temaID, String temaNombre, LocalDate fechaLimite, Integer orden) {
         this.tareaID = tareaID;
+        this.titulo = titulo;
         this.temaID = temaID;
         this.temaNombre = temaNombre;
-        this.titulo = titulo;
-        this.fechaLimite = fechaLimite;
         this.calificacion = 0;
+        this.fechaLimite = fechaLimite;
         this.fechaEntregado = null;
         this.archivoURL = "";
         this.estado = "sin entregar";
+        this.orden = orden;
     }
 
     public EstadoTareaGeneric(String tareaID, String archivoURL) {
@@ -45,8 +57,16 @@ public class EstadoTareaGeneric {
         return tareaID;
     }
 
-    public void setTareaID(String tareaID) {
-        this.tareaID = tareaID;
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getTemaID() {
+        return temaID;
+    }
+
+    public String getTemaNombre() {
+        return temaNombre;
     }
 
     public String getTitulo() {
@@ -77,8 +97,8 @@ public class EstadoTareaGeneric {
         return calificacion;
     }
 
-    public void setCalificacion(Integer calificacion) {
-        this.calificacion = calificacion;
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
     }
 
     public LocalDate getFechaLimite() {
@@ -92,6 +112,7 @@ public class EstadoTareaGeneric {
     public LocalDate getFechaEntregado() {
         return fechaEntregado;
     }
+
 
     public void setFechaEntregado(LocalDate fechaEntregado) {
         this.fechaEntregado = fechaEntregado;
@@ -120,6 +141,4 @@ public class EstadoTareaGeneric {
 
         return this;
     }
-
-
 }

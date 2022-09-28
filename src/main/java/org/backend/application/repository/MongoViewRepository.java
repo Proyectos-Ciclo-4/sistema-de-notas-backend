@@ -167,12 +167,6 @@ public class MongoViewRepository implements ViewRepository {
 
     @Override
     public Mono<VistaEstudiante> entregarTarea(String estudianteID, String cursoID, String tareaID, String URLArchivo) {
-        this.encontrarEstudiantePorID(estudianteID)
-                .doOnSuccess(vistaEstudiante ->
-                        vistaEstudiante.encontrarInscripcion(cursoID)
-                                .encontrarEstadoTarea(tareaID)
-                                .actualizarTarea(URLArchivo));
-
         return this.reactiveMongoTemplate.save(this.encontrarEstudiantePorID(estudianteID)
                 .doOnSuccess(vistaEstudiante ->
                         vistaEstudiante.encontrarInscripcion(cursoID)
@@ -361,6 +355,55 @@ public class MongoViewRepository implements ViewRepository {
                 .switchIfEmpty(Mono.error(new IllegalAccessException("Tema no encotrado")))
                 .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Tema encontrado con exito"));
+    }
+    @Override
+    public Mono<VistaEstudiante> eliminarTareaDeEstudiante(String tareaID, String estudianteID, String cursoID) {
+        return  this.reactiveMongoTemplate.save(
+                this.encontrarEstudiantePorID(estudianteID)
+                        .doOnSuccess(vistaEstudiante ->
+                                vistaEstudiante.encontrarInscripcion("cursoID")
+                                        .eliminarDeEstadoTarea(tareaID)
+
+
+                        )
+        );
+
+
+        /* return this.reactiveMongoTemplate.save(this.encontrarEstudiantePorID(estudianteID)
+                .doOnSuccess(vistaEstudiante ->
+                        vistaEstudiante.encontrarInscripcion(cursoID)
+                                .encontrarEstadoTarea(tareaID)
+                                .actualizarTarea(URLArchivo)));
+
+
+
+        Query buscarTarea = generateFinderQuery("tareaID",tareaID);
+        Update eliminar = new Update().unset("estadosTarea."+tareaID);
+        return reactiveMongoTemplate.findAndModify(buscarTarea,eliminar,VistaEstudiante.class);*/
+    }
+
+    @Override
+    public Mono<VistaCurso> eliminarTareaDeCurso(String tareaID, String cursoID) {
+        return this.reactiveMongoTemplate.save(this.encontrarCursoPorId(cursoID).doOnSuccess(
+                vistaCurso -> vistaCurso.getTemas().forEach(
+                        temaGeneric -> temaGeneric.eliminarTareasId(tareaID)
+                    )
+                )
+
+        );
+
+
+        /*Query buscarTarea = generateFinderQuery("tareasID",tareaID);
+
+        Update eliminar = new Update().unset("tareasID."+tareaID);
+
+        return reactiveMongoTemplate.findAndModify(buscarTarea,eliminar,VistaCurso.class);*/
+
+    }
+    @Override
+    public Mono<VistaTarea> eliminarTarea(String tareaID){
+        Query tarea = generateFinderQuery("_id",tareaID);
+        return reactiveMongoTemplate.findAndRemove(tarea,VistaTarea.class);
     }
 
     private static Query generateFinderQuery(String objectKey, String targetValue) {

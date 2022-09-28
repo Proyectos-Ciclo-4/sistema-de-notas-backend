@@ -68,5 +68,11 @@ public interface ViewRepository {
 
     Mono<TemaGeneric> encontrarTema(String temaID);
 
+    Mono<VistaCurso> eliminarTareaDeCurso(String tareaID, String cursoID);
+
+    Mono<VistaEstudiante> eliminarTareaDeEstudiante(String tareaID, String estudianteID, String cursoID);
+    Mono<VistaTarea> eliminarTarea(String tareaID);
+
+
 
 }

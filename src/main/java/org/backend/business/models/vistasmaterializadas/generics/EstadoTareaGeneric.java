@@ -59,6 +59,12 @@ public class EstadoTareaGeneric {
         return tareaID;
     }
 
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+
     public LocalDate getFechaLimite() {
         return fechaLimite;
     }
@@ -91,6 +97,9 @@ public class EstadoTareaGeneric {
         return calificacion;
     }
 
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
+    }
 
     public void setFechaLimite(LocalDate fechaLimite) {
         this.fechaLimite = fechaLimite;
@@ -152,4 +161,5 @@ public class EstadoTareaGeneric {
 
         return this;
     }
+
 }

@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +46,7 @@ public class InscribirEstudianteACursoUseCase {
                     return this.mongoViewRepository
                             .listarTareasPorCurso(command.getCursoID())
                             .map(vistaTarea -> new EstadoTareaGeneric(
+                                    UUID.randomUUID().toString(),
                                     vistaTarea.get_id(),
                                     vistaTarea.getTemaID(),
                                     vistaTarea.getTemaNombre(),

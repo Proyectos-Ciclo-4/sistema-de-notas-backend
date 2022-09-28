@@ -56,6 +56,7 @@ public class CrearTareaUseCase {
                                     mongoViewRepository.agregarTareaAInscripcion(
                                             vistaTarea.getCursoID(),
                                             new EstadoTareaGeneric(
+                                                    UUID.randomUUID().toString(),
                                                     vistaTarea.get_id(),
                                                     vistaTarea.getTemaID(),
                                                     vistaTarea.getTemaNombre(),

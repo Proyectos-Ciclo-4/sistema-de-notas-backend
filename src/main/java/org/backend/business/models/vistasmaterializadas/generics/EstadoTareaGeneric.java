@@ -3,6 +3,8 @@ package org.backend.business.models.vistasmaterializadas.generics;
 import java.time.LocalDate;
 
 public class EstadoTareaGeneric {
+
+    private String estadoTareaID;
     private String tareaID;
     private String titulo;
 
@@ -18,7 +20,8 @@ public class EstadoTareaGeneric {
     private String estado;
 
     // Constructor para crear objeto EstadoTareaGeneric por primera vez
-    public EstadoTareaGeneric(String tareaID, String titulo, String temaID, String temaNombre, LocalDate fechaLimite) {
+    public EstadoTareaGeneric(String estadoTareaID, String tareaID, String titulo, String temaID, String temaNombre, LocalDate fechaLimite) {
+        this.estadoTareaID = estadoTareaID;
         this.tareaID = tareaID;
         this.temaID = temaID;
         this.temaNombre = temaNombre;
@@ -30,7 +33,8 @@ public class EstadoTareaGeneric {
         this.estado = "sin entregar";
     }
 
-    public EstadoTareaGeneric(String tareaID, String URLArchivo) {
+    public EstadoTareaGeneric(String estadoTareaID, String tareaID, String URLArchivo) {
+        this.estadoTareaID = estadoTareaID;
         this.tareaID = tareaID;
         this.fechaEntregado = LocalDate.now();
         this.URLArchivo = URLArchivo;
@@ -38,6 +42,10 @@ public class EstadoTareaGeneric {
     }
 
     public EstadoTareaGeneric() {
+    }
+
+    public String getEstadoTareaID() {
+        return estadoTareaID;
     }
 
     public String getTareaID() {
@@ -48,12 +56,44 @@ public class EstadoTareaGeneric {
         this.tareaID = tareaID;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getTemaID() {
+        return temaID;
+    }
+
+    public void setTemaID(String temaID) {
+        this.temaID = temaID;
+    }
+
+    public String getTemaNombre() {
+        return temaNombre;
+    }
+
+    public void setTemaNombre(String temaNombre) {
+        this.temaNombre = temaNombre;
+    }
+
     public Integer getCalificacion() {
         return calificacion;
     }
 
     public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
+    }
+
+    public void setFechaLimite(LocalDate fechaLimite) {
+        this.fechaLimite = fechaLimite;
     }
 
     public LocalDate getFechaEntregado() {

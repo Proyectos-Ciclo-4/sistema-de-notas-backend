@@ -15,15 +15,15 @@ public class EstadoTareaGeneric {
     private Integer calificacion;
 
     private LocalDate fechaLimite;
+
+
     private LocalDate fechaEntregado;
     private String archivoURL;
     private String estado;
 
     private Integer orden;
 
-    public Integer getorden() {
-        return orden;
-    }
+    private String retroalimentacion;
 
     public void setNumero(Integer numero) {
         this.orden = numero;
@@ -40,14 +40,16 @@ public class EstadoTareaGeneric {
         this.fechaLimite = fechaLimite;
         this.fechaEntregado = null;
         this.archivoURL = "";
-        this.estado = "sin entregar";
+        this.estado = "Sin entregar";
         this.orden = orden;
+        this.retroalimentacion = "";
     }
 
     public EstadoTareaGeneric(String tareaID, String archivoURL) {
         this.fechaEntregado = LocalDate.now();
         this.archivoURL = archivoURL;
-        this.estado = "entregada";
+        this.estado = "Entregada";
+        this.retroalimentacion = "";
     }
 
     public EstadoTareaGeneric() {
@@ -57,10 +59,19 @@ public class EstadoTareaGeneric {
         return tareaID;
     }
 
+
     public String getTitulo() {
         return titulo;
     }
 
+
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
@@ -89,7 +100,6 @@ public class EstadoTareaGeneric {
     public LocalDate getFechaLimite() {
         return fechaLimite;
     }
-
 
     public void setFechaLimite(LocalDate fechaLimite) {
         this.fechaLimite = fechaLimite;
@@ -120,10 +130,34 @@ public class EstadoTareaGeneric {
         this.estado = estado;
     }
 
+    public Integer getOrden() {
+        return orden;
+    }
+
+    public String getRetroalimentacion() {
+        return retroalimentacion;
+    }
+
+    public void setCalificacion(Integer calificacion) {
+        this.calificacion = calificacion;
+    }
+
+    public void setRetroalimentacion(String retroalimentacion) {
+        this.retroalimentacion = retroalimentacion;
+    }
+
     public EstadoTareaGeneric actualizarTarea(String archivoURL) {
         this.setArchivoURL(archivoURL);
         this.setFechaEntregado(LocalDate.now());
-        this.setEstado("entregado");
+        this.setEstado("Entregada");
+
+        return this;
+    }
+
+    public EstadoTareaGeneric calificarTarea(Integer calificacion, String retroalimentacion) {
+        this.setEstado("Calificado");
+        this.setCalificacion(calificacion);
+        this.setRetroalimentacion(retroalimentacion);
 
         return this;
     }

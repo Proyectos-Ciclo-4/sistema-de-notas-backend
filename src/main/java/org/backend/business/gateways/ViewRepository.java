@@ -31,6 +31,8 @@ public interface ViewRepository {
 
     Mono<VistaEstudiante> encontrarEstudiantePorID(String estudianteID);
 
+    Flux<VistaEstudiante> listarEstudiantesEnCurso(String cursoID);
+
     Mono<VistaEstudiante> agregarInscripcion(InscripcionGeneric inscripcionGeneric, String estudianteID);
 
     void agregarTareaAInscripcion(String cursoID, EstadoTareaGeneric estadoTareaGeneric);
@@ -61,6 +63,8 @@ public interface ViewRepository {
     Flux<VistaTarea> listarTareasPorCurso(String cursoID);
 
     Mono<VistaTarea> crearTarea(VistaTarea vistaTarea);
+
+    Mono<VistaEstudiante> calificarTarea(String estudianteID, String cursoID, String tareaID, Integer calificacion, String retroalimentacion);
 
     Mono<TemaGeneric> encontrarTema(String temaID);
 

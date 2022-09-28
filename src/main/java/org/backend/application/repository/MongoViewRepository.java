@@ -107,6 +107,17 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
+    public Flux<VistaEstudiante> listarEstudiantesEnCurso(String cursoID) {
+        return this.encontrarCursoPorId(cursoID)
+                        .flatMapMany(vistaCurso -> reactiveMongoTemplate.find(
+                                new Query(Criteria
+                                        .where("_id")
+                                        .in(vistaCurso.getInscritos())),
+                                VistaEstudiante.class
+                        ));
+    }
+
+    @Override
     public Mono<VistaEstudiante> crearEstudiante(VistaEstudiante vistaEstudiante) {
         return this.reactiveMongoTemplate
                 .save(vistaEstudiante)
@@ -161,6 +172,16 @@ public class MongoViewRepository implements ViewRepository {
                         vistaEstudiante.encontrarInscripcion(cursoID)
                                 .encontrarEstadoTarea(tareaID)
                                 .actualizarTarea(URLArchivo)));
+
+    }
+
+    @Override
+    public Mono<VistaEstudiante> calificarTarea(String estudianteID, String cursoID, String tareaID, Integer calificacion, String retroalimentacion) {
+        return this.reactiveMongoTemplate.save(this.encontrarEstudiantePorID(estudianteID)
+                .doOnSuccess(vistaEstudiante ->
+                        vistaEstudiante.encontrarInscripcion(cursoID)
+                                .encontrarEstadoTarea(tareaID)
+                                .calificarTarea(calificacion, retroalimentacion)));
 
     }
 

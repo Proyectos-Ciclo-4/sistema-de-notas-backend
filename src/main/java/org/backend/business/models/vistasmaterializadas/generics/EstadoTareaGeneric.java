@@ -1,8 +1,10 @@
 package org.backend.business.models.vistasmaterializadas.generics;
 
+import java.awt.font.TextHitInfo;
 import java.time.LocalDate;
 
 public class EstadoTareaGeneric {
+
     private String tareaID;
     private String titulo;
 
@@ -14,7 +16,7 @@ public class EstadoTareaGeneric {
 
     private LocalDate fechaLimite;
     private LocalDate fechaEntregado;
-    private String URLArchivo;
+    private String archivoURL;
     private String estado;
 
     private Integer orden;
@@ -37,15 +39,14 @@ public class EstadoTareaGeneric {
         this.calificacion = 0;
         this.fechaLimite = fechaLimite;
         this.fechaEntregado = null;
-        this.URLArchivo = null;
+        this.archivoURL = "";
         this.estado = "sin entregar";
         this.orden = orden;
     }
 
-    public EstadoTareaGeneric(String tareaID, String URLArchivo) {
-        this.tareaID = tareaID;
+    public EstadoTareaGeneric(String tareaID, String archivoURL) {
         this.fechaEntregado = LocalDate.now();
-        this.URLArchivo = URLArchivo;
+        this.archivoURL = archivoURL;
         this.estado = "entregada";
     }
 
@@ -68,6 +69,30 @@ public class EstadoTareaGeneric {
         return temaNombre;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getTemaID() {
+        return temaID;
+    }
+
+    public void setTemaID(String temaID) {
+        this.temaID = temaID;
+    }
+
+    public String getTemaNombre() {
+        return temaNombre;
+    }
+
+    public void setTemaNombre(String temaNombre) {
+        this.temaNombre = temaNombre;
+    }
+
     public Integer getCalificacion() {
         return calificacion;
     }
@@ -76,15 +101,44 @@ public class EstadoTareaGeneric {
         return fechaLimite;
     }
 
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
+    }
+
+    public void setFechaLimite(LocalDate fechaLimite) {
+        this.fechaLimite = fechaLimite;
+    }
+
     public LocalDate getFechaEntregado() {
         return fechaEntregado;
     }
 
-    public String getURLArchivo() {
-        return URLArchivo;
+
+    public void setFechaEntregado(LocalDate fechaEntregado) {
+        this.fechaEntregado = fechaEntregado;
+    }
+
+    public String getArchivoURL() {
+        return archivoURL;
+    }
+
+    public void setArchivoURL(String archivoURL) {
+        this.archivoURL = archivoURL;
     }
 
     public String getEstado() {
         return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public EstadoTareaGeneric actualizarTarea(String archivoURL) {
+        this.setArchivoURL(archivoURL);
+        this.setFechaEntregado(LocalDate.now());
+        this.setEstado("entregado");
+
+        return this;
     }
 }

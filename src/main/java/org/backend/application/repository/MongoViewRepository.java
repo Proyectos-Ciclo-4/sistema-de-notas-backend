@@ -155,6 +155,22 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
+    public Mono<VistaEstudiante> entregarTarea(String estudianteID, String cursoID, String tareaID, String URLArchivo) {
+        this.encontrarEstudiantePorID(estudianteID)
+                .doOnSuccess(vistaEstudiante ->
+                        vistaEstudiante.encontrarInscripcion(cursoID)
+                                .encontrarEstadoTarea(tareaID)
+                                .actualizarTarea(URLArchivo));
+
+        return this.reactiveMongoTemplate.save(this.encontrarEstudiantePorID(estudianteID)
+                .doOnSuccess(vistaEstudiante ->
+                        vistaEstudiante.encontrarInscripcion(cursoID)
+                                .encontrarEstadoTarea(tareaID)
+                                .actualizarTarea(URLArchivo)));
+
+    }
+
+    @Override
     public Mono<VistaEstudiante> actualizarPromedio(String cursoID, Float promedio) {
         return null;
     }

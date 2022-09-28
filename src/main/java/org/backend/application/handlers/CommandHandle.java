@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
@@ -113,6 +114,23 @@ public class CommandHandle {
                                 .bodyValue(vistaEstudiante))
                         .onErrorResume(throwable -> {
                             log.error(throwable.getMessage());
+                            return ServerResponse.badRequest().build();
+                        })
+        );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> entregarTarea(EntregarTareaUseCase entregarTareaUseCase) {
+        return route(
+                POST("/entregarTarea"),
+                request -> entregarTareaUseCase.apply(
+                        request.bodyToMono(EntregarTarea.class))
+                        .flatMap(vistaEstudiante -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .bodyValue(vistaEstudiante))
+                        .onErrorResume(throwable -> {
+                            log.error(throwable.getMessage());
+
                             return ServerResponse.badRequest().build();
                         })
         );

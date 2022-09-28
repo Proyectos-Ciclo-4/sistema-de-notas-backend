@@ -1,7 +1,9 @@
 package org.backend.business.usecases;
 
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
+import org.backend.domain.commands.EntregarTarea;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -13,20 +15,15 @@ public class EntregarTareaUseCase {
         this.mongoViewRepository = mongoViewRepository;
     }
 
-    public Mono<EstadoTareaGeneric> apply(String estadoTareaID, String archivoID) {
-
-        return this.mongoViewRepository.entregarTarea(estadoTareaID, archivoID);
-
-        /*
+    public Mono<VistaEstudiante> apply(Mono<EntregarTarea> entregarTareaMono) {
         return entregarTareaMono
-                .flatMap(entregarTarea -> this.mongoViewRepository.entregarTarea(
-                        entregarTarea.getEstudianteID(),
-                        entregarTarea.getCursoID(),
-                        entregarTarea.getTareaID(),
-                        entregarTarea.getArchivoID())
-                );
-
-         */
+                .flatMap(entregarTarea ->
+                        mongoViewRepository.entregarTarea(
+                                entregarTarea.getEstudianteID(),
+                                entregarTarea.getCursoID(),
+                                entregarTarea.getTareaID(),
+                                entregarTarea.getURLArchivo()
+                        ));
 
     }
 }

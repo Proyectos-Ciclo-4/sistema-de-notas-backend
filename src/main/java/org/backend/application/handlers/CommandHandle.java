@@ -122,10 +122,9 @@ public class CommandHandle {
     @Bean
     public RouterFunction<ServerResponse> entregarTarea(EntregarTareaUseCase entregarTareaUseCase) {
         return route(
-                POST("/entregarTarea/{estadoTareaID}/{archivoID}"),
+                POST("/entregarTarea"),
                 request -> entregarTareaUseCase.apply(
-                        request.pathVariable("estadoTareaID"),
-                        request.pathVariable("archivoID"))
+                        request.bodyToMono(EntregarTarea.class))
                         .flatMap(vistaEstudiante -> ServerResponse.ok()
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .bodyValue(vistaEstudiante))

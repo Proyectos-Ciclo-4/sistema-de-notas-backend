@@ -23,9 +23,7 @@ public class EstadoTareaGeneric {
 
     private Integer orden;
 
-    public Integer getorden() {
-        return orden;
-    }
+    private String retroalimentacion;
 
     public void setNumero(Integer numero) {
         this.orden = numero;
@@ -44,12 +42,14 @@ public class EstadoTareaGeneric {
         this.archivoURL = "";
         this.estado = "Sin entregar";
         this.orden = orden;
+        this.retroalimentacion = "";
     }
 
     public EstadoTareaGeneric(String tareaID, String archivoURL) {
         this.fechaEntregado = LocalDate.now();
         this.archivoURL = archivoURL;
         this.estado = "Entregada";
+        this.retroalimentacion = "";
     }
 
     public EstadoTareaGeneric() {
@@ -121,10 +121,34 @@ public class EstadoTareaGeneric {
         this.estado = estado;
     }
 
+    public Integer getOrden() {
+        return orden;
+    }
+
+    public String getRetroalimentacion() {
+        return retroalimentacion;
+    }
+
+    public void setCalificacion(Integer calificacion) {
+        this.calificacion = calificacion;
+    }
+
+    public void setRetroalimentacion(String retroalimentacion) {
+        this.retroalimentacion = retroalimentacion;
+    }
+
     public EstadoTareaGeneric actualizarTarea(String archivoURL) {
         this.setArchivoURL(archivoURL);
         this.setFechaEntregado(LocalDate.now());
         this.setEstado("Entregada");
+
+        return this;
+    }
+
+    public EstadoTareaGeneric calificarTarea(Integer calificacion, String retroalimentacion) {
+        this.setEstado("Calificado");
+        this.setCalificacion(calificacion);
+        this.setRetroalimentacion(retroalimentacion);
 
         return this;
     }

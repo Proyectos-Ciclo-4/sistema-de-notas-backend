@@ -62,6 +62,8 @@ public interface ViewRepository {
 
     Mono<VistaTarea> crearTarea(VistaTarea vistaTarea);
 
+    Mono<VistaEstudiante> calificarTarea(String estudianteID, String cursoID, String tareaID, Integer calificacion, String retroalimentacion);
+
     Mono<TemaGeneric> encontrarTema(String temaID);
 
 

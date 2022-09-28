@@ -8,6 +8,7 @@ public class CrearInscripcion extends Command {
             {
                 estudianteID: ID del usuario en Firebase del estudiante.
                 cursoID: ID del curso al cual se inscribió el estudiante.
+                nombreCurso: Nombre del curso al cual se inscribió el estudiante.
             }
         */
 

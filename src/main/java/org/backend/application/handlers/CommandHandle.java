@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
@@ -117,6 +118,19 @@ public class CommandHandle {
                         })
         );
     }
+/*
+    @Bean
+    public RouterFunction<ServerResponse> entregarTarea(EntregarTareaUseCase entregarTareaUseCase) {
+        return route(
+                POST("/entregarTarea/{archivoID}"),
+                request -> entregarTareaUseCase.apply(Mono.just(request.pathVariable("archivoID")))
+                        .flatMap(s -> ServerResponse.ok()
+
+                        )
+        )
+    }
+
+ */
 
 
 

@@ -155,6 +155,16 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
+    public Mono<EstadoTareaGeneric> entregarTarea(String estadoTareaID, String archivoID) {
+        return this.reactiveMongoTemplate.findAndModify(
+                new Query(Criteria
+                        .where("estadoTareaID")
+                        .is(estadoTareaID)),
+                new Update().set("URLArchivo", archivoID),
+                EstadoTareaGeneric.class);
+    }
+
+    @Override
     public Mono<VistaEstudiante> actualizarPromedio(String cursoID, Float promedio) {
         return null;
     }

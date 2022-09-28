@@ -118,19 +118,24 @@ public class CommandHandle {
                         })
         );
     }
-/*
+
     @Bean
     public RouterFunction<ServerResponse> entregarTarea(EntregarTareaUseCase entregarTareaUseCase) {
         return route(
-                POST("/entregarTarea/{archivoID}"),
-                request -> entregarTareaUseCase.apply(Mono.just(request.pathVariable("archivoID")))
-                        .flatMap(s -> ServerResponse.ok()
+                POST("/entregarTarea/{estadoTareaID}/{archivoID}"),
+                request -> entregarTareaUseCase.apply(
+                        request.pathVariable("estadoTareaID"),
+                        request.pathVariable("archivoID"))
+                        .flatMap(vistaEstudiante -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .bodyValue(vistaEstudiante))
+                        .onErrorResume(throwable -> {
+                            log.error(throwable.getMessage());
 
-                        )
-        )
+                            return ServerResponse.badRequest().build();
+                        })
+        );
     }
-
- */
 
 
 

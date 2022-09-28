@@ -35,6 +35,8 @@ public interface ViewRepository {
 
     void agregarTareaAInscripcion(String cursoID, EstadoTareaGeneric estadoTareaGeneric);
 
+    Mono<EstadoTareaGeneric> entregarTarea(String estadoTareaID, String archivoID);
+
     Mono<VistaEstudiante> actualizarPromedio(String cursoID, Float promedio);
 
     Mono<VistaEstudiante> actualizarAvance(String cursoID, Float avance);

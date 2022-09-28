@@ -15,6 +15,8 @@ public class EstadoTareaGeneric {
     private Integer calificacion;
 
     private LocalDate fechaLimite;
+
+
     private LocalDate fechaEntregado;
     private String archivoURL;
     private String estado;
@@ -40,14 +42,14 @@ public class EstadoTareaGeneric {
         this.fechaLimite = fechaLimite;
         this.fechaEntregado = null;
         this.archivoURL = "";
-        this.estado = "sin entregar";
+        this.estado = "Sin entregar";
         this.orden = orden;
     }
 
     public EstadoTareaGeneric(String tareaID, String archivoURL) {
         this.fechaEntregado = LocalDate.now();
         this.archivoURL = archivoURL;
-        this.estado = "entregada";
+        this.estado = "Entregada";
     }
 
     public EstadoTareaGeneric() {
@@ -57,16 +59,8 @@ public class EstadoTareaGeneric {
         return tareaID;
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public String getTemaID() {
-        return temaID;
-    }
-
-    public String getTemaNombre() {
-        return temaNombre;
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
     }
 
     public String getTitulo() {
@@ -97,13 +91,6 @@ public class EstadoTareaGeneric {
         return calificacion;
     }
 
-    public LocalDate getFechaLimite() {
-        return fechaLimite;
-    }
-
-    public LocalDate getFechaLimite() {
-        return fechaLimite;
-    }
 
     public void setFechaLimite(LocalDate fechaLimite) {
         this.fechaLimite = fechaLimite;
@@ -137,7 +124,7 @@ public class EstadoTareaGeneric {
     public EstadoTareaGeneric actualizarTarea(String archivoURL) {
         this.setArchivoURL(archivoURL);
         this.setFechaEntregado(LocalDate.now());
-        this.setEstado("entregado");
+        this.setEstado("Entregada");
 
         return this;
     }

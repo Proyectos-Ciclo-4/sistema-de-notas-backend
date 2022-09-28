@@ -136,6 +136,25 @@ public class CommandHandle {
         );
     }
 
+    @Bean
+    public RouterFunction<ServerResponse> calificarTarea(CalificarTareaUseCase calificarTareaUseCase) {
+        return route(
+                POST("/calificarTarea"),
+                request -> calificarTareaUseCase.apply(
+                        request.bodyToMono(CalificarTarea.class))
+                        .flatMap(vistaEstudiante -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .bodyValue(vistaEstudiante))
+                        .onErrorResume(throwable -> {
+                            log.error(throwable.getMessage());
+
+                            return ServerResponse.badRequest().build();
+                        })
+
+        );
+
+    }
+
 
 
 }

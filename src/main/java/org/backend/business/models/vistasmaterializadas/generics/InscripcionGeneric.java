@@ -1,10 +1,12 @@
 package org.backend.business.models.vistasmaterializadas.generics;
 
 import org.backend.domain.valueobjects.EstadoTarea;
+import org.yaml.snakeyaml.util.ArrayUtils;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class InscripcionGeneric {
     private String cursoID;
@@ -101,5 +103,13 @@ public class InscripcionGeneric {
     public EstadoTareaGeneric encontrarEstadoTarea(String tareaID) {
         return estadosTarea.stream().filter(estadoTareaGeneric ->
                 estadoTareaGeneric.getTareaID().equals(tareaID)).findFirst().get();
+    }
+
+    public void eliminarDeEstadoTarea(String tareaID) {
+        this.estadosTarea.remove(tareaID);
+
+
+        /*return (EstadoTareaGeneric) estadosTarea.stream().filter(estadoTareaGeneric ->
+                !estadoTareaGeneric.getTareaID().equals(tareaID)).collect(Collectors.toSet());*/
     }
 }

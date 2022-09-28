@@ -61,17 +61,6 @@ public class EstadoTareaGeneric {
         return titulo;
     }
 
-    public String getTemaID() {
-        return temaID;
-    }
-
-    public String getTemaNombre() {
-        return temaNombre;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
@@ -101,9 +90,6 @@ public class EstadoTareaGeneric {
         return fechaLimite;
     }
 
-    public LocalDate getFechaLimite() {
-        return fechaLimite;
-    }
 
     public void setFechaLimite(LocalDate fechaLimite) {
         this.fechaLimite = fechaLimite;
@@ -141,4 +127,5 @@ public class EstadoTareaGeneric {
 
         return this;
     }
+
 }

@@ -3,6 +3,7 @@ package org.backend.application.handlers;
 import co.com.sofka.domain.generic.DomainEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
+import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 import org.backend.business.usecases.*;
 import org.backend.domain.commands.*;
@@ -133,6 +134,27 @@ public class CommandHandle {
 
                             return ServerResponse.badRequest().build();
                         })
+        );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> eliminarTarea(EliminarTareaUseCase eliminarTareaUseCase){
+        return route(
+            POST("/eliminarTarea"),
+                request ->eliminarTareaUseCase.apply(request.bodyToMono(EliminarTarea.class))
+                        .flatMap(vistaTarea -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .bodyValue(vistaTarea)
+                        )
+
+
+
+                /*ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(
+                        BodyInserters.fromPublisher(
+                                eliminarTareaUseCase.eliminarTarea(request.pathVariable("_id")),
+                                VistaTarea.class
+                        )
+                )*/
         );
     }
 

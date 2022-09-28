@@ -4,6 +4,7 @@ import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.domain.identifiers.TareaID;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TemaGeneric {
     private String temaID;
@@ -52,5 +53,11 @@ public class TemaGeneric {
 
     public Set<String> getTareasID() {
         return tareasID;
+    }
+
+    public void eliminarTareasId(String tareaID){
+
+        this.tareasID.remove(tareaID);
+        this.tareas.remove(tareaID);
     }
 }

@@ -139,7 +139,7 @@ public class CommandHandle {
     @Bean
     public RouterFunction<ServerResponse> eliminarTarea(EliminarTareaUseCase eliminarTareaUseCase) {
         return route(
-                DELETE("/eliminarTarea"),
+                POST("/eliminarTarea"),
                 request -> eliminarTareaUseCase.apply(
                         request.bodyToMono(EliminarTarea.class))
                         .flatMap(eliminarTarea -> ServerResponse.ok()

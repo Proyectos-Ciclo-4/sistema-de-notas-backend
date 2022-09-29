@@ -8,6 +8,8 @@ public class EstadoTareaGeneric {
     private String tareaID;
     private String titulo;
 
+
+
     private String temaID;
 
     private String temaNombre;
@@ -89,6 +91,14 @@ public class EstadoTareaGeneric {
 
     public LocalDate getFechaEntregado() {
         return fechaEntregado;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
     }
 
 

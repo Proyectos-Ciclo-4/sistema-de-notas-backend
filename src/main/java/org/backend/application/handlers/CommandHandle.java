@@ -154,6 +154,23 @@ public class CommandHandle {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> eliminarTema(EliminarTemaUseCase eliminarTemaUseCase) {
+        return route(
+                DELETE("/eliminarTema"),
+                request -> eliminarTemaUseCase.apply(
+                        request.bodyToMono(EliminarTema.class))
+                        .flatMap(eliminarTema -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .bodyValue(eliminarTema))
+                        .onErrorResume(throwable -> {
+                            log.error(throwable.getMessage());
+
+                            return ServerResponse.badRequest().build();
+                        })
+        );
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> calificarTarea(CalificarTareaUseCase calificarTareaUseCase) {
         return route(
                 POST("/calificarTarea"),

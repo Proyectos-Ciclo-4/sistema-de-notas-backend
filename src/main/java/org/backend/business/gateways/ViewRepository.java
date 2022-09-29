@@ -74,6 +74,10 @@ public interface ViewRepository {
 
     void eliminarVistaTarea(String tareaID);
 
+    void eliminarTareasPorTema(String cursoID, String temaID);
+
+    void eliminarTema(String cursoID, String temaID);
+
 
 
 }

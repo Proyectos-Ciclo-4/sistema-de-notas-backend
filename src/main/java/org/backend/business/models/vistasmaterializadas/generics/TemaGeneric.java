@@ -59,4 +59,8 @@ public class TemaGeneric {
         this.tareasID.remove(tareaID);
         this.tareas.removeIf(vistaTarea -> vistaTarea.get_id().equals(tareaID));
     }
+
+    public boolean hasTareas() {
+        return !this.tareasID.isEmpty();
+    }
 }

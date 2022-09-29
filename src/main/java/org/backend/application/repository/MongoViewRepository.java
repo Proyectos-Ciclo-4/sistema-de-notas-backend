@@ -9,6 +9,9 @@ import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
+import org.backend.business.usecases.EliminarTareaUseCase;
+import org.backend.domain.commands.EliminarTarea;
+import org.backend.domain.commands.EliminarTema;
 import org.backend.domain.identifiers.TareaID;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
@@ -380,6 +383,42 @@ public class MongoViewRepository implements ViewRepository {
         ).subscribe(vistaTarea -> logSuccessfulOperation(
                 String.format("Tarea %s eliminada de su colección", vistaTarea.get_id())
         ));
+    }
+
+    @Override
+    public void eliminarTareasPorTema(String cursoID, String temaID) {
+        this.encontrarCursoPorId(cursoID)
+                .subscribe(vistaCurso -> {
+                    if (vistaCurso.encontrarTema(temaID).hasTareas()) {
+                        EliminarTareaUseCase eliminarTareaUseCase = new EliminarTareaUseCase(this);
+
+                        /*
+                        vistaCurso.encontrarTema(temaID).getTareasID()
+                                .forEach(tareaID -> eliminarTareaUseCase.apply(Mono.just(
+                                        new EliminarTarea(cursoID, tareaID, temaID))
+                                ).subscribe(eliminarTarea -> logSuccessfulOperation(
+                                        String.format("Tarea %s en tema %s eliminada.", tareaID, temaID)
+                                )));
+
+                         */
+
+                        vistaCurso.encontrarTema(temaID).getTareasID()
+                                .stream().map(tareaID -> new EliminarTarea(cursoID, tareaID, temaID))
+                                .forEach(eliminarTarea -> eliminarTareaUseCase.apply(Mono.just(eliminarTarea))
+                                        .subscribe(eliminarTarea1 -> System.out.println(eliminarTarea1.getTareaID())));
+                    }
+                });
+
+    }
+
+    @Override
+    public void eliminarTema(String cursoID, String temaID) {
+        this.reactiveMongoTemplate.save(this.encontrarCursoPorId(cursoID)
+                        .doOnSuccess(vistaCurso -> vistaCurso.eliminarTemaPorID(temaID)))
+                .subscribe(vistaCursoActualizado
+                        -> logSuccessfulOperation(
+                                String.format("Tema %s en curso %s eliminado.", temaID, cursoID))
+                );
     }
 
     private static Query generateFinderQuery(String objectKey, String targetValue) {

@@ -2,8 +2,6 @@ package org.backend.business.usecases;
 
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
-import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
-import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 import org.backend.domain.commands.CrearTarea;
 import org.backend.domain.events.TemaCreado;
@@ -19,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.io.Flushable;
+
 import java.util.HashSet;
 import java.util.Set;
 

@@ -3,10 +3,8 @@ package org.backend.business.usecases;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
-import org.backend.domain.entities.Tarea;
 import org.backend.domain.events.CursoCreado;
 import org.backend.domain.identifiers.ProfesorID;
-import org.backend.domain.identifiers.TareaID;
 import org.backend.domain.valueobjects.Titulo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.HashSet;

@@ -156,7 +156,8 @@ public class CommandHandle {
                         )
                 )*/
         );
-
+    }
+    @Bean
     public RouterFunction<ServerResponse> calificarTarea(CalificarTareaUseCase calificarTareaUseCase) {
         return route(
                 POST("/calificarTarea"),
@@ -174,7 +175,5 @@ public class CommandHandle {
         );
 
     }
-
-
 
 }

@@ -16,15 +16,25 @@ public class EliminarTareaUseCase {
     }
 
 
-    public Mono<VistaTarea> apply(Mono<EliminarTarea> eliminarTareaMono){
-        return eliminarTareaMono.flatMap(eliminarTarea ->
-                this.mongoViewRepository.eliminarTarea(eliminarTarea.getTareaID()).doOnNext(vistaTarea ->
-                        mongoViewRepository.eliminarTareaDeEstudiante(eliminarTarea.getTareaID(),eliminarTarea.getEstudianteID(), eliminarTarea.getCursoID())
-                                .doOnNext( vistaCurso ->  mongoViewRepository.eliminarTareaDeCurso(eliminarTarea.getTareaID(), eliminarTarea.getCursoID())))
-
-                );
-
-
+    public Mono<EliminarTarea> apply(Mono<EliminarTarea> eliminarTareaMono){
+        return eliminarTareaMono
+                .doOnNext(eliminarTarea -> {
+                    this.mongoViewRepository.eliminarTareaDeEstudiante(
+                            eliminarTarea.getCursoID(),
+                            eliminarTarea.getTareaID(),
+                            eliminarTarea.getTemaID()
+                    );
+                })
+                .doOnNext(eliminarTarea -> {
+                    this.mongoViewRepository.eliminarTareaDeCurso(
+                            eliminarTarea.getCursoID(),
+                            eliminarTarea.getTareaID(),
+                            eliminarTarea.getTemaID()
+                    );
+                })
+                .doOnNext(eliminarTarea -> {
+                            this.mongoViewRepository.eliminarVistaTarea(eliminarTarea.getTareaID());
+                });
 
     }
 }

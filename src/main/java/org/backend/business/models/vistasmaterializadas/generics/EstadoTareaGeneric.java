@@ -59,15 +59,6 @@ public class EstadoTareaGeneric {
         return tareaID;
     }
 
-
-    public LocalDate getFechaLimite() {
-        return fechaLimite;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }

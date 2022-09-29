@@ -63,5 +63,9 @@ public class VistaCurso {
                 temaGeneric.getTemaID().equals(temaID)).findFirst().get();
     }
 
+    public void eliminarTemaPorID(String TemaID) {
+        this.temas.removeIf(temaGeneric -> temaGeneric.getTemaID().equals(temaGeneric));
+    }
+
 
 }

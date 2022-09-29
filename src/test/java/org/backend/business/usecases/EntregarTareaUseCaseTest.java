@@ -1,5 +1,6 @@
 package org.backend.business.usecases;
 
+import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.domain.entities.Tarea;
@@ -24,11 +25,13 @@ class EntregarTareaUseCaseTest {
     @Mock
     MongoViewRepository mongoViewRepository;
 
+    RabbitMQEventBus rabbitMQEventBus;
+
     @InjectMocks
     EntregarTareaUseCase useCase;
 
     @BeforeEach
-    void init(){useCase = new EntregarTareaUseCase(mongoViewRepository);}
+    void init(){useCase = new EntregarTareaUseCase(mongoViewRepository, rabbitMQEventBus);}
 
     @Test
     void entregarTareaTest(){

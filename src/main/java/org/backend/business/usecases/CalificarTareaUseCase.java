@@ -1,5 +1,6 @@
 package org.backend.business.usecases;
 
+import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.domain.commands.CalificarTarea;
@@ -9,11 +10,11 @@ import reactor.core.publisher.Mono;
 @Service
 public class CalificarTareaUseCase {
     private final MongoViewRepository mongoViewRepository;
-    //private final SocketEstudianteHandler socketEstudianteHandler;
+    private final RabbitMQEventBus rabbitMQEventBus;
 
-    public CalificarTareaUseCase(MongoViewRepository mongoViewRepository  /*, SocketEstudianteHandler socketEstudianteHandler*/) {
+    public CalificarTareaUseCase(MongoViewRepository mongoViewRepository, RabbitMQEventBus rabbitMQEventBus) {
         this.mongoViewRepository = mongoViewRepository;
-        //this.socketEstudianteHandler = socketEstudianteHandler;
+        this.rabbitMQEventBus = rabbitMQEventBus;
     }
 
     public Mono<VistaEstudiante> apply(Mono<CalificarTarea> calificarTareaMono) {
@@ -25,7 +26,7 @@ public class CalificarTareaUseCase {
                                 command.getTareaID(),
                                 command.getCalificacion(),
                                 command.getRetroalimentacion()
-                        ));
-                //.flatMap(socketEstudianteHandler::emitirCalificacionActualizada);
+                        ))
+                .doOnSuccess(vistaEstudiante -> rabbitMQEventBus.publicarCalificacion(vistaEstudiante));
     }
 }

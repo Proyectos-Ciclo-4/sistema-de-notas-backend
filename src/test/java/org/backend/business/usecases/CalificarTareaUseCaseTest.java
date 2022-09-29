@@ -1,6 +1,7 @@
 package org.backend.business.usecases;
 
 
+import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.domain.events.TareaCreada;
@@ -19,13 +20,14 @@ class CalificarTareaUseCaseTest {
     @Mock
     MongoViewRepository mongoViewRepository;
 
-    //SocketEstudianteHandler socketEstudianteHandler;
+    RabbitMQEventBus rabbitMQEventBus;
+
 
     @InjectMocks
     CalificarTareaUseCase useCase;
 
     @BeforeEach
-    void init(){useCase = new CalificarTareaUseCase(mongoViewRepository /*, socketEstudianteHandler*/);}
+    void init(){useCase = new CalificarTareaUseCase(mongoViewRepository, rabbitMQEventBus);}
 
     @Test
     void calificarTareaTest(){

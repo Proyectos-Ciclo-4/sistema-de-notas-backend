@@ -1,5 +1,6 @@
 package org.backend.business.usecases;
 
+import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaTarea;
@@ -19,10 +20,12 @@ class CrearTareaUseCaseTest {
     MongoViewRepository mongoViewRepository;
     MongoEventRepository mongoEventRepository;
 
+    RabbitMQEventBus rabbitMQEventBus;
+
     CrearTareaUseCase useCase;
 
     @BeforeEach
-    void init(){useCase = new CrearTareaUseCase(mongoEventRepository,mongoViewRepository);}
+    void init(){useCase = new CrearTareaUseCase(mongoEventRepository,mongoViewRepository, rabbitMQEventBus);}
 
     @Test
     void crearTareaTest(){

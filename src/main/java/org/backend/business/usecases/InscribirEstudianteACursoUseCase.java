@@ -1,5 +1,6 @@
 package org.backend.business.usecases;
 
+import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
@@ -20,13 +21,15 @@ public class InscribirEstudianteACursoUseCase {
   private final MongoEventRepository mongoEventRepository;
   private final MongoViewRepository mongoViewRepository;
 
-  public InscribirEstudianteACursoUseCase(MongoEventRepository mongoEventRepository,
-      MongoViewRepository mongoViewRepository) {
-    this.mongoEventRepository = mongoEventRepository;
-    this.mongoViewRepository = mongoViewRepository;
-  }
+  private final RabbitMQEventBus rabbitMQEventBus;
 
-  public Mono<VistaEstudiante> apply(Mono<CrearInscripcion> crearInscripcionMono) {
+    public InscribirEstudianteACursoUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, RabbitMQEventBus rabbitMQEventBus) {
+        this.mongoEventRepository = mongoEventRepository;
+        this.mongoViewRepository = mongoViewRepository;
+        this.rabbitMQEventBus = rabbitMQEventBus;
+    }
+
+    public Mono<VistaEstudiante> apply(Mono<CrearInscripcion> crearInscripcionMono) {
     return crearInscripcionMono
         .flatMap(command -> {
           InscripcionGeneric inscripcionGeneric = new InscripcionGeneric(
@@ -53,7 +56,8 @@ public class InscribirEstudianteACursoUseCase {
                     .agregarInscripcion(inscripcionGeneric, command.getEstudianteID())
                     .doOnTerminate(() -> this.mongoViewRepository
                         .agregarInscritoACurso(command.getEstudianteID(), command.getCursoID()));
-              });
+              })
+                  .doOnSuccess(vistaEstudiante -> rabbitMQEventBus.publicarNuevoInscrito(vistaEstudiante));
         });
   }
 }

@@ -7,11 +7,9 @@ import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
-import org.backend.domain.valueobjects.EstadoTarea;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.GenericSignatureFormatError;
 
 @Slf4j
 @Service
@@ -39,20 +37,20 @@ public class RabbitMQEventBus {
                 gson.toJson(vistaTarea).getBytes());
     }
 
-    public void publicarCalificacion(EstadoTareaGeneric estadoTareaGeneric) {
-        log.info(String.format("Estado tarea con calificacion %s emitida a queue VISTA ESTUDIANTE", estadoTareaGeneric.getCalificacion()));
+    public void publicarCalificacion(VistaEstudiante vistaEstudiante) {
+        log.info(String.format("Calificacion generada a estudiante %s emitida a queue VISTA ESTUDIANTE", vistaEstudiante.get_id()));
 
         convertAndSend(
                 RabbitConfig.VISTA_ESTUDIANTE_QUEUE_KEY,
-                gson.toJson(estadoTareaGeneric).getBytes());
+                gson.toJson(vistaEstudiante).getBytes());
     }
 
-    public void publicarNuevoInscrito(InscripcionGeneric inscripcionGeneric) {
-        log.info(String.format("Inscripción en curso %s emitida a queue VISTA PROFESOR", inscripcionGeneric.getCursoID()));
+    public void publicarNuevoInscrito(VistaEstudiante vistaEstudiante) {
+        log.info(String.format("Inscripción de estudiante %s emitida a queue VISTA PROFESOR", vistaEstudiante.get_id()));
 
         convertAndSend(
                 RabbitConfig.VISTA_PROFESOR_QUEUE_KEY,
-                gson.toJson(inscripcionGeneric).getBytes()
+                gson.toJson(vistaEstudiante).getBytes()
         );
 
     }

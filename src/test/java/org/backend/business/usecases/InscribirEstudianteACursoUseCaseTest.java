@@ -1,5 +1,6 @@
 package org.backend.business.usecases;
 
+import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
@@ -28,10 +29,12 @@ class InscribirEstudianteACursoUseCaseTest {
     MongoViewRepository mongoViewRepository;
     MongoEventRepository mongoEventRepository;
 
+    RabbitMQEventBus rabbitMQEventBus;
+
     InscribirEstudianteACursoUseCase useCase;
 
     @BeforeEach
-    void init(){useCase = new InscribirEstudianteACursoUseCase(mongoEventRepository,mongoViewRepository);}
+    void init(){useCase = new InscribirEstudianteACursoUseCase(mongoEventRepository,mongoViewRepository, rabbitMQEventBus);}
 
     @Test
     void inscribirEstudianteACursoTest(){

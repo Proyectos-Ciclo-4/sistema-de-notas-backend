@@ -1,6 +1,7 @@
 package org.backend.business.usecases;
 
 import co.com.sofka.domain.generic.DomainEvent;
+import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaTarea;
@@ -26,9 +27,12 @@ public class CrearTareaUseCase {
     private final MongoEventRepository mongoEventRepository;
     private final MongoViewRepository mongoViewRepository;
 
-    public CrearTareaUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository) {
+    private final RabbitMQEventBus rabbitMQEventBus;
+
+    public CrearTareaUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, RabbitMQEventBus rabbitMQEventBus) {
         this.mongoEventRepository = mongoEventRepository;
         this.mongoViewRepository = mongoViewRepository;
+        this.rabbitMQEventBus = rabbitMQEventBus;
     }
 
     public Mono<VistaTarea> apply(Mono<CrearTarea> crearTareaMono) {
@@ -63,7 +67,7 @@ public class CrearTareaUseCase {
                                                     vistaTarea.getFechaLimite(),
                                                     vistaTarea.getOrden()
                                             ))
-                            );
+                            ).doOnSuccess(vistaTarea -> rabbitMQEventBus.publicarTareaNueva(vistaTarea));
 
                     /*
                     Tema temaAR = new Tema(TemaID.of(command.getTemaID()));

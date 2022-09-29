@@ -153,7 +153,7 @@ public class CommandHandle {
         );
     }
 
-    @Bean
+   /* @Bean
     public RouterFunction<ServerResponse> eliminarTema(EliminarTemaUseCase eliminarTemaUseCase) {
         return route(
                 DELETE("/eliminarTema"),
@@ -168,7 +168,7 @@ public class CommandHandle {
                             return ServerResponse.badRequest().build();
                         })
         );
-    }
+    }*/
 
     @Bean
     public RouterFunction<ServerResponse> calificarTarea(CalificarTareaUseCase calificarTareaUseCase) {

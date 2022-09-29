@@ -2,7 +2,6 @@ package org.backend.business.usecases;
 
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
-import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.domain.commands.CalificarTarea;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -10,9 +9,11 @@ import reactor.core.publisher.Mono;
 @Service
 public class CalificarTareaUseCase {
     private final MongoViewRepository mongoViewRepository;
+    //private final SocketEstudianteHandler socketEstudianteHandler;
 
-    public CalificarTareaUseCase(MongoViewRepository mongoViewRepository) {
+    public CalificarTareaUseCase(MongoViewRepository mongoViewRepository  /*, SocketEstudianteHandler socketEstudianteHandler*/) {
         this.mongoViewRepository = mongoViewRepository;
+        //this.socketEstudianteHandler = socketEstudianteHandler;
     }
 
     public Mono<VistaEstudiante> apply(Mono<CalificarTarea> calificarTareaMono) {
@@ -25,5 +26,6 @@ public class CalificarTareaUseCase {
                                 command.getCalificacion(),
                                 command.getRetroalimentacion()
                         ));
+                //.flatMap(socketEstudianteHandler::emitirCalificacionActualizada);
     }
 }

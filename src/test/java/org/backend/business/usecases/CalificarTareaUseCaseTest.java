@@ -19,11 +19,13 @@ class CalificarTareaUseCaseTest {
     @Mock
     MongoViewRepository mongoViewRepository;
 
+    //SocketEstudianteHandler socketEstudianteHandler;
+
     @InjectMocks
     CalificarTareaUseCase useCase;
 
     @BeforeEach
-    void init(){useCase = new CalificarTareaUseCase(mongoViewRepository);}
+    void init(){useCase = new CalificarTareaUseCase(mongoViewRepository /*, socketEstudianteHandler*/);}
 
     @Test
     void calificarTareaTest(){

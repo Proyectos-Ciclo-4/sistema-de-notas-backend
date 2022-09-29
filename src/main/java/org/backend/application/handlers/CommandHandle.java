@@ -16,8 +16,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
-import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Slf4j
@@ -138,25 +137,22 @@ public class CommandHandle {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> eliminarTarea(EliminarTareaUseCase eliminarTareaUseCase){
+    public RouterFunction<ServerResponse> eliminarTarea(EliminarTareaUseCase eliminarTareaUseCase) {
         return route(
-            POST("/eliminarTarea"),
-                request ->eliminarTareaUseCase.apply(request.bodyToMono(EliminarTarea.class))
-                        .flatMap(vistaTarea -> ServerResponse.ok()
+                DELETE("/eliminarTarea"),
+                request -> eliminarTareaUseCase.apply(
+                        request.bodyToMono(EliminarTarea.class))
+                        .flatMap(eliminarTarea -> ServerResponse.ok()
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .bodyValue(vistaTarea)
-                        )
+                                .bodyValue(eliminarTarea))
+                        .onErrorResume(throwable -> {
+                            log.error(throwable.getMessage());
 
-
-
-                /*ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(
-                        BodyInserters.fromPublisher(
-                                eliminarTareaUseCase.eliminarTarea(request.pathVariable("_id")),
-                                VistaTarea.class
-                        )
-                )*/
+                            return ServerResponse.badRequest().build();
+                        })
         );
     }
+
     @Bean
     public RouterFunction<ServerResponse> calificarTarea(CalificarTareaUseCase calificarTareaUseCase) {
         return route(

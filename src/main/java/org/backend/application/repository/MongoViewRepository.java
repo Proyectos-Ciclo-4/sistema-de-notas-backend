@@ -9,6 +9,7 @@ import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
+import org.backend.domain.identifiers.TareaID;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -114,7 +115,12 @@ public class MongoViewRepository implements ViewRepository {
                                         .where("_id")
                                         .in(vistaCurso.getInscritos())),
                                 VistaEstudiante.class
-                        ));
+                        )
+                                        .doOnNext(vistaEstudiante -> logSuccessfulOperation(
+                                                String.format("Estudiante %s encontrado", vistaEstudiante.getNombre())
+                                        ))
+
+                        );
     }
 
     @Override
@@ -306,27 +312,6 @@ public class MongoViewRepository implements ViewRepository {
         Query encontrarTareaPorCursoID = generateFinderQuery("cursoID", cursoID);
 
         return reactiveMongoTemplate.find(encontrarTareaPorCursoID, VistaTarea.class);
-
-        // La implementación de abajo puede ser correcta, pero es más complicada
-        /*
-        Query encontrarCursoPadre = generateFinderQuery("_id", cursoID);
-        Set<String> tareasIDS = new HashSet<>();
-
-        reactiveMongoTemplate
-                // Encontrar cursoPadre
-                .findOne(encontrarCursoPadre, VistaCurso.class)
-                // Extraer el vistaCurso del Mono.
-                .doOnNext(vistaCurso -> vistaCurso.getTemas()
-                        // Por cada tema, recoger los IDs de las tareas en dichos temas
-                        .forEach(temaGeneric ->
-                                        tareasIDS.addAll(temaGeneric.getTareasID())));
-
-        Query encontrarTareasEnLista = new Query(Criteria
-                .where("_id").in(tareasIDS));
-        *
-        * */
-
-
     }
 
 
@@ -356,54 +341,45 @@ public class MongoViewRepository implements ViewRepository {
                 .doOnError(MongoViewRepository::logError)
                 .doOnSuccess(e -> logSuccessfulOperation("Tema encontrado con exito"));
     }
+
     @Override
-    public Mono<VistaEstudiante> eliminarTareaDeEstudiante(String tareaID, String estudianteID, String cursoID) {
-        return  this.reactiveMongoTemplate.save(
-                this.encontrarEstudiantePorID(estudianteID)
-                        .doOnSuccess(vistaEstudiante ->
-                                vistaEstudiante.encontrarInscripcion("cursoID")
-                                        .eliminarDeEstadoTarea(tareaID)
-
-
-                        )
-        );
-
-
-        /* return this.reactiveMongoTemplate.save(this.encontrarEstudiantePorID(estudianteID)
-                .doOnSuccess(vistaEstudiante ->
-                        vistaEstudiante.encontrarInscripcion(cursoID)
-                                .encontrarEstadoTarea(tareaID)
-                                .actualizarTarea(URLArchivo)));
-
-
-
-        Query buscarTarea = generateFinderQuery("tareaID",tareaID);
-        Update eliminar = new Update().unset("estadosTarea."+tareaID);
-        return reactiveMongoTemplate.findAndModify(buscarTarea,eliminar,VistaEstudiante.class);*/
+    public void eliminarTareaDeEstudiante(String cursoID, String tareaID, String temaID){
+        this.listarEstudiantesEnCurso(cursoID)
+                .flatMap(vistaEstudiante -> {
+                    vistaEstudiante
+                            .encontrarInscripcion(cursoID)
+                            .eliminarEstadoTarea(tareaID);
+                    return this.reactiveMongoTemplate.save(vistaEstudiante);
+                })
+                .subscribe(vistaEstudiante -> logSuccessfulOperation(
+                        String.format("Tarea %s eliminada en estudiante %s", tareaID, vistaEstudiante.getNombre())
+                ));
     }
 
     @Override
-    public Mono<VistaCurso> eliminarTareaDeCurso(String tareaID, String cursoID) {
-        return this.reactiveMongoTemplate.save(this.encontrarCursoPorId(cursoID).doOnSuccess(
-                vistaCurso -> vistaCurso.getTemas().forEach(
-                        temaGeneric -> temaGeneric.eliminarTareasId(tareaID)
-                    )
-                )
+    public void eliminarTareaDeCurso(String cursoID, String tareaID, String temaID) {
+        this.encontrarCursoPorId(cursoID)
+                .flatMap(vistaCurso -> {
+                    vistaCurso
+                            .encontrarTema(temaID)
+                            .eliminarTareaEnArrays(tareaID);
 
-        );
-
-
-        /*Query buscarTarea = generateFinderQuery("tareasID",tareaID);
-
-        Update eliminar = new Update().unset("tareasID."+tareaID);
-
-        return reactiveMongoTemplate.findAndModify(buscarTarea,eliminar,VistaCurso.class);*/
+                    return this.reactiveMongoTemplate.save(vistaCurso);
+                })
+                .subscribe(vistaCurso -> logSuccessfulOperation(
+                        String.format("Tarea %s eliminada del curso %s", tareaID, vistaCurso.getTitulo())
+                ));
 
     }
+
     @Override
-    public Mono<VistaTarea> eliminarTarea(String tareaID){
-        Query tarea = generateFinderQuery("_id",tareaID);
-        return reactiveMongoTemplate.findAndRemove(tarea,VistaTarea.class);
+    public void eliminarVistaTarea(String tareaID) {
+        this.reactiveMongoTemplate.findAndRemove(
+                generateFinderQuery("_id", tareaID),
+                VistaTarea.class
+        ).subscribe(vistaTarea -> logSuccessfulOperation(
+                String.format("Tarea %s eliminada de su colección", vistaTarea.get_id())
+        ));
     }
 
     private static Query generateFinderQuery(String objectKey, String targetValue) {

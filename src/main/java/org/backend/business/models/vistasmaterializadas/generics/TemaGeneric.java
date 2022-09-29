@@ -55,9 +55,8 @@ public class TemaGeneric {
         return tareasID;
     }
 
-    public void eliminarTareasId(String tareaID){
-
+    public void eliminarTareaEnArrays(String tareaID){
         this.tareasID.remove(tareaID);
-        this.tareas.remove(tareaID);
+        this.tareas.removeIf(vistaTarea -> vistaTarea.get_id().equals(tareaID));
     }
 }

@@ -58,5 +58,10 @@ public class VistaCurso {
         return inscritos.contains(estudianteID);
     }
 
+    public TemaGeneric encontrarTema(String temaID) {
+        return this.temas.stream().filter(temaGeneric ->
+                temaGeneric.getTemaID().equals(temaID)).findFirst().get();
+    }
+
 
 }

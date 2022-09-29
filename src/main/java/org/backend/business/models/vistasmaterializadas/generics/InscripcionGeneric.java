@@ -105,11 +105,9 @@ public class InscripcionGeneric {
                 estadoTareaGeneric.getTareaID().equals(tareaID)).findFirst().get();
     }
 
-    public void eliminarDeEstadoTarea(String tareaID) {
-        this.estadosTarea.remove(tareaID);
+    public void eliminarEstadoTarea(String tareaID) {
+        this.estadosTarea.removeIf(estadoTarea
+                -> estadoTarea.getTareaID().equals(tareaID));
 
-
-        /*return (EstadoTareaGeneric) estadosTarea.stream().filter(estadoTareaGeneric ->
-                !estadoTareaGeneric.getTareaID().equals(tareaID)).collect(Collectors.toSet());*/
     }
 }

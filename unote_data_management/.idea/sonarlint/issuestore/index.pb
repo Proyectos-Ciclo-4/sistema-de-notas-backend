@@ -139,16 +139,12 @@ q
 Asrc/main/java/org/backend/application/handlers/CommandHandle.java,8/6/864a7e3a3347a554a63e7c56f1d3a3b9a3b28b28
 p
 @src/main/java/org/backend/application/handlers/QueryHandler.java,d/4/d46e89960ddfff491b7713175719cdcc2cf090f5
-7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 n
 >src/main/java/org/backend/domain/valueobjects/EstadoTarea.java,d/f/df2a3d16ee9bd88fc419486fff49ac35e166c720
 è
 _src/main/java/org/backend/business/models/vistasmaterializadas/generics/InscripcionGeneric.java,9/4/945d4426bb07c101907a3e80477fbba2483dd24f
 l
 <src/main/java/org/backend/domain/commands/EntregarTarea.java,1/0/106a155a9359bd8b1f3d73cbb2b152efadd881a6
-v
-Fsrc/test/java/org/backend/business/usecases/CrearTareaUseCaseTest.java,c/a/cae30380733acdd98862ca1c27911b7c5ed79348
 z
 Jsrc/test/java/org/backend/business/usecases/CalificarTareaUseCaseTest.java,9/a/9ac3943455b4579feb338af074623bd8cd157ce9
 v
@@ -161,3 +157,7 @@ y
 Isrc/test/java/org/backend/business/usecases/EntregarTareaUseCaseTest.java,c/b/cb9053e9fc0aeef716a40bcb2a1e8291ad5ccf93
 u
 Esrc/main/java/org/backend/business/usecases/EntregarTareaUseCase.java,8/6/868768f160260579b332b5f187659600a35b9653
+É
+Ssrc/main/java/org/backend/business/models/vistasmaterializadas/VistaEstudiante.java,c/3/c3fcb477419da04c8687a0e6578179b27f03482e
+~
+Nsrc/main/java/org/backend/business/models/vistasmaterializadas/VistaTarea.java,e/b/eb1e9d40c79bbee63e0605e9da4b4c62ac7b6d9f

@@ -3,6 +3,7 @@ package org.backend.application.bus;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.application.bus.notificationmodels.NotificationNuevaTarea;
+import org.backend.application.bus.notificationmodels.NotificationTareaActualizada;
 import org.backend.application.config.RabbitConfig;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
@@ -41,12 +42,16 @@ public class RabbitMQEventBus {
                 ).getBytes());
     }
 
-    public void publicarCalificacion(VistaEstudiante vistaEstudiante) {
-        log.info(String.format("Calificacion generada a estudiante %s emitida a queue VISTA ESTUDIANTE", vistaEstudiante.get_id()));
+    public void publicarCalificacion(NotificationTareaActualizada notificationTareaActualizada) {
+        log.info(String.format(
+                "Calificacion de tarea %s de estudiante %s emitida a queue VISTA ESTUDIANTE",
+                notificationTareaActualizada.getEstudianteID(),
+                notificationTareaActualizada.getEstadoTareaGeneric().getTareaID()
+                ));
 
         convertAndSend(
                 RabbitConfig.PUBLICAR_CALIFICACION_QUEUE,
-                gson.toJson(vistaEstudiante).getBytes());
+                gson.toJson(notificationTareaActualizada).getBytes());
     }
 
     public void publicarNuevoInscrito(VistaEstudiante vistaEstudiante) {

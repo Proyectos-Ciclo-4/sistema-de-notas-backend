@@ -1,6 +1,7 @@
 package org.backend.business.usecases;
 
 import org.backend.application.bus.RabbitMQEventBus;
+import org.backend.application.bus.notificationmodels.NotificationTareaActualizada;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.domain.commands.CalificarTarea;
@@ -26,7 +27,15 @@ public class CalificarTareaUseCase {
                                 command.getTareaID(),
                                 command.getCalificacion(),
                                 command.getRetroalimentacion()
-                        ))
-                .doOnSuccess(vistaEstudiante -> rabbitMQEventBus.publicarCalificacion(vistaEstudiante));
+                        )
+                                .doOnSuccess(vistaEstudiante ->
+                                        rabbitMQEventBus.publicarCalificacion(
+                                                new NotificationTareaActualizada(
+                                                        vistaEstudiante.get_id(),
+                                                        vistaEstudiante
+                                                                .encontrarInscripcion(command.getCursoID())
+                                                                .encontrarEstadoTarea(command.getTareaID()))
+                                        ))
+                );
     }
 }

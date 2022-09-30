@@ -131,8 +131,6 @@ u
 Esrc/main/java/org/backend/business/usecases/EliminarTareaUseCase.java,1/7/17abcc7bc05d831c4d4ed1d6e9d89cea6ef3dd1b
 o
 ?src/main/java/org/backend/business/gateways/ViewRepository.java,6/9/698cd9e59451b15863c486a5d02c067f720cd85a
-m
-=src/main/java/org/backend/domain/commands/CalificarTarea.java,d/8/d8aa64dcfd9eea7056926ad59cdf82a98cdfaa48
 k
 ;src/main/java/org/backend/application/config/AppConfig.java,2/7/27bb7e512b17be1a3b8a48ee9a32590b627d822a
 q
@@ -147,8 +145,6 @@ l
 <src/main/java/org/backend/domain/commands/EntregarTarea.java,1/0/106a155a9359bd8b1f3d73cbb2b152efadd881a6
 z
 Jsrc/test/java/org/backend/business/usecases/CalificarTareaUseCaseTest.java,9/a/9ac3943455b4579feb338af074623bd8cd157ce9
-v
-Fsrc/main/java/org/backend/business/usecases/CalificarTareaUseCase.java,5/e/5eba165d79489555bd721f54c012dcb423361ec2
 …
 Usrc/test/java/org/backend/business/usecases/InscribirEstudianteACursoUseCaseTest.java,4/c/4cf41c6e4c3d346d6b2dc527f253bf2ab461d064
 

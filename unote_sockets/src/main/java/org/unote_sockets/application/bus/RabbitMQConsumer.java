@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import org.unote_sockets.application.bus.notificationmodels.NotificationNuevaTarea;
+import org.unote_sockets.application.bus.notificationmodels.NotificationTareaActualizada;
 import org.unote_sockets.application.controller.SocketEstudianteController;
 import org.unote_sockets.application.controller.SocketProfesorController;
 import org.unote_sockets.models.vistasmaterializadas.VistaEstudiante;
@@ -43,9 +44,21 @@ public class RabbitMQConsumer {
     }
 
     @RabbitListener(queues = PUBLICAR_CALIFICACION_QUEUE)
-    public void escucharCalificacion(String calificacionJSON) {
-        VistaEstudiante vistaEstudiante = gson.fromJson(calificacionJSON, VistaEstudiante.class);
-        log.info(String.format("Calificación a estudiante %s recibida en queue", vistaEstudiante.get_id()));
+    public void escucharCalificacion(String tareaActualizadaJSON) {
+        NotificationTareaActualizada notificationTareaActualizada = gson.fromJson(tareaActualizadaJSON, NotificationTareaActualizada.class);
+
+        log.info(String.format(
+                "Calificación de tarea %s a estudiante %s recibida en queue.",
+                notificationTareaActualizada.getEstadoTareaGeneric().getTareaID(),
+                notificationTareaActualizada.getEstudianteID()
+        ));
+
+        socketEstudianteController.emitirCalificacionTarea(
+                notificationTareaActualizada.getEstudianteID(),
+                notificationTareaActualizada.getEstadoTareaGeneric()
+        );
+
+
         // TODO: reenviar a socket
     }
 

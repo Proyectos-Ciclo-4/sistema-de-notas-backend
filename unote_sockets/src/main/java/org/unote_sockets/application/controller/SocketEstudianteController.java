@@ -79,11 +79,14 @@ public class SocketEstudianteController {
         }
     }
 
-    public void emitirCalificacionTarea(String estudianteID, VistaEstudiante vistaEstudiante) {
+    public void emitirCalificacionTarea(String estudianteID, EstadoTareaGeneric estadoTareaGeneric) {
         if (Objects.nonNull(estudianteID) && sessions.containsKey(estudianteID)) {
-            broadcastJSON(gson.toJson(vistaEstudiante), estudianteID);
-            log.info("Calificación de tareaemitida desde el websocket");
-
+            broadcastJSON(gson.toJson(estadoTareaGeneric), estudianteID);
+            log.info(String.format(
+                    "Calificación de tarea %s para estudiante %s emitida desde el websocket",
+                    estadoTareaGeneric.getTareaID(),
+                    estudianteID
+            ));
         }
     }
 

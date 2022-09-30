@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.backend.application.bus.notificationmodels.NotificationNuevaInscripcion;
 import org.backend.application.bus.notificationmodels.NotificationNuevaTarea;
 import org.backend.application.bus.notificationmodels.NotificationTareaActualizada;
+import org.backend.application.bus.notificationmodels.NotificationTareaEntregada;
 import org.backend.application.config.RabbitConfig;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
@@ -68,11 +69,13 @@ public class RabbitMQEventBus {
         );
     }
 
-    public void publicarEntregaTarea(VistaEstudiante vistaEstudiante) {
-        log.info(String.format("Entrega hecha por estudiante %s emitida a queue VISTA PROFESOR", vistaEstudiante.getNombre()));
+    public void publicarEntregaTarea(NotificationTareaEntregada notificationTareaEntregada) {
+        log.info(String.format(
+                "Entrega hecha por estudiante %s emitida a queue VISTA PROFESOR",
+                notificationTareaEntregada.getVistaEstudiante().get_id()));
 
         convertAndSend(
                 RabbitConfig.PUBLICAR_ENTREGA_TAREA_QUEUE,
-                gson.toJson(vistaEstudiante).getBytes());
+                gson.toJson(notificationTareaEntregada).getBytes());
     }
 }

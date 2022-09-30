@@ -1,6 +1,7 @@
 package org.backend.business.usecases;
 
 import org.backend.application.bus.RabbitMQEventBus;
+import org.backend.application.bus.notificationmodels.NotificationTareaEntregada;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
@@ -27,6 +28,16 @@ public class EntregarTareaUseCase {
                                 entregarTarea.getTareaID(),
                                 entregarTarea.getArchivoURL()
                         ))
-                .doOnSuccess(vistaEstudiante -> rabbitMQEventBus.publicarEntregaTarea(vistaEstudiante));
+                .doOnSuccess(vistaEstudiante -> entregarTareaMono
+                                .doOnNext(entregarTarea -> this.mongoViewRepository
+                                        .encontrarCursoPorId(entregarTarea.getCursoID())
+                                        .subscribe(vistaCurso -> this.rabbitMQEventBus.publicarEntregaTarea(
+                                                new NotificationTareaEntregada(
+                                                        vistaCurso.getProfesorID(),
+                                                        vistaEstudiante
+                                                )
+                                        ))
+                                )
+                        );
     }
 }

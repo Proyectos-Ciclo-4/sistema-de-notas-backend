@@ -149,8 +149,6 @@ Jsrc/test/java/org/backend/business/usecases/CalificarTareaUseCaseTest.java,9/a
 Usrc/test/java/org/backend/business/usecases/InscribirEstudianteACursoUseCaseTest.java,4/c/4cf41c6e4c3d346d6b2dc527f253bf2ab461d064
 y
 Isrc/test/java/org/backend/business/usecases/EntregarTareaUseCaseTest.java,c/b/cb9053e9fc0aeef716a40bcb2a1e8291ad5ccf93
-u
-Esrc/main/java/org/backend/business/usecases/EntregarTareaUseCase.java,8/6/868768f160260579b332b5f187659600a35b9653
 ƒ
 Ssrc/main/java/org/backend/business/models/vistasmaterializadas/VistaEstudiante.java,c/3/c3fcb477419da04c8687a0e6578179b27f03482e
 ~

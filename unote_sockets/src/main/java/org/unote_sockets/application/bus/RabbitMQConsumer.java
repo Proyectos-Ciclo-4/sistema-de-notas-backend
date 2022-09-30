@@ -77,8 +77,6 @@ public class RabbitMQConsumer {
                 notificationNuevaInscripcion.getProfesorID(),
                 notificationNuevaInscripcion.getVistaEstudiante()
         );
-
-
     }
 
     @RabbitListener(queues = PUBLICAR_ENTREGA_TAREA_QUEUE)

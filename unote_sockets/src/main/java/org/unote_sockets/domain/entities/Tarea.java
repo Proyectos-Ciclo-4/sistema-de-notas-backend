@@ -1,10 +1,10 @@
 package org.unote_sockets.domain.entities;
 
 import co.com.sofka.domain.generic.Entity;
-import org.backend.domain.identifiers.TareaID;
-import org.backend.domain.valueobjects.FechaLimite;
-import org.backend.domain.valueobjects.Porcentaje;
-import org.backend.domain.valueobjects.Titulo;
+import org.unote_sockets.domain.identifiers.TareaID;
+import org.unote_sockets.domain.valueobjects.FechaLimite;
+import org.unote_sockets.domain.valueobjects.Porcentaje;
+import org.unote_sockets.domain.valueobjects.Titulo;
 
 import java.util.Objects;
 

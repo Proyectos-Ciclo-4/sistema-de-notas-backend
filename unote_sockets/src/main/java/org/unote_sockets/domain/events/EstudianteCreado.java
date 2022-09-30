@@ -1,9 +1,10 @@
 package org.unote_sockets.domain.events;
 
+
 import co.com.sofka.domain.generic.DomainEvent;
-import org.backend.domain.entities.Inscripcion;
-import org.backend.domain.identifiers.CursoID;
-import org.backend.domain.valueobjects.Nombre;
+import org.unote_sockets.domain.entities.Inscripcion;
+import org.unote_sockets.domain.identifiers.CursoID;
+import org.unote_sockets.domain.valueobjects.Nombre;
 
 import java.util.HashMap;
 

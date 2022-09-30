@@ -1,14 +1,18 @@
 package org.unote_sockets.domain;
 
+
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
-import org.backend.domain.commands.CrearTarea;
-import org.backend.domain.events.TareaCreada;
-import org.backend.domain.events.TemaCreado;
-import org.backend.domain.identifiers.CursoID;
-import org.backend.domain.identifiers.TareaID;
-import org.backend.domain.identifiers.TemaID;
-import org.backend.domain.valueobjects.*;
+import org.unote_sockets.domain.commands.CrearTarea;
+import org.unote_sockets.domain.events.TareaCreada;
+import org.unote_sockets.domain.events.TemaCreado;
+import org.unote_sockets.domain.identifiers.CursoID;
+import org.unote_sockets.domain.identifiers.TareaID;
+import org.unote_sockets.domain.identifiers.TemaID;
+import org.unote_sockets.domain.valueobjects.Descripcion;
+import org.unote_sockets.domain.valueobjects.FechaLimite;
+import org.unote_sockets.domain.valueobjects.Orden;
+import org.unote_sockets.domain.valueobjects.Titulo;
 
 import java.util.List;
 import java.util.Objects;

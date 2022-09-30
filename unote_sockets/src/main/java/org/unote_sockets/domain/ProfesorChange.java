@@ -1,8 +1,8 @@
 package org.unote_sockets.domain;
 
 import co.com.sofka.domain.generic.EventChange;
-import org.backend.domain.events.CursoAgregado;
-import org.backend.domain.events.ProfesorCreado;
+import org.unote_sockets.domain.events.CursoAgregado;
+import org.unote_sockets.domain.events.ProfesorCreado;
 
 import java.util.HashSet;
 

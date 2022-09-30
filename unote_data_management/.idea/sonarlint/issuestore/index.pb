@@ -129,8 +129,6 @@ Nsrc/main/java/org/backend/business/models/vistasmaterializadas/VistaCurso.java
 _src/main/java/org/backend/business/models/vistasmaterializadas/generics/EstadoTareaGeneric.java,c/a/ca213ba700de5b405c9a3f3a4148b608a9f06abb
 u
 Esrc/main/java/org/backend/business/usecases/EliminarTareaUseCase.java,1/7/17abcc7bc05d831c4d4ed1d6e9d89cea6ef3dd1b
-É
-Ssrc/main/java/org/backend/business/models/vistasmaterializadas/VistaEstudiante.java,c/3/c3fcb477419da04c8687a0e6578179b27f03482e
 o
 ?src/main/java/org/backend/business/gateways/ViewRepository.java,6/9/698cd9e59451b15863c486a5d02c067f720cd85a
 m
@@ -143,8 +141,6 @@ p
 @src/main/java/org/backend/application/handlers/QueryHandler.java,d/4/d46e89960ddfff491b7713175719cdcc2cf090f5
 7
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
-~
-Nsrc/main/java/org/backend/business/models/vistasmaterializadas/VistaTarea.java,e/b/eb1e9d40c79bbee63e0605e9da4b4c62ac7b6d9f
 n
 >src/main/java/org/backend/domain/valueobjects/EstadoTarea.java,d/f/df2a3d16ee9bd88fc419486fff49ac35e166c720
 è

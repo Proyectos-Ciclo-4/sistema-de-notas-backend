@@ -1,12 +1,13 @@
 package org.unote_sockets.domain;
 
+
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
-import org.backend.domain.events.CursoAgregado;
-import org.backend.domain.events.ProfesorCreado;
-import org.backend.domain.identifiers.CursoID;
-import org.backend.domain.identifiers.ProfesorID;
-import org.backend.domain.valueobjects.Nombre;
+import org.unote_sockets.domain.events.CursoAgregado;
+import org.unote_sockets.domain.events.ProfesorCreado;
+import org.unote_sockets.domain.identifiers.CursoID;
+import org.unote_sockets.domain.identifiers.ProfesorID;
+import org.unote_sockets.domain.valueobjects.Nombre;
 
 import java.util.List;
 import java.util.Set;

@@ -1,9 +1,10 @@
 package org.unote_sockets.domain;
 
+
 import co.com.sofka.domain.generic.EventChange;
-import org.backend.domain.commands.CrearTarea;
-import org.backend.domain.events.TareaCreada;
-import org.backend.domain.events.TemaCreado;
+import org.unote_sockets.domain.commands.CrearTarea;
+import org.unote_sockets.domain.events.TareaCreada;
+import org.unote_sockets.domain.events.TemaCreado;
 
 public class TemaChange extends EventChange {
     public TemaChange(Tema tema) {

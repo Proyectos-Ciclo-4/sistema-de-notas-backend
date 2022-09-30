@@ -1,9 +1,10 @@
 package org.unote_sockets.domain.events;
 
+
 import co.com.sofka.domain.generic.DomainEvent;
-import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
-import org.backend.domain.identifiers.ProfesorID;
-import org.backend.domain.valueobjects.Titulo;
+import org.unote_sockets.domain.identifiers.ProfesorID;
+import org.unote_sockets.domain.valueobjects.Titulo;
+import org.unote_sockets.models.generics.TemaGeneric;
 
 import java.util.Set;
 

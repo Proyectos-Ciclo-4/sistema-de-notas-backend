@@ -1,5 +1,6 @@
 package org.unote_sockets.domain.events;
 
+
 import co.com.sofka.domain.generic.DomainEvent;
 
 import java.io.File;

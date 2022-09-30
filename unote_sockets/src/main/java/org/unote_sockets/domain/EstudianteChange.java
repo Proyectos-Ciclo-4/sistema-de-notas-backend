@@ -1,12 +1,12 @@
 package org.unote_sockets.domain;
 
 import co.com.sofka.domain.generic.EventChange;
-import org.backend.domain.entities.Inscripcion;
-import org.backend.domain.events.*;
-import org.backend.domain.identifiers.CursoID;
-import org.backend.domain.valueobjects.Avance;
-import org.backend.domain.valueobjects.EstadoTarea;
-import org.backend.domain.valueobjects.Promedio;
+import org.unote_sockets.domain.entities.Inscripcion;
+import org.unote_sockets.domain.events.*;
+import org.unote_sockets.domain.identifiers.CursoID;
+import org.unote_sockets.domain.valueobjects.Avance;
+import org.unote_sockets.domain.valueobjects.EstadoTarea;
+import org.unote_sockets.domain.valueobjects.Promedio;
 
 public class EstudianteChange extends EventChange {
 

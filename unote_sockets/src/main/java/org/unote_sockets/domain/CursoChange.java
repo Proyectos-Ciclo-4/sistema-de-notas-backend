@@ -1,7 +1,7 @@
 package org.unote_sockets.domain;
 
 import co.com.sofka.domain.generic.EventChange;
-import org.backend.domain.events.CursoCreado;
+import org.unote_sockets.domain.events.CursoCreado;
 
 public class CursoChange extends EventChange {
 

@@ -1,9 +1,9 @@
 package org.unote_sockets.domain.events;
 
 import co.com.sofka.domain.generic.DomainEvent;
-import org.backend.domain.commands.CrearTarea;
-import org.backend.domain.valueobjects.Orden;
-import org.backend.domain.valueobjects.Titulo;
+import org.unote_sockets.domain.commands.CrearTarea;
+import org.unote_sockets.domain.valueobjects.Orden;
+import org.unote_sockets.domain.valueobjects.Titulo;
 
 import java.util.Set;
 

@@ -1,12 +1,12 @@
 package org.unote_sockets.domain.entities;
 
 import co.com.sofka.domain.generic.Entity;
-import org.backend.domain.identifiers.CursoID;
-import org.backend.domain.identifiers.InscripcionID;
-import org.backend.domain.identifiers.TareaID;
-import org.backend.domain.valueobjects.Avance;
-import org.backend.domain.valueobjects.EstadoTarea;
-import org.backend.domain.valueobjects.Promedio;
+import org.unote_sockets.domain.identifiers.CursoID;
+import org.unote_sockets.domain.identifiers.InscripcionID;
+import org.unote_sockets.domain.identifiers.TareaID;
+import org.unote_sockets.domain.valueobjects.Avance;
+import org.unote_sockets.domain.valueobjects.EstadoTarea;
+import org.unote_sockets.domain.valueobjects.Promedio;
 
 import java.util.HashMap;
 import java.util.Objects;

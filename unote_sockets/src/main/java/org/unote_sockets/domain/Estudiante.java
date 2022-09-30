@@ -2,15 +2,15 @@ package org.unote_sockets.domain;
 
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
-import org.backend.domain.entities.Inscripcion;
-import org.backend.domain.events.*;
-import org.backend.domain.identifiers.CursoID;
-import org.backend.domain.identifiers.EstudianteID;
-import org.backend.domain.identifiers.TareaID;
-import org.backend.domain.valueobjects.Avance;
-import org.backend.domain.valueobjects.EstadoTarea;
-import org.backend.domain.valueobjects.Nombre;
-import org.backend.domain.valueobjects.Promedio;
+import org.unote_sockets.domain.entities.Inscripcion;
+import org.unote_sockets.domain.events.*;
+import org.unote_sockets.domain.identifiers.CursoID;
+import org.unote_sockets.domain.identifiers.EstudianteID;
+import org.unote_sockets.domain.identifiers.TareaID;
+import org.unote_sockets.domain.valueobjects.Avance;
+import org.unote_sockets.domain.valueobjects.EstadoTarea;
+import org.unote_sockets.domain.valueobjects.Nombre;
+import org.unote_sockets.domain.valueobjects.Promedio;
 
 import java.util.HashMap;
 import java.util.List;

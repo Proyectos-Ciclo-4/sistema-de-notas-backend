@@ -143,8 +143,6 @@ p
 @src/main/java/org/backend/application/handlers/QueryHandler.java,d/4/d46e89960ddfff491b7713175719cdcc2cf090f5
 7
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
-n
->src/main/java/org/backend/application/config/RabbitConfig.java,9/c/9cf64d9dccfcdf322ea42858a5762400fcc03466
 ~
 Nsrc/main/java/org/backend/business/models/vistasmaterializadas/VistaTarea.java,e/b/eb1e9d40c79bbee63e0605e9da4b4c62ac7b6d9f
 n
@@ -169,7 +167,5 @@ Usrc/test/java/org/backend/business/usecases/InscribirEstudianteACursoUseCaseTes
 Qsrc/main/java/org/backend/business/usecases/InscribirEstudianteACursoUseCase.java,9/2/92538afc1f173f2ae8c91b9ac29b9611644df12d
 y
 Isrc/test/java/org/backend/business/usecases/EntregarTareaUseCaseTest.java,c/b/cb9053e9fc0aeef716a40bcb2a1e8291ad5ccf93
-o
-?src/main/java/org/backend/application/bus/RabbitMQEventBus.java,4/2/4272501460ad8882d5da5905ecdd782c979a87bf
 u
 Esrc/main/java/org/backend/business/usecases/EntregarTareaUseCase.java,8/6/868768f160260579b332b5f187659600a35b9653

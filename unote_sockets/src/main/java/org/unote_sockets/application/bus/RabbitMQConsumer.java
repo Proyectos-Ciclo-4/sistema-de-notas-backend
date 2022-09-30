@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import org.unote_sockets.application.bus.notificationmodels.NotificationNuevaInscripcion;
 import org.unote_sockets.application.bus.notificationmodels.NotificationNuevaTarea;
 import org.unote_sockets.application.bus.notificationmodels.NotificationTareaActualizada;
 import org.unote_sockets.application.controller.SocketEstudianteController;
@@ -65,9 +66,19 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = PUBLICAR_NUEVO_INSCRITO_QUEUE)
     public void escucharInscritoNuevo(String inscritoJSON) {
-        VistaEstudiante vistaEstudiante = gson.fromJson(inscritoJSON, VistaEstudiante.class);
-        log.info(String.format("Nuevo Inscrito %s recibido en queue", vistaEstudiante.get_id()));
-        // TODO: reenviar a socket
+        NotificationNuevaInscripcion notificationNuevaInscripcion = gson.fromJson(inscritoJSON, NotificationNuevaInscripcion.class);
+        log.info(String.format(
+                "Inscripcion de %s en curso de profesor % recibida en queue",
+                notificationNuevaInscripcion.getVistaEstudiante().get_id(),
+                notificationNuevaInscripcion.getProfesorID()
+        ));
+
+        socketProfesorController.emitirNuevaInscripcion(
+                notificationNuevaInscripcion.getProfesorID(),
+                notificationNuevaInscripcion.getVistaEstudiante()
+        );
+
+
     }
 
     @RabbitListener(queues = PUBLICAR_ENTREGA_TAREA_QUEUE)

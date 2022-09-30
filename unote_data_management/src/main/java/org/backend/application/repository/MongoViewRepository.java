@@ -1,6 +1,7 @@
 package org.backend.application.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.business.gateways.ViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaCurso;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
@@ -33,10 +34,13 @@ import java.util.regex.Pattern;
 public class MongoViewRepository implements ViewRepository {
 
     private final ReactiveMongoTemplate reactiveMongoTemplate;
+    private final RabbitMQEventBus rabbitMQEventBus;
 
-    public MongoViewRepository(ReactiveMongoTemplate reactiveMongoTemplate) {
+    public MongoViewRepository(ReactiveMongoTemplate reactiveMongoTemplate, RabbitMQEventBus rabbitMQEventBus) {
         this.reactiveMongoTemplate = reactiveMongoTemplate;
+        this.rabbitMQEventBus = rabbitMQEventBus;
     }
+
 
     /* OPERACIONES CON VISTA MATERIALIZADA 'PROFESOR' */
 
@@ -164,7 +168,12 @@ public class MongoViewRepository implements ViewRepository {
                                                             .is(cursoID))),
                                                     new Update().addToSet("inscripciones.$.estadosTarea", estadoTareaGeneric),
                                                             VistaEstudiante.class)
-                                                    .subscribe(vistaEstudiante ->
+                                            .doOnSuccess(vistaEstudiante ->
+                                                    rabbitMQEventBus.publicarTareaNueva(
+                                                            inscritoID,
+                                                            estadoTareaGeneric
+                                                    ))
+                                            .subscribe(vistaEstudiante ->
                                                             logSuccessfulOperation(String.format(
                                                                     "Tarea %s añadida al estudiante %s",
                                                                     estadoTareaGeneric.getTareaID(),

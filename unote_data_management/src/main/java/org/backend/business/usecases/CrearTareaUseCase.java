@@ -27,12 +27,9 @@ public class CrearTareaUseCase {
     private final MongoEventRepository mongoEventRepository;
     private final MongoViewRepository mongoViewRepository;
 
-    private final RabbitMQEventBus rabbitMQEventBus;
-
-    public CrearTareaUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, RabbitMQEventBus rabbitMQEventBus) {
+    public CrearTareaUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository) {
         this.mongoEventRepository = mongoEventRepository;
         this.mongoViewRepository = mongoViewRepository;
-        this.rabbitMQEventBus = rabbitMQEventBus;
     }
 
     public Mono<VistaTarea> apply(Mono<CrearTarea> crearTareaMono) {
@@ -67,7 +64,7 @@ public class CrearTareaUseCase {
                                                     vistaTarea.getFechaLimite(),
                                                     vistaTarea.getOrden()
                                             ))
-                            ).doOnSuccess(vistaTarea -> rabbitMQEventBus.publicarTareaNueva(vistaTarea));
+                            );
 
                     /*
                     Tema temaAR = new Tema(TemaID.of(command.getTemaID()));

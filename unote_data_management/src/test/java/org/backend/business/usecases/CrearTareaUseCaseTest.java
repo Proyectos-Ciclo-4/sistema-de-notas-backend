@@ -20,12 +20,10 @@ class CrearTareaUseCaseTest {
     MongoViewRepository mongoViewRepository;
     MongoEventRepository mongoEventRepository;
 
-    RabbitMQEventBus rabbitMQEventBus;
-
     CrearTareaUseCase useCase;
 
     @BeforeEach
-    void init(){useCase = new CrearTareaUseCase(mongoEventRepository,mongoViewRepository, rabbitMQEventBus);}
+    void init(){useCase = new CrearTareaUseCase(mongoEventRepository,mongoViewRepository);}
 
     @Test
     void crearTareaTest(){

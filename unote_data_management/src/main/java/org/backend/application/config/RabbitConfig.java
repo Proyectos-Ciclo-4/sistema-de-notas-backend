@@ -55,7 +55,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding bindingTareaNuevaQueue() {
+    public Binding BindingTareaNuevaQueue() {
         return BindingBuilder
                 .bind(tareaNuevaQueue())
                 .to(getTopicExchange())
@@ -63,7 +63,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding bindingCalificacionQueue() {
+    public Binding BindingCalificacionQueue() {
         return BindingBuilder
                 .bind(calificacionQueue())
                 .to(getTopicExchange())
@@ -71,7 +71,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding bindingInscritoNuevoQueue() {
+    public Binding BindingInscritoNuevoQueue() {
         return BindingBuilder
                 .bind(inscritoNuevoQueue())
                 .to(getTopicExchange())
@@ -79,7 +79,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding bindingEntregaTareaQueue() {
+    public Binding BindingEntregaTareaQueue() {
         return BindingBuilder
                 .bind(entregaTareaQueue())
                 .to(getTopicExchange())

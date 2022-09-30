@@ -3,6 +3,7 @@ package org.unote_sockets.application.controller;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.unote_sockets.models.generics.EstadoTareaGeneric;
 import org.unote_sockets.models.vistasmaterializadas.VistaEstudiante;
 import org.unote_sockets.models.vistasmaterializadas.VistaTarea;
 
@@ -16,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Slf4j
 @Component
@@ -73,9 +72,9 @@ public class SocketEstudianteController {
 
     }
 
-    public void emitirCreacionTarea(String estudianteID, VistaTarea vistaTarea) {
+    public void emitirCreacionTarea(String estudianteID, EstadoTareaGeneric estadoTareaGeneric) {
         if (Objects.nonNull(estudianteID) && sessions.containsKey(estudianteID)) {
-            broadcastJSON(gson.toJson(vistaTarea), estudianteID);
+            broadcastJSON(gson.toJson(estadoTareaGeneric), estudianteID);
             log.info("Creación de tarea emitida desde el websocket");
         }
     }

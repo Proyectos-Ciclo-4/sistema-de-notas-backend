@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import org.unote_sockets.application.bus.notificationmodels.NotificationNuevaTarea;
+import org.unote_sockets.application.controller.SocketEstudianteController;
+import org.unote_sockets.application.controller.SocketProfesorController;
 import org.unote_sockets.models.vistasmaterializadas.VistaEstudiante;
 import org.unote_sockets.models.vistasmaterializadas.VistaTarea;
 
@@ -13,8 +16,14 @@ public class RabbitMQConsumer {
 
     private final Gson gson = new Gson();
 
-    //TODO: inyectar socket handler
-    // Constructor para inyectar socket handler
+    SocketEstudianteController socketEstudianteController;
+
+    SocketProfesorController socketProfesorController;
+
+    public RabbitMQConsumer(SocketEstudianteController socketEstudianteController, SocketProfesorController socketProfesorController) {
+        this.socketEstudianteController = socketEstudianteController;
+        this.socketProfesorController = socketProfesorController;
+    }
 
     // Queues
     public static final String PUBLICAR_TAREA_NUEVA_QUEUE = "estudiante.tarea_nueva";
@@ -24,9 +33,13 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = PUBLICAR_TAREA_NUEVA_QUEUE)
     public void escucharTareaNueva(String tareaNuevaJSON) {
-        VistaTarea vistaTarea = gson.fromJson(tareaNuevaJSON, VistaTarea.class);
-        log.info(String.format("Creación de tarea %s recibida en queue", vistaTarea.get_id()));
-        // TODO: reenviar a socket
+        NotificationNuevaTarea notificationNuevaTarea = gson.fromJson(tareaNuevaJSON, NotificationNuevaTarea.class);
+        log.info(String.format("Creación de tarea %s recibida en queue", notificationNuevaTarea.getEstadoTareaGeneric().getTareaID()));
+        socketEstudianteController.emitirCreacionTarea(
+                notificationNuevaTarea.getEstudianteID(),
+                notificationNuevaTarea.getEstadoTareaGeneric()
+        );
+
     }
 
     @RabbitListener(queues = PUBLICAR_CALIFICACION_QUEUE)

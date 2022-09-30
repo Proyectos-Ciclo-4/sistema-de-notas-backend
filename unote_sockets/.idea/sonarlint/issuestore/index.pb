@@ -81,3 +81,15 @@ t
 Dsrc/main/java/org/unote_sockets/domain/events/EstadoTareaCreado.java,1/7/178e4a38fc8b12676d3728209315cd9ce5cf4209
 s
 Csrc/main/java/org/unote_sockets/domain/events/EstudianteCreado.java,e/5/e53484b0ee4c4f54de27b97cb5042466cf652b8f
+f
+6src/main/java/org/unote_sockets/domain/Estudiante.java,c/9/c91fd63a3c443ed09849a5380c0b93209cbd8f37
+€
+Psrc/main/java/org/unote_sockets/models/vistasmaterializadas/VistaEstudiante.java,8/8/882c9903f95ca117040df1f857192992d69ac8b2
+{
+Ksrc/main/java/org/unote_sockets/models/vistasmaterializadas/VistaCurso.java,0/d/0d2ca435b77717dd4b244fe2c2b9a12c96093a5b
+p
+@src/main/java/org/unote_sockets/domain/entities/Inscripcion.java,c/6/c613da6623a81b446971cb0fabf1769cb19717ef
+j
+:src/main/java/org/unote_sockets/domain/entities/Tarea.java,8/0/80ba0d0b3f1fceca76323fdc86bcd283f59e1d52
+r
+Bsrc/main/java/org/unote_sockets/domain/events/InscritoEnCurso.java,f/4/f42020fdb997ea515415e96e470be49daf655587

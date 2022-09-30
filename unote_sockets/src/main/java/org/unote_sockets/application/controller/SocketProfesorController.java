@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
-@ServerEndpoint("/vistaEstudiante/{profesorID}")
+@ServerEndpoint("/vistaProfesor/{profesorID}")
 public class SocketProfesorController {
     private static Map<String, Map<String, Session>> sessions;
     private final Gson gson = new Gson();

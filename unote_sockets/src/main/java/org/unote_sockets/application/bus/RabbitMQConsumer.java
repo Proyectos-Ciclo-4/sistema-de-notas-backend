@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.unote_sockets.application.bus.notificationmodels.NotificationNuevaInscripcion;
 import org.unote_sockets.application.bus.notificationmodels.NotificationNuevaTarea;
 import org.unote_sockets.application.bus.notificationmodels.NotificationTareaActualizada;
+import org.unote_sockets.application.bus.notificationmodels.NotificationTareaEntregada;
 import org.unote_sockets.application.controller.SocketEstudianteController;
 import org.unote_sockets.application.controller.SocketProfesorController;
 import org.unote_sockets.models.vistasmaterializadas.VistaEstudiante;
@@ -81,10 +82,15 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = PUBLICAR_ENTREGA_TAREA_QUEUE)
     public void escucharEntregaTarea(String entregaJSON) {
-        VistaEstudiante vistaEstudiante = gson.fromJson(entregaJSON, VistaEstudiante.class);
-        log.info(String.format("Entrega de studiante %s recibida en queue", vistaEstudiante.get_id()));
-        // TODO: reenviar a socket
+        NotificationTareaEntregada notificationTareaEntregada = gson.fromJson(entregaJSON, NotificationTareaEntregada.class);
+        log.info(String.format(
+                "Entrega de estudiante %s recibida en queue",
+                notificationTareaEntregada.getVistaEstudiante().get_id()));
 
+        socketProfesorController.emtirNuevaEntrega(
+                notificationTareaEntregada.getProfesorID(),
+                notificationTareaEntregada.getVistaEstudiante()
+        );
     }
 
 }

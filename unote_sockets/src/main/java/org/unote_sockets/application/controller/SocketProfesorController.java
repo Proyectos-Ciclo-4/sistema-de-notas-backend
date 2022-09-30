@@ -79,7 +79,6 @@ public class SocketProfesorController {
         if (Objects.nonNull(profesorID) && sessions.containsKey(profesorID)) {
             broadcastJSON(gson.toJson(vistaEstudiante), profesorID);
             log.info("Nueva entrega emitida desde el web socket");
-
         }
     }
 

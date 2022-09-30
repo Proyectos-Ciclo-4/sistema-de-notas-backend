@@ -35,7 +35,11 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = PUBLICAR_TAREA_NUEVA_QUEUE)
     public void escucharTareaNueva(String tareaNuevaJSON) {
         NotificationNuevaTarea notificationNuevaTarea = gson.fromJson(tareaNuevaJSON, NotificationNuevaTarea.class);
-        log.info(String.format("Creación de tarea %s recibida en queue", notificationNuevaTarea.getEstadoTareaGeneric().getTareaID()));
+        log.info(String.format(
+                "Creación de tarea %s recibida en queue",
+                notificationNuevaTarea.getEstadoTareaGeneric().getTareaID()
+        ));
+
         socketEstudianteController.emitirCreacionTarea(
                 notificationNuevaTarea.getEstudianteID(),
                 notificationNuevaTarea.getEstadoTareaGeneric()
@@ -57,9 +61,6 @@ public class RabbitMQConsumer {
                 notificationTareaActualizada.getEstudianteID(),
                 notificationTareaActualizada.getEstadoTareaGeneric()
         );
-
-
-        // TODO: reenviar a socket
     }
 
     @RabbitListener(queues = PUBLICAR_NUEVO_INSCRITO_QUEUE)

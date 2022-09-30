@@ -43,24 +43,24 @@ public class MongoViewRepository implements ViewRepository {
     @Override
     public Mono<VistaProfesor> crearProfesor(VistaProfesor vistaProfesor) {
         return this.reactiveMongoTemplate
-                .save(vistaProfesor)
-                .doOnError(
-                        MongoViewRepository::logError
-                ).doOnSuccess(
-                        e -> logSuccessfulOperation(String.format("Profesor %s creado", vistaProfesor.get_id()))
-                );
+            .save(vistaProfesor)
+            .doOnError(
+                MongoViewRepository::logError
+            ).doOnSuccess(
+                e -> logSuccessfulOperation(String.format("Profesor %s creado", vistaProfesor.get_id()))
+            );
     }
 
 
     @Override
     public Flux<VistaProfesor> encontrarTodosProfesores() {
         return reactiveMongoTemplate
-                .findAll(VistaProfesor.class)
-                .doOnError(
-                        MongoViewRepository::logError
-                )
-                .doOnComplete(
-                        () -> logSuccessfulOperation("Base de datos regresó todos los profesores."));
+            .findAll(VistaProfesor.class)
+            .doOnError(
+                MongoViewRepository::logError
+            )
+            .doOnComplete(
+                () -> logSuccessfulOperation("Base de datos regresó todos los profesores."));
     }
 
     @Override
@@ -68,10 +68,10 @@ public class MongoViewRepository implements ViewRepository {
         Query query = generateFinderQuery("_id", profesorID);
 
         return reactiveMongoTemplate
-                .findOne(query, VistaProfesor.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Profesor no encontrado")))
-                .doOnError(MongoViewRepository::logError)
-                .doOnSuccess(e -> logSuccessfulOperation("Profesor encontrado con exito"));
+            .findOne(query, VistaProfesor.class)
+            .switchIfEmpty(Mono.error(new IllegalAccessException("Profesor no encontrado")))
+            .doOnError(MongoViewRepository::logError)
+            .doOnSuccess(e -> logSuccessfulOperation("Profesor encontrado con exito"));
 
     }
 
@@ -81,22 +81,22 @@ public class MongoViewRepository implements ViewRepository {
         Update agregarCursoIDaProfesor = new Update().addToSet("cursosIDS", cursoID);
 
         this.reactiveMongoTemplate
-                .updateFirst(
-                        encontrarProfesor,
-                        agregarCursoIDaProfesor,
-                        VistaProfesor.class
+            .updateFirst(
+                encontrarProfesor,
+                agregarCursoIDaProfesor,
+                VistaProfesor.class
 
-                ).subscribe();
+            ).subscribe();
     }
 
     /* OPERACIONES CON VISTA MATERIALIZADA 'ESTUDIANTE' */
 
     @Override
     public Flux<VistaEstudiante> encontrarTodosEstudiantes() {
-        return  reactiveMongoTemplate
-                .findAll(VistaEstudiante.class)
-                .doOnError(MongoViewRepository::logError)
-                .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los estudiantes."));
+        return reactiveMongoTemplate
+            .findAll(VistaEstudiante.class)
+            .doOnError(MongoViewRepository::logError)
+            .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los estudiantes."));
     }
 
     @Override
@@ -104,93 +104,112 @@ public class MongoViewRepository implements ViewRepository {
         Query query = generateFinderQuery("_id", estudianteID);
 
         return reactiveMongoTemplate
-                .findOne(query, VistaEstudiante.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Estudiante no encontrado")))
-                .doOnError(MongoViewRepository::logError)
-                .doOnSuccess(e -> logSuccessfulOperation("Estudiante encontrado con exito"));
+            .findOne(query, VistaEstudiante.class)
+            .switchIfEmpty(Mono.error(new IllegalAccessException("Estudiante no encontrado")))
+            .doOnError(MongoViewRepository::logError)
+            .doOnSuccess(e -> logSuccessfulOperation("Estudiante encontrado con exito"));
     }
 
     @Override
     public Flux<VistaEstudiante> listarEstudiantesEnCurso(String cursoID) {
         return this.encontrarCursoPorId(cursoID)
-                        .flatMapMany(vistaCurso -> reactiveMongoTemplate.find(
-                                new Query(Criteria
-                                        .where("_id")
-                                        .in(vistaCurso.getInscritos())),
-                                VistaEstudiante.class
-                        )
-                                        .doOnNext(vistaEstudiante -> logSuccessfulOperation(
-                                                String.format("Estudiante %s encontrado", vistaEstudiante.getNombre())
-                                        ))
+            .flatMapMany(vistaCurso -> reactiveMongoTemplate.find(
+                        new Query(Criteria
+                            .where("_id")
+                            .in(vistaCurso.getInscritos())),
+                        VistaEstudiante.class
+                    )
+                    .doOnNext(vistaEstudiante -> logSuccessfulOperation(
+                        String.format("Estudiante %s encontrado", vistaEstudiante.getNombre())
+                    ))
 
-                        );
+            );
     }
 
     @Override
     public Mono<VistaEstudiante> crearEstudiante(VistaEstudiante vistaEstudiante) {
         return this.reactiveMongoTemplate
-                .save(vistaEstudiante)
-                .doOnError(
-                        throwable -> log.error(throwable.getMessage())
-                ).doOnSuccess(
-                        e -> log.info(String.format("Estudiante %s creado", vistaEstudiante.get_id()))
-                );
+            .save(vistaEstudiante)
+            .doOnError(
+                throwable -> log.error(throwable.getMessage())
+            ).doOnSuccess(
+                e -> log.info(String.format("Estudiante %s creado", vistaEstudiante.get_id()))
+            );
     }
 
     @Override
-    public Mono<VistaEstudiante> agregarInscripcion(InscripcionGeneric inscripcionGeneric, String estudianteID) {
+    public Mono<VistaEstudiante> agregarInscripcion(InscripcionGeneric inscripcionGeneric,
+        String estudianteID) {
 
-    return this.reactiveMongoTemplate
-                .findAndModify(
-                        generateFinderQuery("_id", estudianteID),
-                        new Update().addToSet("inscripciones", inscripcionGeneric),
-                        new FindAndModifyOptions().returnNew(true),
-                        VistaEstudiante.class
-                );
+        return this.reactiveMongoTemplate
+            .findAndModify(
+                generateFinderQuery("_id", estudianteID),
+                new Update().addToSet("inscripciones", inscripcionGeneric),
+                new FindAndModifyOptions().returnNew(true),
+                VistaEstudiante.class
+            );
     }
 
     @Override
     public void agregarTareaAInscripcion(String cursoID, EstadoTareaGeneric estadoTareaGeneric) {
         this.encontrarCursoPorId(cursoID)
-                .subscribe(vistaCurso ->
-                        vistaCurso.getInscritos()
-                                .forEach(inscritoID -> {
-                                    this.reactiveMongoTemplate.findAndModify(
-                                            new Query(Criteria
-                                                    .where("_id")
-                                                    .is(inscritoID)
-                                                    .andOperator(Criteria
-                                                            .where("inscripciones.cursoID")
-                                                            .is(cursoID))),
-                                                    new Update().addToSet("inscripciones.$.estadosTarea", estadoTareaGeneric),
-                                                            VistaEstudiante.class)
-                                                    .subscribe(vistaEstudiante ->
-                                                            logSuccessfulOperation(String.format(
-                                                                    "Tarea %s añadida al estudiante %s",
-                                                                    estadoTareaGeneric.getTareaID(),
-                                                                    vistaEstudiante.getNombre()))
-                                                    );
-                                        }
-                                ));
+            .subscribe(vistaCurso ->
+                vistaCurso.getInscritos()
+                    .forEach(inscritoID -> {
+                            this.reactiveMongoTemplate.findAndModify(
+                                    new Query(Criteria
+                                        .where("_id")
+                                        .is(inscritoID)
+                                        .andOperator(Criteria
+                                            .where("inscripciones.cursoID")
+                                            .is(cursoID))),
+                                    new Update().addToSet("inscripciones.$.estadosTarea", estadoTareaGeneric),
+
+                                    VistaEstudiante.class)
+                                .subscribe(vistaEstudiante ->
+
+                                    {
+                                        this.ActualizarCumplimiento(vistaEstudiante);
+                                        logSuccessfulOperation(String.format(
+                                            "Tarea %s añadida al estudiante %s",
+                                            estadoTareaGeneric.getTareaID(),
+                                            vistaEstudiante.getNombre()));
+                                    }
+
+                                );
+                        }
+                    ));
     }
 
     @Override
-    public Mono<VistaEstudiante> entregarTarea(String estudianteID, String cursoID, String tareaID, String URLArchivo) {
+    public Mono<VistaEstudiante> entregarTarea(String estudianteID, String cursoID, String tareaID,
+        String URLArchivo) {
         return this.reactiveMongoTemplate.save(this.encontrarEstudiantePorID(estudianteID)
-                .doOnSuccess(vistaEstudiante ->
-                        vistaEstudiante.encontrarInscripcion(cursoID)
-                                .encontrarEstadoTarea(tareaID)
-                                .actualizarTarea(URLArchivo)));
+            .doOnSuccess(vistaEstudiante ->
+                vistaEstudiante.encontrarInscripcion(cursoID)
+                    .encontrarEstadoTarea(tareaID)
+                    .actualizarTarea(URLArchivo))
+            .doOnSuccess(vistaEstudiante -> vistaEstudiante.setAvance()));
+
+    }
+
+    public void ActualizarCumplimiento(VistaEstudiante vistaEstudiante) {
+        var update = new Update();
+        Query query = new Query(Criteria.where("_id").is(vistaEstudiante.get_id()));
+        vistaEstudiante.setAvance();
+        update.set("inscripciones", vistaEstudiante.getInscripciones());
+        this.reactiveMongoTemplate.updateFirst(query, update,"vistaEstudiante").subscribe();
 
     }
 
     @Override
-    public Mono<VistaEstudiante> calificarTarea(String estudianteID, String cursoID, String tareaID, Integer calificacion, String retroalimentacion) {
+    public Mono<VistaEstudiante> calificarTarea(String estudianteID, String cursoID, String tareaID,
+        Integer calificacion, String retroalimentacion) {
         return this.reactiveMongoTemplate.save(this.encontrarEstudiantePorID(estudianteID)
-                .doOnSuccess(vistaEstudiante ->
-                        vistaEstudiante.encontrarInscripcion(cursoID)
-                                .encontrarEstadoTarea(tareaID)
-                                .calificarTarea(calificacion, retroalimentacion)));
+            .doOnSuccess(vistaEstudiante ->
+                vistaEstudiante.encontrarInscripcion(cursoID)
+                    .encontrarEstadoTarea(tareaID)
+                    .calificarTarea(calificacion, retroalimentacion)));
 
     }
 
@@ -205,12 +224,14 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
-    public Mono<VistaEstudiante> actualizarCalificacion(String cursoID, String tareaID, Integer calificacion) {
+    public Mono<VistaEstudiante> actualizarCalificacion(String cursoID, String tareaID,
+        Integer calificacion) {
         return null;
     }
 
     @Override
-    public Mono<VistaEstudiante> actualizarTarea(String cursoID, String tareaID, EstadoTareaGeneric estadoTareaGeneric) {
+    public Mono<VistaEstudiante> actualizarTarea(String cursoID, String tareaID,
+        EstadoTareaGeneric estadoTareaGeneric) {
         return null;
     }
 
@@ -221,53 +242,53 @@ public class MongoViewRepository implements ViewRepository {
         Query query = generateFinderQuery("_id", cursoID);
 
         return reactiveMongoTemplate
-                .findOne(query, VistaCurso.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Curso no encontrado")))
-                .doOnError(MongoViewRepository::logError)
-                .doOnSuccess(e -> logSuccessfulOperation("Curso encontrado con exito"));
+            .findOne(query, VistaCurso.class)
+            .switchIfEmpty(Mono.error(new IllegalAccessException("Curso no encontrado")))
+            .doOnError(MongoViewRepository::logError)
+            .doOnSuccess(e -> logSuccessfulOperation("Curso encontrado con exito"));
     }
 
     @Override
     public Flux<VistaCurso> encontrarCursoPorRegex(String regex) {
         Query encontrarRegex = new Query(
-                Criteria
-                        .where("titulo")
-                        .regex(Pattern.compile(regex, Pattern.CASE_INSENSITIVE))
+            Criteria
+                .where("titulo")
+                .regex(Pattern.compile(regex, Pattern.CASE_INSENSITIVE))
         );
 
         return reactiveMongoTemplate
-                .find(encontrarRegex, VistaCurso.class);
+            .find(encontrarRegex, VistaCurso.class);
 
     }
 
     @Override
     public Flux<VistaCurso> listarCursos() {
         return reactiveMongoTemplate
-                .findAll(VistaCurso.class)
-                .doOnError(MongoViewRepository::logError)
-                .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los Cursos."));
+            .findAll(VistaCurso.class)
+            .doOnError(MongoViewRepository::logError)
+            .doOnComplete(() -> logSuccessfulOperation("Base de datos regresó todos los Cursos."));
     }
 
     @Override
     public Mono<VistaCurso> crearCurso(VistaCurso curso) {
         return reactiveMongoTemplate
-                .save(curso)
-                .doOnError(MongoViewRepository::logError)
-                .doOnNext(vistaCurso ->
-                        this.agregarCursoIDaProfesor(vistaCurso.getProfesorID(), vistaCurso.get_id()))
-                .doOnSuccess(e -> logSuccessfulOperation(String.format("Curso %s creado", curso.get_id())));
+            .save(curso)
+            .doOnError(MongoViewRepository::logError)
+            .doOnNext(vistaCurso ->
+                this.agregarCursoIDaProfesor(vistaCurso.getProfesorID(), vistaCurso.get_id()))
+            .doOnSuccess(e -> logSuccessfulOperation(String.format("Curso %s creado", curso.get_id())));
 
     }
 
     @Override
     public void agregarInscritoACurso(String estudianteID, String cursoID) {
         reactiveMongoTemplate
-                .findAndModify(
-                        generateFinderQuery("_id", cursoID),
-                        new Update().addToSet("inscritos", estudianteID),
-                        new FindAndModifyOptions().returnNew(true),
-                        VistaCurso.class
-                ).subscribe();
+            .findAndModify(
+                generateFinderQuery("_id", cursoID),
+                new Update().addToSet("inscritos", estudianteID),
+                new FindAndModifyOptions().returnNew(true),
+                VistaCurso.class
+            ).subscribe();
 
     }
 
@@ -277,18 +298,18 @@ public class MongoViewRepository implements ViewRepository {
         Update agregarTemaACurso = new Update();
 
         return reactiveMongoTemplate
-                .findOne(encontrarCursoPadre, VistaCurso.class)
-                .doOnNext(vistaCurso -> {
-                    Set<TemaGeneric> cursoTemas = vistaCurso.getTemas();
-                    cursoTemas.add(nuevoTema);
+            .findOne(encontrarCursoPadre, VistaCurso.class)
+            .doOnNext(vistaCurso -> {
+                Set<TemaGeneric> cursoTemas = vistaCurso.getTemas();
+                cursoTemas.add(nuevoTema);
 
-                    agregarTemaACurso.set("temas", cursoTemas);
+                agregarTemaACurso.set("temas", cursoTemas);
 
-                    reactiveMongoTemplate
-                            .findAndModify(encontrarCursoPadre, agregarTemaACurso, VistaCurso.class)
-                            .subscribe();
-                        })
-                .thenReturn(nuevoTema);
+                reactiveMongoTemplate
+                    .findAndModify(encontrarCursoPadre, agregarTemaACurso, VistaCurso.class)
+                    .subscribe();
+            })
+            .thenReturn(nuevoTema);
     }
 
     @Override
@@ -303,10 +324,10 @@ public class MongoViewRepository implements ViewRepository {
         Query query = generateFinderQuery("_id", tareaID);
 
         return reactiveMongoTemplate
-                .findOne(query, VistaTarea.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Tarea no encontrada")))
-                .doOnError(MongoViewRepository::logError)
-                .doOnSuccess(e -> logSuccessfulOperation("Tarea encontrada con exito"));
+            .findOne(query, VistaTarea.class)
+            .switchIfEmpty(Mono.error(new IllegalAccessException("Tarea no encontrada")))
+            .doOnError(MongoViewRepository::logError)
+            .doOnSuccess(e -> logSuccessfulOperation("Tarea encontrada con exito"));
     }
 
     @Override
@@ -321,13 +342,13 @@ public class MongoViewRepository implements ViewRepository {
     public void agregarTareaATema(VistaTarea vistaTarea) {
         Query encontrarTemaPadre = generateFinderQuery("temas.temaID", vistaTarea.getTemaID());
         Update agregarTareaATema = new Update().addToSet("temas.$.tareasID", vistaTarea.get_id());
-        agregarTareaATema.addToSet("temas.$.tareas",vistaTarea);
+        agregarTareaATema.addToSet("temas.$.tareas", vistaTarea);
         reactiveMongoTemplate
-                .findAndModify(
-                            encontrarTemaPadre,
-                            agregarTareaATema,
-                            VistaCurso.class
-                ).subscribe();
+            .findAndModify(
+                encontrarTemaPadre,
+                agregarTareaATema,
+                VistaCurso.class
+            ).subscribe();
         ;
     }
 
@@ -339,58 +360,59 @@ public class MongoViewRepository implements ViewRepository {
 
     public Mono<TemaGeneric> encontrarTema(String temaID) {
         return reactiveMongoTemplate.
-                findOne(new Query(Criteria.where("temas.temaID").is(temaID)), TemaGeneric.class)
-                .switchIfEmpty(Mono.error(new IllegalAccessException("Tema no encotrado")))
-                .doOnError(MongoViewRepository::logError)
-                .doOnSuccess(e -> logSuccessfulOperation("Tema encontrado con exito"));
+            findOne(new Query(Criteria.where("temas.temaID").is(temaID)), TemaGeneric.class)
+            .switchIfEmpty(Mono.error(new IllegalAccessException("Tema no encotrado")))
+            .doOnError(MongoViewRepository::logError)
+            .doOnSuccess(e -> logSuccessfulOperation("Tema encontrado con exito"));
     }
 
     @Override
-    public void eliminarTareaDeEstudiante(String cursoID, String tareaID, String temaID){
+    public void eliminarTareaDeEstudiante(String cursoID, String tareaID, String temaID) {
         this.listarEstudiantesEnCurso(cursoID)
-                .flatMap(vistaEstudiante -> {
-                    vistaEstudiante
-                            .encontrarInscripcion(cursoID)
-                            .eliminarEstadoTarea(tareaID);
-                    return this.reactiveMongoTemplate.save(vistaEstudiante);
-                })
-                .subscribe(vistaEstudiante -> logSuccessfulOperation(
-                        String.format("Tarea %s eliminada en estudiante %s", tareaID, vistaEstudiante.getNombre())
-                ));
+            .flatMap(vistaEstudiante -> {
+                vistaEstudiante
+                    .encontrarInscripcion(cursoID)
+                    .eliminarEstadoTarea(tareaID);
+                return this.reactiveMongoTemplate.save(vistaEstudiante);
+            })
+            .subscribe(vistaEstudiante -> logSuccessfulOperation(
+                String.format("Tarea %s eliminada en estudiante %s", tareaID,
+                    vistaEstudiante.getNombre())
+            ));
     }
 
     @Override
     public void eliminarTareaDeCurso(String cursoID, String tareaID, String temaID) {
         this.encontrarCursoPorId(cursoID)
-                .flatMap(vistaCurso -> {
-                    vistaCurso
-                            .encontrarTema(temaID)
-                            .eliminarTareaEnArrays(tareaID);
+            .flatMap(vistaCurso -> {
+                vistaCurso
+                    .encontrarTema(temaID)
+                    .eliminarTareaEnArrays(tareaID);
 
-                    return this.reactiveMongoTemplate.save(vistaCurso);
-                })
-                .subscribe(vistaCurso -> logSuccessfulOperation(
-                        String.format("Tarea %s eliminada del curso %s", tareaID, vistaCurso.getTitulo())
-                ));
+                return this.reactiveMongoTemplate.save(vistaCurso);
+            })
+            .subscribe(vistaCurso -> logSuccessfulOperation(
+                String.format("Tarea %s eliminada del curso %s", tareaID, vistaCurso.getTitulo())
+            ));
 
     }
 
     @Override
     public void eliminarVistaTarea(String tareaID) {
         this.reactiveMongoTemplate.findAndRemove(
-                generateFinderQuery("_id", tareaID),
-                VistaTarea.class
+            generateFinderQuery("_id", tareaID),
+            VistaTarea.class
         ).subscribe(vistaTarea -> logSuccessfulOperation(
-                String.format("Tarea %s eliminada de su colección", vistaTarea.get_id())
+            String.format("Tarea %s eliminada de su colección", vistaTarea.get_id())
         ));
     }
 
     @Override
     public void eliminarTareasPorTema(String cursoID, String temaID) {
         this.encontrarCursoPorId(cursoID)
-                .subscribe(vistaCurso -> {
-                    if (vistaCurso.encontrarTema(temaID).hasTareas()) {
-                        EliminarTareaUseCase eliminarTareaUseCase = new EliminarTareaUseCase(this);
+            .subscribe(vistaCurso -> {
+                if (vistaCurso.encontrarTema(temaID).hasTareas()) {
+                    EliminarTareaUseCase eliminarTareaUseCase = new EliminarTareaUseCase(this);
 
                         /*
                         vistaCurso.encontrarTema(temaID).getTareasID()
@@ -402,29 +424,29 @@ public class MongoViewRepository implements ViewRepository {
 
                          */
 
-                        vistaCurso.encontrarTema(temaID).getTareasID()
-                                .stream().map(tareaID -> new EliminarTarea(cursoID, tareaID, temaID))
-                                .forEach(eliminarTarea -> eliminarTareaUseCase.apply(Mono.just(eliminarTarea))
-                                        .subscribe(eliminarTarea1 -> System.out.println(eliminarTarea1.getTareaID())));
-                    }
-                });
+                    vistaCurso.encontrarTema(temaID).getTareasID()
+                        .stream().map(tareaID -> new EliminarTarea(cursoID, tareaID, temaID))
+                        .forEach(eliminarTarea -> eliminarTareaUseCase.apply(Mono.just(eliminarTarea))
+                            .subscribe(eliminarTarea1 -> System.out.println(eliminarTarea1.getTareaID())));
+                }
+            });
 
     }
 
     @Override
     public void eliminarTema(String cursoID, String temaID) {
         this.reactiveMongoTemplate.save(this.encontrarCursoPorId(cursoID)
-                        .doOnSuccess(vistaCurso -> vistaCurso.eliminarTemaPorID(temaID)))
-                .subscribe(vistaCursoActualizado
-                        -> logSuccessfulOperation(
-                                String.format("Tema %s en curso %s eliminado.", temaID, cursoID))
-                );
+                .doOnSuccess(vistaCurso -> vistaCurso.eliminarTemaPorID(temaID)))
+            .subscribe(vistaCursoActualizado
+                -> logSuccessfulOperation(
+                String.format("Tema %s en curso %s eliminado.", temaID, cursoID))
+            );
     }
 
     private static Query generateFinderQuery(String objectKey, String targetValue) {
         return new Query(Criteria
-                .where(objectKey)
-                .is(targetValue)
+            .where(objectKey)
+            .is(targetValue)
         );
     }
 
@@ -432,6 +454,7 @@ public class MongoViewRepository implements ViewRepository {
     private static void logSuccessfulOperation(String successMessage) {
         log.info(successMessage);
     }
+
     private static void logError(Throwable error) {
         log.error(error.getMessage());
     }

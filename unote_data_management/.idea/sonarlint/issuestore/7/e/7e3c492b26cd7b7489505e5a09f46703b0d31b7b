@@ -1,0 +1,11 @@
+
+Š
+java:S1319"hThe type of "tareasCurso" should be an interface such as "Map" rather than the implementation "HashMap".(Ú²¨øÿÿÿÿ8Ìö©–¶0
+
+java:S1319*"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(¶èœÌşÿÿÿÿ8Íö©–¶0
+H
+java:S2160"+Override the "equals" method in this class.(•šÿ8ãö©–¶0
+j	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘ë¦8êö©–¶0
+o	java:S100""NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßû»‡ùÿÿÿÿ8ëö©–¶0
+o	java:S100&"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„“ úÿÿÿÿ8ìö©–¶0
+o	java:S100*"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶èœÌşÿÿÿÿ8íö©–¶0

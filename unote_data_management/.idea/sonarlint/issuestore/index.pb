@@ -147,12 +147,8 @@ n
 _src/main/java/org/backend/business/models/vistasmaterializadas/generics/InscripcionGeneric.java,9/4/945d4426bb07c101907a3e80477fbba2483dd24f
 l
 <src/main/java/org/backend/domain/commands/EntregarTarea.java,1/0/106a155a9359bd8b1f3d73cbb2b152efadd881a6
-y
-Isrc/main/java/org/backend/application/repository/MongoViewRepository.java,4/a/4a687fcd21344968728b435d5f18783102d49c26
 v
 Fsrc/test/java/org/backend/business/usecases/CrearTareaUseCaseTest.java,c/a/cae30380733acdd98862ca1c27911b7c5ed79348
-r
-Bsrc/main/java/org/backend/business/usecases/CrearTareaUseCase.java,9/e/9e3eea37cf92825ec200d26a3eddbb9c768f4f46
 z
 Jsrc/test/java/org/backend/business/usecases/CalificarTareaUseCaseTest.java,9/a/9ac3943455b4579feb338af074623bd8cd157ce9
 v

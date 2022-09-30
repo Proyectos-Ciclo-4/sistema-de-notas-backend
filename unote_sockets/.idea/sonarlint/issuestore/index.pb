@@ -1,8 +1,6 @@
 
 7
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
-w
-Gsrc/main/java/org/unote_sockets/application/config/WebSocketConfig.java,b/d/bdf3b14289be54721ca662494004bb0ae7d9fe7f
 ~
 Nsrc/main/java/org/unote_sockets/models/vistasmaterializadas/VistaProfesor.java,b/5/b588e3b5fc2a1e556712bf536e640c3297cfddf0
 {

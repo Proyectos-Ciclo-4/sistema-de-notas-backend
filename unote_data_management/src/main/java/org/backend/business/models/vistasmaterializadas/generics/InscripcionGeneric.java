@@ -1,8 +1,10 @@
 package org.backend.business.models.vistasmaterializadas.generics;
 
+import org.apache.commons.math3.util.Precision;
 import org.backend.domain.valueobjects.EstadoTarea;
 import org.yaml.snakeyaml.util.ArrayUtils;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -92,7 +94,8 @@ public class InscripcionGeneric {
 
         this.avance = tareasTotales == 0
                 ? 0
-                : (float) this.estadosTarea.size() / (float) tareasEntregadas;
+                : Precision.round((float) this.estadosTarea.size() / (float) tareasEntregadas, 2);
+
     }
 
     public Set<EstadoTareaGeneric> getEstadosTarea() {

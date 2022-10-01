@@ -369,9 +369,13 @@ public class MongoViewRepository implements ViewRepository {
                             .eliminarEstadoTarea(tareaID);
                     return this.reactiveMongoTemplate.save(vistaEstudiante);
                 })
-                .subscribe(vistaEstudiante -> logSuccessfulOperation(
-                        String.format("Tarea %s eliminada en estudiante %s", tareaID, vistaEstudiante.getNombre())
-                ));
+                .subscribe(vistaEstudiante -> {
+                    this.ActualizarCumplimiento(vistaEstudiante);
+                        logSuccessfulOperation(
+                            String.format("Tarea %s eliminada en estudiante %s", tareaID,
+                                vistaEstudiante.getNombre()));
+                    }
+                );
     }
 
     @Override

@@ -165,9 +165,5 @@ v
 Fsrc/main/java/org/backend/business/usecases/CalificarTareaUseCase.java,5/e/5eba165d79489555bd721f54c012dcb423361ec2
 é
 ^src/main/java/org/backend/application/bus/notificationmodels/NotificationNuevaInscripcion.java,b/b/bb071154d12a51c1398b34466e366146eab83c26
-å
-\src/main/java/org/backend/application/bus/notificationmodels/NotificationTareaEntregada.java,5/5/55d95bc2f12aeb0cee166aed706a7049bde9ee3e
 Å
 Qsrc/main/java/org/backend/business/usecases/InscribirEstudianteACursoUseCase.java,9/2/92538afc1f173f2ae8c91b9ac29b9611644df12d
-u
-Esrc/main/java/org/backend/business/usecases/EntregarTareaUseCase.java,8/6/868768f160260579b332b5f187659600a35b9653

@@ -3,6 +3,7 @@ package org.backend.business.usecases;
 
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.domain.events.EstudianteCreado;
 import org.backend.domain.valueobjects.Nombre;
@@ -26,9 +27,11 @@ class CrearEstudianteUseCaseTest {
     @InjectMocks
     CrearEstudianteUseCase crearEstudianteUseCase;
 
+    Blockchain blockchain;
+
     @BeforeEach
     void init() {
-        crearEstudianteUseCase = new CrearEstudianteUseCase(mongoViewRepository,mongoEventRepository);
+        crearEstudianteUseCase = new CrearEstudianteUseCase(mongoViewRepository,mongoEventRepository, blockchain);
     }
 
     @Test

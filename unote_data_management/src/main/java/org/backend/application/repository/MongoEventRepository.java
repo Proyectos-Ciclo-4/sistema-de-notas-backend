@@ -4,6 +4,7 @@ import co.com.sofka.domain.generic.DomainEvent;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.business.gateways.EventRepository;
+import org.backend.business.models.vistasmaterializadas.SavedHash;
 import org.backend.business.models.vistasmaterializadas.generics.StoredEvent;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -70,5 +71,10 @@ public class MongoEventRepository implements EventRepository {
                         throw new IllegalArgumentException("No se encontró el evento de dominio solicitado");
                     }
                 });
+    }
+
+    @Override
+    public Mono<SavedHash> saveEventHash(SavedHash hash) {
+        return reactiveMongoTemplate.save(hash, "blockChainHash");
     }
 }

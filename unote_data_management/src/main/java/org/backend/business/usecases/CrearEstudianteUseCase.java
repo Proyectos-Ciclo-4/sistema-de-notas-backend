@@ -1,19 +1,12 @@
 package org.backend.business.usecases;
 
-import co.com.sofka.domain.generic.DomainEvent;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
-import org.backend.domain.Estudiante;
 import org.backend.domain.commands.CrearEstudiante;
-import org.backend.domain.identifiers.EstudianteID;
-import org.backend.domain.valueobjects.Nombre;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-
-
-import java.util.HashMap;
-import java.util.List;
 
 
 @Service
@@ -21,9 +14,12 @@ public class CrearEstudianteUseCase {
     private final MongoViewRepository mongoViewRepository;
     private final MongoEventRepository mongoEventRepository;
 
-    public CrearEstudianteUseCase(MongoViewRepository mongoViewRepository, MongoEventRepository mongoEventRepository) {
+    private final Blockchain blockchain;
+
+    public CrearEstudianteUseCase(MongoViewRepository mongoViewRepository, MongoEventRepository mongoEventRepository, Blockchain blockchain) {
         this.mongoViewRepository = mongoViewRepository;
         this.mongoEventRepository = mongoEventRepository;
+        this.blockchain = blockchain;
     }
 
     public Mono<VistaEstudiante> apply(Mono<CrearEstudiante> crearEstudianteMono){
@@ -42,7 +38,7 @@ public class CrearEstudianteUseCase {
                             command.getEstudianteID(),
                             command.getNombre()
                     );
-
+                    blockchain.saveBlock(estudiante,"estudianteCreado",estudiante.get_id());
                     return mongoViewRepository.crearEstudiante(estudiante);
                 }
         );

@@ -1,0 +1,17 @@
+
+]	java:S125$"<This block of commented-out lines of code should be removed.(Š¤”Öşÿÿÿÿ8š„ÿş·0
+a
+java:S1128"DRemove this unused import 'co.com.sofka.domain.generic.DomainEvent'.(Í–’ı8„ÿş·0
+W
+java:S1128":Remove this unused import 'org.backend.domain.Estudiante'.(¯ûÇµ8„ÿş·0
+e
+java:S1128	"HRemove this unused import 'org.backend.domain.identifiers.EstudianteID'.(¸ÏŠ8„ÿş·0
+e
+java:S1128
+"CRemove this unused import 'org.backend.domain.valueobjects.Nombre'.(†Æş‡úÿÿÿÿ8Ÿ„ÿş·0
+P
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8Ÿ„ÿş·0
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8 „ÿş·0
+U
+java:S1068"8Remove this unused "mongoEventRepository" private field.(ı˜…ƒ8¡„ÿş·0

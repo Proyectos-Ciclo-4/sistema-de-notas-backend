@@ -54,16 +54,16 @@ public class CrearTareaUseCase {
                             .doOnNext(vistaTarea ->
                                     mongoViewRepository.agregarTareaATema(nuevaTarea))
                             .doOnSuccess(vistaTarea ->
-                                    mongoViewRepository.agregarTareaAInscripcion(
-                                            vistaTarea.getCursoID(),
-                                            new EstadoTareaGeneric(
-                                                    vistaTarea.get_id(),
-                                                    vistaTarea.getTitulo(),
-                                                    vistaTarea.getTemaID(),
-                                                    vistaTarea.getTemaNombre(),
-                                                    vistaTarea.getFechaLimite(),
-                                                    vistaTarea.getOrden()
-                                            ))
+                                        mongoViewRepository.agregarTareaAInscripcion(
+                                                vistaTarea.getCursoID(),
+                                                new EstadoTareaGeneric(
+                                                        vistaTarea.get_id(),
+                                                        vistaTarea.getTitulo(),
+                                                        vistaTarea.getTemaID(),
+                                                        vistaTarea.getTemaNombre(),
+                                                        vistaTarea.getFechaLimite(),
+                                                        vistaTarea.getOrden()
+                                                ))
                             );
 
                     /*

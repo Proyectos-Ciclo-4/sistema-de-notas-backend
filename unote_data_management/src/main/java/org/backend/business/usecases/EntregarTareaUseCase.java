@@ -27,17 +27,28 @@ public class EntregarTareaUseCase {
                                 entregarTarea.getCursoID(),
                                 entregarTarea.getTareaID(),
                                 entregarTarea.getArchivoURL()
-                        ))
-                .doOnSuccess(vistaEstudiante -> entregarTareaMono
-                                .doOnNext(entregarTarea -> this.mongoViewRepository
-                                        .encontrarCursoPorId(entregarTarea.getCursoID())
-                                        .subscribe(vistaCurso -> this.rabbitMQEventBus.publicarEntregaTarea(
-                                                new NotificationTareaEntregada(
-                                                        vistaCurso.getProfesorID(),
-                                                        vistaEstudiante
-                                                )
-                                        ))
+                        )
+                                .doOnSuccess(vistaEstudiante -> this.mongoViewRepository
+                                                .encontrarCursoPorId(entregarTarea.getCursoID())
+                                                .subscribe(vistaCurso -> this.rabbitMQEventBus.publicarEntregaTarea(
+                                                        new NotificationTareaEntregada(
+                                                                vistaCurso.getProfesorID(),
+                                                                vistaEstudiante
+                                                        )
+                                                ))
+                                        )
+                                /*.doOnNext(vistaEstudiante -> entregarTareaMono
+                                        .subscribe(entregarTarea -> this.mongoViewRepository
+                                                .encontrarCursoPorId(entregarTarea.getCursoID())
+                                                .subscribe(vistaCurso -> this.rabbitMQEventBus.publicarEntregaTarea(
+                                                        new NotificationTareaEntregada(
+                                                                vistaCurso.getProfesorID(),
+                                                                vistaEstudiante
+                                                        )
+                                                ))
+                                        )
                                 )
-                        );
+                                 */
+                );
     }
 }

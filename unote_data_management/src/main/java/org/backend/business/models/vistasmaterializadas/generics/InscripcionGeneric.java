@@ -76,6 +76,7 @@ public class InscripcionGeneric {
         return avance;
     }
 
+
     public String getNombreCurso() {
         return nombreCurso;
     }
@@ -84,8 +85,14 @@ public class InscripcionGeneric {
         return fechaInscripcion;
     }
 
-    public void setAvance(Float avance) {
-        this.avance = avance;
+    public void setAvance() {
+        int tareasTotales = this.estadosTarea.size();
+        float tareasEntregadas = this.estadosTarea.stream()
+                .filter(estadoTareaGeneric -> estadoTareaGeneric.getEstado().equals("Entregada")).count();
+
+        this.avance = tareasTotales == 0
+                ? 0
+                : (float) this.estadosTarea.size() / (float) tareasEntregadas;
     }
 
     public Set<EstadoTareaGeneric> getEstadosTarea() {

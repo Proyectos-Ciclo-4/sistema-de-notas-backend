@@ -4,7 +4,6 @@ import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class VistaCurso {
     private String _id;

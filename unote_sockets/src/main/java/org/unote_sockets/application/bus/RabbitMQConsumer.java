@@ -69,7 +69,7 @@ public class RabbitMQConsumer {
     public void escucharInscritoNuevo(String inscritoJSON) {
         NotificationNuevaInscripcion notificationNuevaInscripcion = gson.fromJson(inscritoJSON, NotificationNuevaInscripcion.class);
         log.info(String.format(
-                "Inscripcion de %s en curso de profesor % recibida en queue",
+                "Inscripcion de %s en curso de profesor %s recibida en queue",
                 notificationNuevaInscripcion.getVistaEstudiante().get_id(),
                 notificationNuevaInscripcion.getProfesorID()
         ));

@@ -103,11 +103,3 @@ bsrc/main/java/org/unote_sockets/application/bus/notificationmodels/Notification
 dsrc/main/java/org/unote_sockets/application/bus/notificationmodels/NotificationNuevaInscripcion.java,8/8/88297315e1805e4f18bf8b8bec2a454a7355c52e
 ”
 dsrc/main/java/org/unote_sockets/application/bus/notificationmodels/NotificationTareaActualizada.java,e/5/e56a1e303eae4e50eda21e9427c700bac1c2406e
-„
-Tsrc/main/java/org/unote_sockets/application/controller/SocketProfesorController.java,7/4/746b50a09974bd84e998227af2e390fbff938399
-†
-Vsrc/main/java/org/unote_sockets/application/controller/SocketEstudianteController.java,7/8/7802ff2391aa8fa3fe14ca215a6202fc34b021b2
-w
-Gsrc/main/java/org/unote_sockets/application/config/WebSocketConfig.java,b/d/bdf3b14289be54721ca662494004bb0ae7d9fe7f
-u
-Esrc/main/java/org/unote_sockets/application/bus/RabbitMQConsumer.java,9/8/9885da14281117ebb908872c401c86ff44020082

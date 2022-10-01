@@ -163,9 +163,8 @@ v
 Fsrc/main/java/org/backend/business/usecases/CalificarTareaUseCase.java,5/e/5eba165d79489555bd721f54c012dcb423361ec2
 é
 ^src/main/java/org/backend/application/bus/notificationmodels/NotificationNuevaInscripcion.java,b/b/bb071154d12a51c1398b34466e366146eab83c26
-å
-\src/main/java/org/backend/application/bus/notificationmodels/NotificationTareaEntregada.java,5/5/55d95bc2f12aeb0cee166aed706a7049bde9ee3e
 Å
+<<<<<<< HEAD
 Qsrc/main/java/org/backend/business/usecases/InscribirEstudianteACursoUseCase.java,9/2/92538afc1f173f2ae8c91b9ac29b9611644df12d
 u
 Esrc/main/java/org/backend/business/usecases/EntregarTareaUseCase.java,8/6/868768f160260579b332b5f187659600a35b9653
@@ -183,3 +182,6 @@ y
 Isrc/main/java/org/backend/application/repository/MongoViewRepository.java,4/a/4a687fcd21344968728b435d5f18783102d49c26
 7
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+=======
+Qsrc/main/java/org/backend/business/usecases/InscribirEstudianteACursoUseCase.java,9/2/92538afc1f173f2ae8c91b9ac29b9611644df12d
+>>>>>>> d5c40b9e91811972a8a1441f325567501135b12f

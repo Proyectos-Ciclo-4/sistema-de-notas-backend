@@ -1,5 +1,6 @@
 package org.backend.business.models.vistasmaterializadas;
 
+import java.util.stream.Collectors;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.domain.events.EstudianteCreado;
@@ -37,7 +38,7 @@ public class VistaEstudiante {
 
     public static VistaEstudiante fromCreationEvent(EstudianteCreado estudianteCreado) {
         return new VistaEstudiante(
-                estudianteCreado.getNombre().toString()
+            estudianteCreado.getNombre().toString()
         );
     }
 
@@ -67,6 +68,20 @@ public class VistaEstudiante {
 
     public InscripcionGeneric encontrarInscripcion(String cursoID) {
         return inscripciones.stream().filter(inscripcionGeneric ->
-                inscripcionGeneric.getCursoID().equals(cursoID)).findFirst().get();
+            inscripcionGeneric.getCursoID().equals(cursoID)).findFirst().get();
+    }
+
+    public VistaEstudiante setAvance(){
+        var nuevaInscripcion = inscripciones.stream().map(inscripcionGeneric -> {
+            var totalTarea = inscripcionGeneric.getEstadosTarea().size();
+            var tareasEntregada = inscripcionGeneric.getEstadosTarea().stream().filter(
+                estadoTareaGeneric -> estadoTareaGeneric.getEstado().equals("Entregada")
+            ).count();
+            var promedio = (float) tareasEntregada/(float) totalTarea;
+            inscripcionGeneric.setPromedio(promedio*100);
+            return inscripcionGeneric;
+        }).collect(Collectors.toSet());
+        this.inscripciones = nuevaInscripcion;
+        return this;
     }
 }

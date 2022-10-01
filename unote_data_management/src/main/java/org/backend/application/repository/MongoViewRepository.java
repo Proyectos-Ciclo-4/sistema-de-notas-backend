@@ -12,8 +12,6 @@ import org.backend.business.models.vistasmaterializadas.generics.InscripcionGene
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 import org.backend.business.usecases.EliminarTareaUseCase;
 import org.backend.domain.commands.EliminarTarea;
-import org.backend.domain.commands.EliminarTema;
-import org.backend.domain.identifiers.TareaID;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -23,8 +21,6 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.HashSet;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -158,45 +154,44 @@ public class MongoViewRepository implements ViewRepository {
         this.encontrarCursoPorId(cursoID)
                 .subscribe(vistaCurso ->
                         vistaCurso.getInscritos()
-                                .forEach(inscritoID -> {
-                                    this.encontrarEstudiantePorID(inscritoID)
-                                            .subscribe(vistaEstudiante -> {
-                                                vistaEstudiante
-                                                        .encontrarInscripcion(cursoID)
-                                                        .agregarEstadoTarea(estadoTareaGeneric);
+                                .forEach(inscritoID -> this.encontrarEstudiantePorID(inscritoID)
+                                        .subscribe(vistaEstudiante -> {
+                                            vistaEstudiante
+                                                    .encontrarInscripcion(cursoID)
+                                                    .agregarEstadoTarea(estadoTareaGeneric);
 
-                                                vistaEstudiante
-                                                        .encontrarInscripcion(cursoID)
-                                                        .setAvance();
+                                            vistaEstudiante
+                                                    .encontrarInscripcion(cursoID)
+                                                    .setAvance();
 
-                                                this.reactiveMongoTemplate.save(vistaEstudiante)
-                                                        .subscribe(vistaEstudianteActualizada -> {
-                                                            log.info(String.format(
-                                                                    "Inscripción %s de estudiante %sactualizado con éxito",
-                                                                    estadoTareaGeneric,
-                                                                    vistaEstudiante.getNombre()
-                                                            ));
-
-                                                            this.rabbitMQEventBus.publicarTareaNueva(
-                                                                    vistaEstudiante.get_id(),
-                                                                    estadoTareaGeneric
-                                                            );
-
-                                                        });
-                                            });
-                                }));
+                                            this.reactiveMongoTemplate.save(vistaEstudiante)
+                                                    .subscribe(vistaEstudianteActualizada -> {
+                                                        log.info(String.format(
+                                                                "Inscripción %s de estudiante %s actualizada con éxito",
+                                                                estadoTareaGeneric.getTareaID(),
+                                                                vistaEstudiante.getNombre()
+                                                        ));
+                                                        this.rabbitMQEventBus.publicarTareaNueva(
+                                                                vistaEstudiante.get_id(),
+                                                                estadoTareaGeneric
+                                                        );
+                                                    });
+                                            })
+                                ));
     }
 
     @Override
     public Mono<VistaEstudiante> entregarTarea(String estudianteID, String cursoID, String tareaID, String URLArchivo) {
-        return this.reactiveMongoTemplate.save(this.encontrarEstudiantePorID(estudianteID)
-                .doOnSuccess(vistaEstudiante ->
-                        vistaEstudiante.encontrarInscripcion(cursoID)
-                                .encontrarEstadoTarea(tareaID)
-                                .actualizarTarea(URLArchivo))
-                .doOnSuccess(vistaEstudiante -> vistaEstudiante.setAvance())
-        );
+        return this.reactiveMongoTemplate.save(
+                this.encontrarEstudiantePorID(estudianteID)
+                        .doOnSuccess(vistaEstudiante -> {
+                            vistaEstudiante.encontrarInscripcion(cursoID)
+                                    .encontrarEstadoTarea(tareaID)
+                                    .actualizarTarea(URLArchivo);
 
+                            vistaEstudiante.encontrarInscripcion(cursoID).setAvance();
+                        })
+        );
     }
 
     @Override
@@ -343,7 +338,6 @@ public class MongoViewRepository implements ViewRepository {
                             agregarTareaATema,
                             VistaCurso.class
                 ).subscribe();
-        ;
     }
 
     @Override
@@ -367,14 +361,17 @@ public class MongoViewRepository implements ViewRepository {
                     vistaEstudiante
                             .encontrarInscripcion(cursoID)
                             .eliminarEstadoTarea(tareaID);
+
+                    vistaEstudiante
+                            .encontrarInscripcion(cursoID)
+                            .setAvance();
+
                     return this.reactiveMongoTemplate.save(vistaEstudiante);
                 })
-                .subscribe(vistaEstudiante -> {
-                    this.actualizarCumplimiento(vistaEstudiante);
+                .subscribe(vistaEstudiante ->
                         logSuccessfulOperation(
                             String.format("Tarea %s eliminada en estudiante %s", tareaID,
-                                vistaEstudiante.getNombre()));
-                    }
+                                vistaEstudiante.getNombre()))
                 );
     }
 
@@ -446,16 +443,6 @@ public class MongoViewRepository implements ViewRepository {
                 .is(targetValue)
         );
     }
-
-    public void actualizarCumplimiento(VistaEstudiante vistaEstudiante) {
-        Update update = new Update();
-        Query query = new Query(Criteria.where("_id").is(vistaEstudiante.get_id()));
-        vistaEstudiante.setAvance();
-        update.set("inscripciones", vistaEstudiante.getInscripciones());
-        this.reactiveMongoTemplate.updateFirst(query, update,"vistaEstudiante").subscribe();
-
-    }
-
 
     private static void logSuccessfulOperation(String successMessage) {
         log.info(successMessage);

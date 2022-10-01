@@ -63,26 +63,6 @@ public class VistaEstudiante {
     return avance;
   }
 
-  public VistaEstudiante setAvance() {
-    Set<InscripcionGeneric> nuevaInscripcion = inscripciones.stream().map(
-            inscripcionGeneric -> {
-              int tareasTotales = inscripcionGeneric.getEstadosTarea().size();
-              long tareasEntregadas = inscripcionGeneric.getEstadosTarea().stream()
-                      .filter(estadoTareaGeneric -> estadoTareaGeneric.getEstado().equals("Entregada")).count();
-              float promedio = tareasTotales == 0
-                      ? 0
-                      : (float) tareasEntregadas / (float) tareasTotales;
-
-              inscripcionGeneric.setPromedio(promedio * 100);
-
-              return inscripcionGeneric;
-            }).collect(Collectors.toSet());
-
-    this.inscripciones = nuevaInscripcion;
-
-    return this;
-  }
-
   public Set<InscripcionGeneric> getInscripciones() {
     return inscripciones;
   }

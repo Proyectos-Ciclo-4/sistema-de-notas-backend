@@ -24,6 +24,8 @@ public class RabbitMQEventBus {
     }
 
     private void convertAndSend(String routingKey, byte[] objetivo) {
+        System.out.println("CALLED");
+
         rabbitTemplate.convertAndSend(
                 RabbitConfig.EXCHANGE,
                 routingKey,

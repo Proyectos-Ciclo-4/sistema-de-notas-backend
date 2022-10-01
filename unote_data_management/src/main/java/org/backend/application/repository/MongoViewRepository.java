@@ -174,10 +174,14 @@ public class MongoViewRepository implements ViewRepository {
                                                             estadoTareaGeneric
                                                     ))
                                             .subscribe(vistaEstudiante ->
-                                                            logSuccessfulOperation(String.format(
-                                                                    "Tarea %s añadida al estudiante %s",
-                                                                    estadoTareaGeneric.getTareaID(),
-                                                                    vistaEstudiante.getNombre()))
+                                                    {
+                                                        this.ActualizarCumplimiento(vistaEstudiante);
+
+                                                        logSuccessfulOperation(String.format(
+                                                                "Tarea %s añadida al estudiante %s",
+                                                                estadoTareaGeneric.getTareaID(),
+                                                                vistaEstudiante.getNombre()));
+                                                    }
                                                     );
                                         }
                                 ));
@@ -189,7 +193,9 @@ public class MongoViewRepository implements ViewRepository {
                 .doOnSuccess(vistaEstudiante ->
                         vistaEstudiante.encontrarInscripcion(cursoID)
                                 .encontrarEstadoTarea(tareaID)
-                                .actualizarTarea(URLArchivo)));
+                                .actualizarTarea(URLArchivo))
+                .doOnSuccess(vistaEstudiante -> vistaEstudiante.setAvance())
+        );
 
     }
 
@@ -435,6 +441,15 @@ public class MongoViewRepository implements ViewRepository {
                 .where(objectKey)
                 .is(targetValue)
         );
+    }
+
+    public void ActualizarCumplimiento(VistaEstudiante vistaEstudiante) {
+        Update update = new Update();
+        Query query = new Query(Criteria.where("_id").is(vistaEstudiante.get_id()));
+        vistaEstudiante.setAvance();
+        update.set("inscripciones", vistaEstudiante.getInscripciones());
+        this.reactiveMongoTemplate.updateFirst(query, update,"vistaEstudiante").subscribe();
+
     }
 
 

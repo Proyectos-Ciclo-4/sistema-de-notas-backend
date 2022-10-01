@@ -6,6 +6,7 @@ import org.backend.domain.events.EstudianteCreado;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class VistaEstudiante {
     private String _id;
@@ -59,6 +60,20 @@ public class VistaEstudiante {
 
     public Float getAvance() {
         return avance;
+    }
+
+    public VistaEstudiante setAvance(){
+        var nuevaInscripcion = inscripciones.stream().map(inscripcionGeneric -> {
+            var totalTarea = inscripcionGeneric.getEstadosTarea().size();
+            var tareasEntregada = inscripcionGeneric.getEstadosTarea().stream().filter(
+                    estadoTareaGeneric -> estadoTareaGeneric.getEstado().equals("Entregada")
+            ).count();
+            var promedio = (float) tareasEntregada/(float) totalTarea;
+            inscripcionGeneric.setPromedio(promedio*100);
+            return inscripcionGeneric;
+        }).collect(Collectors.toSet());
+        this.inscripciones = nuevaInscripcion;
+        return this;
     }
 
     public Set<InscripcionGeneric> getInscripciones() {

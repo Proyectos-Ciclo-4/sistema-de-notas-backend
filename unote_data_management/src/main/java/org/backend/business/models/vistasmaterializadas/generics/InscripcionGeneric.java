@@ -94,7 +94,7 @@ public class InscripcionGeneric {
 
         this.avance = tareasTotales == 0
                 ? 0
-                : Precision.round((float) this.estadosTarea.size() / (float) tareasEntregadas, 2);
+                : Precision.round((float) tareasEntregadas/(float) this.estadosTarea.size() , 2);
 
     }
 

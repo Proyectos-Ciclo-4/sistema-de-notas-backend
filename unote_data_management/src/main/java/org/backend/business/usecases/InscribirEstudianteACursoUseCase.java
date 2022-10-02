@@ -43,7 +43,8 @@ public class InscribirEstudianteACursoUseCase {
                       vistaTarea.getTemaID(),
                       vistaTarea.getTemaNombre(),
                       vistaTarea.getFechaLimite(),
-                      vistaTarea.getOrden()
+                      vistaTarea.getOrden(),
+                  vistaTarea.getDescripcion()
                   )
               )
               .collect(Collectors.toSet())

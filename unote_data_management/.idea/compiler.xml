@@ -11,6 +11,7 @@
         <module name="sofka_unote_backend" />
         <module name="unote" />
         <module name="sistema-de-notas-backend" />
+        <module name="unote_data_management" />
       </profile>
     </annotationProcessing>
   </component>

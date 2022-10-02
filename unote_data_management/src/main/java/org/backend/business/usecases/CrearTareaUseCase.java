@@ -62,7 +62,8 @@ public class CrearTareaUseCase {
                                                         vistaTarea.getTemaID(),
                                                         vistaTarea.getTemaNombre(),
                                                         vistaTarea.getFechaLimite(),
-                                                        vistaTarea.getOrden()
+                                                        vistaTarea.getOrden(),
+                                                    vistaTarea.getDescripcion()
                                                 ))
                             );
 

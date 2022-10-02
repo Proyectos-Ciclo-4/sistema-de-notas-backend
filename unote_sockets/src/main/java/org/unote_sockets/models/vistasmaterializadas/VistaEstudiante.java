@@ -13,6 +13,7 @@ public class VistaEstudiante {
     private Float promedio;
     private Float avance;
 
+    private String tipo;
     private Set<InscripcionGeneric> inscripciones;
 
     public VistaEstudiante(String _id, String nombre, Float promedio, Float avance) {
@@ -41,6 +42,13 @@ public class VistaEstudiante {
         );
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
     public VistaEstudiante() {
     }

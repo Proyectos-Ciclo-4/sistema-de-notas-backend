@@ -37,6 +37,7 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = PUBLICAR_TAREA_NUEVA_QUEUE)
     public void escucharTareaNueva(String tareaNuevaJSON) {
         NotificationNuevaTarea notificationNuevaTarea = gson.fromJson(tareaNuevaJSON, NotificationNuevaTarea.class);
+        notificationNuevaTarea.getEstadoTareaGeneric().setTipo(PUBLICAR_TAREA_NUEVA_QUEUE);
         log.info(String.format(
                 "Creación de tarea %s recibida en queue",
                 notificationNuevaTarea.getEstadoTareaGeneric().getTareaID()
@@ -52,7 +53,7 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = PUBLICAR_CALIFICACION_QUEUE)
     public void escucharCalificacion(String tareaActualizadaJSON) {
         NotificationTareaActualizada notificationTareaActualizada = gson.fromJson(tareaActualizadaJSON, NotificationTareaActualizada.class);
-
+    notificationTareaActualizada.getEstadoTareaGeneric().setTipo(PUBLICAR_CALIFICACION_QUEUE);
         log.info(String.format(
                 "Calificación de tarea %s a estudiante %s recibida en queue.",
                 notificationTareaActualizada.getEstadoTareaGeneric().getTareaID(),
@@ -68,6 +69,7 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = PUBLICAR_NUEVO_INSCRITO_QUEUE)
     public void escucharInscritoNuevo(String inscritoJSON) {
         NotificationNuevaInscripcion notificationNuevaInscripcion = gson.fromJson(inscritoJSON, NotificationNuevaInscripcion.class);
+        notificationNuevaInscripcion.getVistaEstudiante().setTipo(PUBLICAR_NUEVO_INSCRITO_QUEUE);
         log.info(String.format(
                 "Inscripcion de %s en curso de profesor %s recibida en queue",
                 notificationNuevaInscripcion.getVistaEstudiante().get_id(),
@@ -83,6 +85,7 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = PUBLICAR_ENTREGA_TAREA_QUEUE)
     public void escucharEntregaTarea(String entregaJSON) {
         NotificationTareaEntregada notificationTareaEntregada = gson.fromJson(entregaJSON, NotificationTareaEntregada.class);
+        notificationTareaEntregada.getVistaEstudiante().setTipo(PUBLICAR_ENTREGA_TAREA_QUEUE);
         log.info(String.format(
                 "Entrega de estudiante %s recibida en queue",
                 notificationTareaEntregada.getVistaEstudiante().get_id()));

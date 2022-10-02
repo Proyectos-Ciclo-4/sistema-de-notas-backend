@@ -23,6 +23,8 @@ public class EstadoTareaGeneric {
 
     private String retroalimentacion;
 
+    private String tipo;
+
     public void setNumero(Integer numero) {
         this.orden = numero;
     }
@@ -51,6 +53,18 @@ public class EstadoTareaGeneric {
     }
 
     public EstadoTareaGeneric() {
+    }
+
+    public void setTareaID(String tareaID) {
+        this.tareaID = tareaID;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getTareaID() {

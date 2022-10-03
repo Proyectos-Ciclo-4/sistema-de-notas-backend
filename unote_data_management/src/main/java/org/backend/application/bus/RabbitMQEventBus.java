@@ -37,7 +37,7 @@ public class RabbitMQEventBus {
         log.info(String.format("Tarea %s emitida a queue VISTA ESTUDIANTE", estadoTareaGeneric.getTareaID()));
 
         convertAndSend(
-                RabbitConfig.PUBLICAR_TAREA_NUEVA_QUEUE,
+                RabbitConfig.PUBLICAR_TAREA_NUEVA_QUEUE_KEY,
                 gson.toJson(
                         new NotificationNuevaTarea(
                                 estudianteID,
@@ -54,7 +54,7 @@ public class RabbitMQEventBus {
                 ));
 
         convertAndSend(
-                RabbitConfig.PUBLICAR_CALIFICACION_QUEUE,
+                RabbitConfig.PUBLICAR_CALIFICACION_QUEUE_KEY,
                 gson.toJson(notificationTareaActualizada).getBytes());
     }
 
@@ -66,7 +66,7 @@ public class RabbitMQEventBus {
                 ));
 
         convertAndSend(
-                RabbitConfig.PUBLICAR_NUEVO_INSCRITO_QUEUE,
+                RabbitConfig.PUBLICAR_NUEVO_INSCRITO_KEY,
                 gson.toJson(notificationNuevaInscripcion).getBytes()
         );
     }
@@ -77,7 +77,7 @@ public class RabbitMQEventBus {
                 notificationTareaEntregada.getVistaEstudiante().get_id()));
 
         convertAndSend(
-                RabbitConfig.PUBLICAR_ENTREGA_TAREA_QUEUE,
+                RabbitConfig.PUBLICAR_ENTREGA_TAREA_QUEUE_KEY,
                 gson.toJson(notificationTareaEntregada).getBytes());
     }
 }

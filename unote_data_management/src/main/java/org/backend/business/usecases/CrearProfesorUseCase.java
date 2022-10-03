@@ -3,6 +3,7 @@ package org.backend.business.usecases;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaProfesor;
 import org.backend.domain.Profesor;
 import org.backend.domain.commands.CrearProfesor;
@@ -20,9 +21,12 @@ public class CrearProfesorUseCase {
     private final MongoEventRepository mongoEventRepository;
     private final MongoViewRepository mongoViewRepository;
 
-    public CrearProfesorUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository) {
+    private final Blockchain blockchain;
+
+    public CrearProfesorUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, Blockchain blockchain) {
         this.mongoEventRepository = mongoEventRepository;
         this.mongoViewRepository = mongoViewRepository;
+        this.blockchain = blockchain;
     }
 
     public Mono<VistaProfesor> apply(Mono<CrearProfesor> crearProfesorMono) {
@@ -45,6 +49,7 @@ public class CrearProfesorUseCase {
                                     command.getProfesorID(),
                                     command.getNombre()
                             );
+                            blockchain.saveBlock(nuevoProfesor,"ProfesorCreado", nuevoProfesor.get_id());
                             return mongoViewRepository.crearProfesor(nuevoProfesor);
                         }
                 );

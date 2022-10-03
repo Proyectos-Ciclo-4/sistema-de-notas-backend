@@ -1,25 +1,14 @@
 package org.backend.business.usecases;
 
-import co.com.sofka.domain.generic.DomainEvent;
-import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
-import org.backend.domain.Tema;
 import org.backend.domain.commands.CrearTarea;
-import org.backend.domain.entities.Tarea;
-import org.backend.domain.identifiers.CursoID;
-import org.backend.domain.identifiers.TareaID;
-import org.backend.domain.identifiers.TemaID;
-import org.backend.domain.valueobjects.Descripcion;
-import org.backend.domain.valueobjects.FechaLimite;
-import org.backend.domain.valueobjects.Orden;
-import org.backend.domain.valueobjects.Titulo;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -27,9 +16,12 @@ public class CrearTareaUseCase {
     private final MongoEventRepository mongoEventRepository;
     private final MongoViewRepository mongoViewRepository;
 
-    public CrearTareaUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository) {
+    private final Blockchain blockchain;
+
+    public CrearTareaUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, Blockchain blockchain) {
         this.mongoEventRepository = mongoEventRepository;
         this.mongoViewRepository = mongoViewRepository;
+        this.blockchain = blockchain;
     }
 
     public Mono<VistaTarea> apply(Mono<CrearTarea> crearTareaMono) {
@@ -48,7 +40,7 @@ public class CrearTareaUseCase {
                             command.getFechaLimite(),
                             command.getPorcentaje()
                     );
-
+                    blockchain.saveBlock(nuevaTarea, "tareaCreada" , nuevaTarea.get_id());
                     return mongoViewRepository
                             .crearTarea(nuevaTarea)
                             .doOnNext(vistaTarea ->

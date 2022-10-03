@@ -3,10 +3,11 @@ package org.backend.business.usecases;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.gateways.EventRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 import org.backend.domain.Tema;
 import org.backend.domain.commands.CrearTema;
-import org.backend.domain.entities.Tarea;
 import org.backend.domain.identifiers.TemaID;
 import org.backend.domain.valueobjects.Orden;
 import org.backend.domain.valueobjects.Titulo;
@@ -25,11 +26,14 @@ public class AgregarTemaUseCase {
     private final MongoViewRepository mongoViewRepository;
     private final CrearTareaUseCase crearTareaUseCase;
 
+    private final Blockchain blockchain;
 
-    public AgregarTemaUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, CrearTareaUseCase crearTareaUseCase) {
+
+    public AgregarTemaUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, CrearTareaUseCase crearTareaUseCase,  Blockchain blockchain) {
         this.mongoEventRepository = mongoEventRepository;
         this.mongoViewRepository = mongoViewRepository;
         this.crearTareaUseCase = crearTareaUseCase;
+        this.blockchain = blockchain;
     }
 
     public Mono<TemaGeneric> apply(Mono<CrearTema> crearTemaMono) {
@@ -61,6 +65,8 @@ public class AgregarTemaUseCase {
 
                     return this.mongoViewRepository.agregarTema(newTema)
                             .doOnNext(temaGeneric -> {
+
+                                blockchain.saveBlock(newTema,"temaCreado", newTema.getTemaID());
                                 if (!command.getTareas().isEmpty()) {
                                     command.getTareas().forEach(
                                             crearTarea -> {
@@ -70,7 +76,11 @@ public class AgregarTemaUseCase {
                                                 crearTareaUseCase
                                                         .apply(Mono.just(crearTarea))
                                                         .subscribe(vistaTarea -> tareasIDS.add(vistaTarea.get_id()));
+
+
+
                                             });
+
                                 }
                             });
                 });

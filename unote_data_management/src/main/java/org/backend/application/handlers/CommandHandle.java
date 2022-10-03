@@ -83,6 +83,7 @@ public class CommandHandle {
                                 .bodyValue(temaGeneric))
                         .onErrorResume(throwable -> {
                             log.error(throwable.getMessage());
+                            throwable.printStackTrace();
                             return ServerResponse.badRequest().build();
                         })
         );

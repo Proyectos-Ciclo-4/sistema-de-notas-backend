@@ -2,6 +2,8 @@ package org.backend.business.usecases;
 
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.gateways.EventRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 import org.backend.domain.commands.CrearTarea;
 import org.backend.domain.events.TemaCreado;
@@ -31,9 +33,10 @@ class AgregarTemaUseCaseTest {
     @InjectMocks
     AgregarTemaUseCase useCase;
     CrearTareaUseCase crearTareaUseCase;
+    Blockchain blockchain;
 
     @BeforeEach
-    void init(){useCase = new AgregarTemaUseCase(mongoEventRepository,mongoViewRepository,crearTareaUseCase);}
+    void init(){useCase = new AgregarTemaUseCase(mongoEventRepository,mongoViewRepository,crearTareaUseCase,  blockchain);}
 
     @Test
     void agregarTemaTest(){

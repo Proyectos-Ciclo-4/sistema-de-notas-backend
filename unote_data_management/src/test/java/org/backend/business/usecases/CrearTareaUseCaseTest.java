@@ -1,13 +1,14 @@
 package org.backend.business.usecases;
 
-import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.domain.events.TareaCreada;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,11 +20,12 @@ class CrearTareaUseCaseTest {
     @Mock
     MongoViewRepository mongoViewRepository;
     MongoEventRepository mongoEventRepository;
-
+    @InjectMocks
     CrearTareaUseCase useCase;
+    Blockchain blockchain;
 
     @BeforeEach
-    void init(){useCase = new CrearTareaUseCase(mongoEventRepository,mongoViewRepository);}
+    void init(){useCase = new CrearTareaUseCase(mongoEventRepository,mongoViewRepository, blockchain);}
 
     @Test
     void crearTareaTest(){

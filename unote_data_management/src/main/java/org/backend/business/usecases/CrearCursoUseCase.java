@@ -3,8 +3,8 @@ package org.backend.business.usecases;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaCurso;
-import org.backend.business.models.vistasmaterializadas.VistaTarea;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
 import org.backend.domain.Curso;
 import org.backend.domain.commands.CrearCurso;
@@ -23,12 +23,14 @@ import java.util.UUID;
 public class CrearCursoUseCase {
     private final MongoEventRepository mongoEventRepository;
     private final MongoViewRepository mongoViewRepository;
+    private final Blockchain blockchain;
 
     private final AgregarTemaUseCase agregarTemaUseCase;
 
-    public CrearCursoUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, AgregarTemaUseCase agregarTemaUseCase) {
+    public CrearCursoUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, Blockchain blockchain, AgregarTemaUseCase agregarTemaUseCase) {
         this.mongoEventRepository = mongoEventRepository;
         this.mongoViewRepository = mongoViewRepository;
+        this.blockchain = blockchain;
         this.agregarTemaUseCase = agregarTemaUseCase;
     }
 
@@ -60,6 +62,7 @@ public class CrearCursoUseCase {
                     return this.mongoViewRepository
                             .crearCurso(newCurso)
                             .doOnNext(vistaCurso -> {
+                                blockchain.saveBlock(newCurso, "cursoCreado", newCurso.get_id());
                                 if (command.checkTemasExists()) {
                                     command.getTemas().forEach(
                                             crearTema -> {

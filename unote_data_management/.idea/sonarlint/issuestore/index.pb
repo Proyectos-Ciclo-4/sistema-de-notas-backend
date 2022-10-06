@@ -1,14 +1,19 @@
-<<<<<<< HEAD
 
-~
-Nsrc/main/java/org/backend/business/models/vistasmaterializadas/Blockchain.java,c/9/c937634de876ff4e7502def20f0726b2a3f77574
-i
-9src/main/java/org/backend/domain/commands/CrearTarea.java,1/4/145385e8c2358e7d0bbee3f5d93ea7286a6621bd
-ƒ
-Ssrc/main/java/org/backend/business/models/vistasmaterializadas/VistaEstudiante.java,c/3/c3fcb477419da04c8687a0e6578179b27f03482e
+r
+Bsrc/main/java/org/backend/business/usecases/CrearTareaUseCase.java,9/e/9e3eea37cf92825ec200d26a3eddbb9c768f4f46
+Ž
+^src/main/java/org/backend/application/bus/notificationmodels/NotificationNuevaInscripcion.java,b/b/bb071154d12a51c1398b34466e366146eab83c26
+
+Qsrc/main/java/org/backend/business/usecases/InscribirEstudianteACursoUseCase.java,9/2/92538afc1f173f2ae8c91b9ac29b9611644df12d
+Ž
+^src/main/java/org/backend/application/bus/notificationmodels/NotificationTareaActualizada.java,a/b/ab17cfce4828e84d324bbe1ac1c23a3a820f92a8
+v
+Fsrc/main/java/org/backend/business/usecases/CalificarTareaUseCase.java,5/e/5eba165d79489555bd721f54c012dcb423361ec2
+y
+Isrc/test/java/org/backend/business/usecases/EntregarTareaUseCaseTest.java,c/b/cb9053e9fc0aeef716a40bcb2a1e8291ad5ccf93
+Œ
+\src/main/java/org/backend/application/bus/notificationmodels/NotificationTareaEntregada.java,5/5/55d95bc2f12aeb0cee166aed706a7049bde9ee3e
+y
+Isrc/main/java/org/backend/application/repository/MongoViewRepository.java,4/a/4a687fcd21344968728b435d5f18783102d49c26
 o
-?src/main/java/org/backend/application/bus/RabbitMQEventBus.java,4/2/4272501460ad8882d5da5905ecdd782c979a87bf
-ˆ
-Xsrc/main/java/org/backend/application/bus/notificationmodels/NotificationNuevaTarea.java,c/3/c32f7d42a6ce12ddf2578ef47e563cee4155a60a
-=======
->>>>>>> 59d2ce403e262dda0192897ff40a751ed0928d7e
+?src/main/java/org/backend/business/gateways/ViewRepository.java,6/9/698cd9e59451b15863c486a5d02c067f720cd85a

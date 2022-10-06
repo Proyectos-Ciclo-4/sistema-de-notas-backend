@@ -5,6 +5,7 @@ import org.backend.application.bus.notificationmodels.NotificationTareaEntregada
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
+import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.domain.commands.EntregarTarea;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -53,6 +54,8 @@ public class EntregarTareaUseCase {
                                         )
                                 )
                                  */
-                ).doOnSuccess(vistaEstudiante -> blockchain.saveBlock(vistaEstudiante,"unote.tareaEntregada", vistaEstudiante.get_id()));
+                )
+                .doOnSuccess(estadoTareaGeneric ->
+                        blockchain.saveBlock(estadoTareaGeneric,"unote.tareaEntregada", estadoTareaGeneric.getTareaID()));
     }
 }

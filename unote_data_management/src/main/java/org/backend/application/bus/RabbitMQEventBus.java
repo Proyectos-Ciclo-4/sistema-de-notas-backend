@@ -74,8 +74,8 @@ public class RabbitMQEventBus {
 
     public void publicarEntregaTarea(NotificationTareaEntregada notificationTareaEntregada) {
         log.info(String.format(
-                "Entrega hecha por estudiante %s emitida a queue VISTA PROFESOR",
-                notificationTareaEntregada.getVistaEstudiante().get_id()));
+                "Entrega de tarea %s emitida a queue VISTA PROFESOR",
+                notificationTareaEntregada.getEstadoTareaGeneric().getTareaID()));
 
         convertAndSend(
                 RabbitConfig.PUBLICAR_ENTREGA_TAREA_QUEUE_KEY,

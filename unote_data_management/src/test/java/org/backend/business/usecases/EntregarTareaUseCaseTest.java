@@ -2,6 +2,7 @@ package org.backend.business.usecases;
 
 import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.domain.entities.Tarea;
 import org.backend.domain.events.TareaCreada;
@@ -29,9 +30,10 @@ class EntregarTareaUseCaseTest {
 
     @InjectMocks
     EntregarTareaUseCase useCase;
+    Blockchain blockchain;
 
     @BeforeEach
-    void init(){useCase = new EntregarTareaUseCase(mongoViewRepository, rabbitMQEventBus);}
+    void init(){useCase = new EntregarTareaUseCase(mongoViewRepository, rabbitMQEventBus, blockchain);}
 
     @Test
     void entregarTareaTest(){

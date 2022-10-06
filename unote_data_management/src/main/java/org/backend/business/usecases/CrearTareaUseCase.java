@@ -40,7 +40,6 @@ public class CrearTareaUseCase {
                             command.getFechaLimite(),
                             command.getPorcentaje()
                     );
-                    blockchain.saveBlock(nuevaTarea, "tareaCreada" , nuevaTarea.get_id());
                     return mongoViewRepository
                             .crearTarea(nuevaTarea)
                             .doOnNext(vistaTarea ->
@@ -72,6 +71,6 @@ public class CrearTareaUseCase {
 
                     List<DomainEvent> events = temaAR.getUncommittedChanges();
                      */
-                });
+                }).doOnSuccess(vistaTarea -> blockchain.saveBlock(vistaTarea,"unote.tareaCreada",vistaTarea.get_id()));
     }
 }

@@ -3,6 +3,7 @@ package org.backend.business.usecases;
 
 import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.domain.events.TareaCreada;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,13 +22,15 @@ class CalificarTareaUseCaseTest {
     MongoViewRepository mongoViewRepository;
 
     RabbitMQEventBus rabbitMQEventBus;
+    Blockchain blockchain;
 
 
     @InjectMocks
     CalificarTareaUseCase useCase;
 
+
     @BeforeEach
-    void init(){useCase = new CalificarTareaUseCase(mongoViewRepository, rabbitMQEventBus);}
+    void init(){useCase = new CalificarTareaUseCase(mongoViewRepository, rabbitMQEventBus, blockchain);}
 
     @Test
     void calificarTareaTest(){

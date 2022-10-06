@@ -3,6 +3,7 @@ package org.backend.business.usecases;
 import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.domain.events.InscritoEnCurso;
@@ -32,9 +33,10 @@ class InscribirEstudianteACursoUseCaseTest {
     RabbitMQEventBus rabbitMQEventBus;
 
     InscribirEstudianteACursoUseCase useCase;
+    Blockchain blockchain;
 
     @BeforeEach
-    void init(){useCase = new InscribirEstudianteACursoUseCase(mongoEventRepository,mongoViewRepository, rabbitMQEventBus);}
+    void init(){useCase = new InscribirEstudianteACursoUseCase(mongoEventRepository,mongoViewRepository, rabbitMQEventBus, blockchain);}
 
     @Test
     void inscribirEstudianteACursoTest(){

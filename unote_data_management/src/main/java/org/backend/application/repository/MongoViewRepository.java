@@ -3,10 +3,7 @@ package org.backend.application.repository;
 import lombok.extern.slf4j.Slf4j;
 import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.business.gateways.ViewRepository;
-import org.backend.business.models.vistasmaterializadas.VistaCurso;
-import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
-import org.backend.business.models.vistasmaterializadas.VistaProfesor;
-import org.backend.business.models.vistasmaterializadas.VistaTarea;
+import org.backend.business.models.vistasmaterializadas.*;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.TemaGeneric;
@@ -32,9 +29,12 @@ public class MongoViewRepository implements ViewRepository {
     private final ReactiveMongoTemplate reactiveMongoTemplate;
     private final RabbitMQEventBus rabbitMQEventBus;
 
-    public MongoViewRepository(ReactiveMongoTemplate reactiveMongoTemplate, RabbitMQEventBus rabbitMQEventBus) {
+    private final Blockchain blockchain;
+
+    public MongoViewRepository(ReactiveMongoTemplate reactiveMongoTemplate, RabbitMQEventBus rabbitMQEventBus, Blockchain blockchain) {
         this.reactiveMongoTemplate = reactiveMongoTemplate;
         this.rabbitMQEventBus = rabbitMQEventBus;
+        this.blockchain = blockchain;
     }
 
 
@@ -406,7 +406,7 @@ public class MongoViewRepository implements ViewRepository {
         this.encontrarCursoPorId(cursoID)
                 .subscribe(vistaCurso -> {
                     if (vistaCurso.encontrarTema(temaID).hasTareas()) {
-                        EliminarTareaUseCase eliminarTareaUseCase = new EliminarTareaUseCase(this);
+                        EliminarTareaUseCase eliminarTareaUseCase = new EliminarTareaUseCase(this, blockchain);
 
                         /*
                         vistaCurso.encontrarTema(temaID).getTareasID()

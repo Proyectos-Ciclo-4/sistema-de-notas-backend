@@ -4,6 +4,7 @@ import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.bus.notificationmodels.NotificationNuevaInscripcion;
 import org.backend.application.repository.MongoEventRepository;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
 import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.business.models.vistasmaterializadas.generics.InscripcionGeneric;
@@ -21,10 +22,13 @@ public class InscribirEstudianteACursoUseCase {
 
   private final RabbitMQEventBus rabbitMQEventBus;
 
-    public InscribirEstudianteACursoUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, RabbitMQEventBus rabbitMQEventBus) {
+  private final Blockchain blockchain;
+
+    public InscribirEstudianteACursoUseCase(MongoEventRepository mongoEventRepository, MongoViewRepository mongoViewRepository, RabbitMQEventBus rabbitMQEventBus, Blockchain blockchain) {
         this.mongoEventRepository = mongoEventRepository;
         this.mongoViewRepository = mongoViewRepository;
         this.rabbitMQEventBus = rabbitMQEventBus;
+        this.blockchain = blockchain;
     }
 
     public Mono<VistaEstudiante> apply(Mono<CrearInscripcion> crearInscripcionMono) {
@@ -63,6 +67,6 @@ public class InscribirEstudianteACursoUseCase {
                                           vistaCurso.getProfesorID(),
                                           vistaEstudiante))
                           ));
-        });
+        }).doOnSuccess(vistaEstudiante -> blockchain.saveBlock(vistaEstudiante,"unote.matriculadoEnCurso", vistaEstudiante.get_id()));
   }
 }

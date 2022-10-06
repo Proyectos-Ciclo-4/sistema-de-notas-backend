@@ -65,8 +65,6 @@ public class AgregarTemaUseCase {
 
                     return this.mongoViewRepository.agregarTema(newTema)
                             .doOnNext(temaGeneric -> {
-
-                                blockchain.saveBlock(newTema,"temaCreado", newTema.getTemaID());
                                 if (!command.getTareas().isEmpty()) {
                                     command.getTareas().forEach(
                                             crearTarea -> {
@@ -83,6 +81,6 @@ public class AgregarTemaUseCase {
 
                                 }
                             });
-                });
+                }).doOnSuccess(temaGeneric -> blockchain.saveBlock(temaGeneric,"unote.temaCreado", temaGeneric.getTemaID()));
     }
 }

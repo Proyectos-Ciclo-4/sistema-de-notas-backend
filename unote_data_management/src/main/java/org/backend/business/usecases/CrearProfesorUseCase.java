@@ -49,9 +49,8 @@ public class CrearProfesorUseCase {
                                     command.getProfesorID(),
                                     command.getNombre()
                             );
-                            blockchain.saveBlock(nuevoProfesor,"ProfesorCreado", nuevoProfesor.get_id());
                             return mongoViewRepository.crearProfesor(nuevoProfesor);
                         }
-                );
+                ).doOnSuccess(vistaProfesor -> blockchain.saveBlock(vistaProfesor,"unote.profesorCreado", vistaProfesor.get_id()));
     }
 }

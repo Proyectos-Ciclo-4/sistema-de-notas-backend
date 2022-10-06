@@ -62,7 +62,6 @@ public class CrearCursoUseCase {
                     return this.mongoViewRepository
                             .crearCurso(newCurso)
                             .doOnNext(vistaCurso -> {
-                                blockchain.saveBlock(newCurso, "cursoCreado", newCurso.get_id());
                                 if (command.checkTemasExists()) {
                                     command.getTemas().forEach(
                                             crearTema -> {
@@ -74,6 +73,6 @@ public class CrearCursoUseCase {
                                             });
                                 }
                             });
-                });
+                }).doOnSuccess(vistaCurso -> blockchain.saveBlock(vistaCurso,"unote.cursoAgregado", vistaCurso.get_id()));
     }
 }

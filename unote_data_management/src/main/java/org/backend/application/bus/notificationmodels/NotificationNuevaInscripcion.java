@@ -6,9 +6,12 @@ public class NotificationNuevaInscripcion {
     private final String profesorID;
     private final VistaEstudiante vistaEstudiante;
 
-    public NotificationNuevaInscripcion(String profesorID, VistaEstudiante vistaEstudiante) {
+    private final String cursoID;
+
+    public NotificationNuevaInscripcion(String profesorID, VistaEstudiante vistaEstudiante, String cursoID) {
         this.profesorID = profesorID;
         this.vistaEstudiante = vistaEstudiante;
+        this.cursoID = cursoID;
     }
 
     public String getProfesorID() {
@@ -17,5 +20,9 @@ public class NotificationNuevaInscripcion {
 
     public VistaEstudiante getVistaEstudiante() {
         return vistaEstudiante;
+    }
+
+    public String getCursoID() {
+        return cursoID;
     }
 }

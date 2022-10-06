@@ -19,7 +19,7 @@ public class EntregarTareaUseCase {
         this.rabbitMQEventBus = rabbitMQEventBus;
     }
 
-    public Mono<VistaEstudiante> apply(Mono<EntregarTarea> entregarTareaMono) {
+    public Mono<EstadoTareaGeneric> apply(Mono<EntregarTarea> entregarTareaMono) {
         return entregarTareaMono
                 .flatMap(entregarTarea ->
                         mongoViewRepository.entregarTarea(
@@ -28,12 +28,13 @@ public class EntregarTareaUseCase {
                                 entregarTarea.getTareaID(),
                                 entregarTarea.getArchivoURL()
                         )
-                                .doOnSuccess(vistaEstudiante -> this.mongoViewRepository
+                                .doOnSuccess(estadoTareaGeneric -> this.mongoViewRepository
                                                 .encontrarCursoPorId(entregarTarea.getCursoID())
                                                 .subscribe(vistaCurso -> this.rabbitMQEventBus.publicarEntregaTarea(
                                                         new NotificationTareaEntregada(
                                                                 vistaCurso.getProfesorID(),
-                                                                vistaEstudiante
+                                                                estadoTareaGeneric,
+                                                                vistaCurso.get_id()
                                                         )
                                                 ))
                                         )

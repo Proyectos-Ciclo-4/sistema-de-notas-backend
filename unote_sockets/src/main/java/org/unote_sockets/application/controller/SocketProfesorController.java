@@ -3,6 +3,7 @@ package org.unote_sockets.application.controller;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.unote_sockets.models.generics.EstadoTareaGeneric;
 import org.unote_sockets.models.vistasmaterializadas.VistaEstudiante;
 
 import javax.websocket.OnClose;
@@ -75,9 +76,9 @@ public class SocketProfesorController {
         }
     }
 
-    public void emtirNuevaEntrega(String profesorID, VistaEstudiante vistaEstudiante) {
+    public void emtirNuevaEntrega(String profesorID, EstadoTareaGeneric estadoTareaGeneric) {
         if (Objects.nonNull(profesorID) && sessions.containsKey(profesorID)) {
-            broadcastJSON(gson.toJson(vistaEstudiante), profesorID);
+            broadcastJSON(gson.toJson(estadoTareaGeneric), profesorID);
             log.info("Nueva entrega emitida desde el web socket");
         }
     }

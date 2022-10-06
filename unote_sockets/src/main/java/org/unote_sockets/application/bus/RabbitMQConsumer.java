@@ -10,8 +10,6 @@ import org.unote_sockets.application.bus.notificationmodels.NotificationTareaAct
 import org.unote_sockets.application.bus.notificationmodels.NotificationTareaEntregada;
 import org.unote_sockets.application.controller.SocketEstudianteController;
 import org.unote_sockets.application.controller.SocketProfesorController;
-import org.unote_sockets.models.vistasmaterializadas.VistaEstudiante;
-import org.unote_sockets.models.vistasmaterializadas.VistaTarea;
 
 @Slf4j
 @Component
@@ -85,14 +83,14 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = PUBLICAR_ENTREGA_TAREA_QUEUE)
     public void escucharEntregaTarea(String entregaJSON) {
         NotificationTareaEntregada notificationTareaEntregada = gson.fromJson(entregaJSON, NotificationTareaEntregada.class);
-        notificationTareaEntregada.getVistaEstudiante().setTipo(PUBLICAR_ENTREGA_TAREA_QUEUE);
+        notificationTareaEntregada.getEstadoTareaGeneric().setTipo(PUBLICAR_ENTREGA_TAREA_QUEUE);
         log.info(String.format(
-                "Entrega de estudiante %s recibida en queue",
-                notificationTareaEntregada.getVistaEstudiante().get_id()));
+                "Tarea %s recibida en queue",
+                notificationTareaEntregada.getEstadoTareaGeneric().getTareaID()));
 
         socketProfesorController.emtirNuevaEntrega(
                 notificationTareaEntregada.getProfesorID(),
-                notificationTareaEntregada.getVistaEstudiante()
+                notificationTareaEntregada.getEstadoTareaGeneric()
         );
     }
 

@@ -3,6 +3,7 @@ package org.backend.business.usecases;
 import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.repository.MongoViewRepository;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
+import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.domain.entities.Tarea;
 import org.backend.domain.events.TareaCreada;
 import org.backend.domain.identifiers.TareaID;
@@ -42,8 +43,8 @@ class EntregarTareaUseCaseTest {
 
         tareaCreada.setAggregateRootId("333");
 
-        Mono<VistaEstudiante> expectedMono = Mono.just(
-                new VistaEstudiante("1212","Juan", Float.valueOf(0),Float.valueOf(9))
+        Mono<EstadoTareaGeneric> expectedMono = Mono.just(
+                new EstadoTareaGeneric("1212","archivoURL")
         );
 
         Mockito.when(mongoViewRepository.entregarTarea("1212","333","4545","" ))
@@ -52,7 +53,7 @@ class EntregarTareaUseCaseTest {
         var useCaseExecuted = mongoViewRepository.entregarTarea("1212","333","4545","" );
 
         StepVerifier.create(useCaseExecuted).expectNextMatches(
-                vistaEstudiante -> vistaEstudiante.get_id().equals("1212")
+                estadoTareaGeneric -> estadoTareaGeneric.getTareaID().equals("1212")
         ).verifyComplete();
     }
 

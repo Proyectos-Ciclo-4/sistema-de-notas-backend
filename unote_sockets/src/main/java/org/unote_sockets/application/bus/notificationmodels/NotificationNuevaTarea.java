@@ -7,9 +7,12 @@ public class NotificationNuevaTarea {
     private final String estudianteID;
     private final EstadoTareaGeneric estadoTareaGeneric;
 
-    public NotificationNuevaTarea(String estudianteID, EstadoTareaGeneric estadoTareaGeneric) {
+    private final String cursoID;
+
+    public NotificationNuevaTarea(String estudianteID, EstadoTareaGeneric estadoTareaGeneric, String cursoID) {
         this.estudianteID = estudianteID;
         this.estadoTareaGeneric = estadoTareaGeneric;
+        this.cursoID = cursoID;
     }
 
     public String getEstudianteID() {
@@ -18,5 +21,9 @@ public class NotificationNuevaTarea {
 
     public EstadoTareaGeneric getEstadoTareaGeneric() {
         return estadoTareaGeneric;
+    }
+
+    public String getCursoID() {
+        return cursoID;
     }
 }

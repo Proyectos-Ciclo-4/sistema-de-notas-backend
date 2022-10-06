@@ -173,7 +173,8 @@ public class MongoViewRepository implements ViewRepository {
                                                         ));
                                                         this.rabbitMQEventBus.publicarTareaNueva(
                                                                 vistaEstudiante.get_id(),
-                                                                estadoTareaGeneric
+                                                                estadoTareaGeneric,
+                                                                cursoID
                                                         );
                                                     });
                                             })
@@ -181,7 +182,7 @@ public class MongoViewRepository implements ViewRepository {
     }
 
     @Override
-    public Mono<VistaEstudiante> entregarTarea(String estudianteID, String cursoID, String tareaID, String URLArchivo) {
+    public Mono<EstadoTareaGeneric> entregarTarea(String estudianteID, String cursoID, String tareaID, String URLArchivo) {
         return this.reactiveMongoTemplate.save(
                 this.encontrarEstudiantePorID(estudianteID)
                         .doOnSuccess(vistaEstudiante -> {
@@ -191,6 +192,9 @@ public class MongoViewRepository implements ViewRepository {
 
                             vistaEstudiante.encontrarInscripcion(cursoID).setAvance();
                         })
+        ).map(vistaEstudiante -> vistaEstudiante
+                .encontrarInscripcion(cursoID)
+                .encontrarEstadoTarea(tareaID)
         );
     }
 

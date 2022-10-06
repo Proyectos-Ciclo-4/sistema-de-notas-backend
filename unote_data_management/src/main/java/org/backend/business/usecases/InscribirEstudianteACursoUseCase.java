@@ -61,7 +61,8 @@ public class InscribirEstudianteACursoUseCase {
                           .subscribe(vistaCurso -> this.rabbitMQEventBus.publicarNuevoInscrito(
                                   new NotificationNuevaInscripcion(
                                           vistaCurso.getProfesorID(),
-                                          vistaEstudiante))
+                                          vistaEstudiante,
+                                          vistaCurso.get_id()))
                           ));
         });
   }

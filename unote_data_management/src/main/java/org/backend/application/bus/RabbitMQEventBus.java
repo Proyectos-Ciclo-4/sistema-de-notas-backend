@@ -33,7 +33,7 @@ public class RabbitMQEventBus {
         );
     }
 
-    public void publicarTareaNueva(String estudianteID, EstadoTareaGeneric estadoTareaGeneric){
+    public void publicarTareaNueva(String estudianteID, EstadoTareaGeneric estadoTareaGeneric, String cursoID){
         log.info(String.format("Tarea %s emitida a queue VISTA ESTUDIANTE", estadoTareaGeneric.getTareaID()));
 
         convertAndSend(
@@ -41,7 +41,8 @@ public class RabbitMQEventBus {
                 gson.toJson(
                         new NotificationNuevaTarea(
                                 estudianteID,
-                                estadoTareaGeneric
+                                estadoTareaGeneric,
+                                cursoID
                         )
                 ).getBytes());
     }

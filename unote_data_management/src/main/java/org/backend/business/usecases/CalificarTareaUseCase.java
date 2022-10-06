@@ -34,7 +34,9 @@ public class CalificarTareaUseCase {
                                                         vistaEstudiante.get_id(),
                                                         vistaEstudiante
                                                                 .encontrarInscripcion(command.getCursoID())
-                                                                .encontrarEstadoTarea(command.getTareaID()))
+                                                                .encontrarEstadoTarea(command.getTareaID()),
+                                                        command.getCursoID()
+                                                        )
                                         ))
                 );
     }

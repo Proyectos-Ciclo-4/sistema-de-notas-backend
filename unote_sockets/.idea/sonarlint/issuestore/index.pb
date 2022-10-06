@@ -91,3 +91,9 @@ r
 Bsrc/main/java/org/unote_sockets/domain/events/InscritoEnCurso.java,f/4/f42020fdb997ea515415e96e470be49daf655587
 Y
 )src/main/java/org/unote_sockets/Main.java,2/0/204bf7a16c5abc3fa2efbd9b83bba4ee7ab894ea
+w
+Gsrc/main/java/org/unote_sockets/application/config/WebSocketConfig.java,b/d/bdf3b14289be54721ca662494004bb0ae7d9fe7f
+w
+Gsrc/main/java/org/unote_sockets/models/generics/EstadoTareaGeneric.java,f/4/f43320af4a7fabb720406acf1d17eb01a41bde98
+€
+Psrc/main/java/org/unote_sockets/models/vistasmaterializadas/VistaEstudiante.java,8/8/882c9903f95ca117040df1f857192992d69ac8b2

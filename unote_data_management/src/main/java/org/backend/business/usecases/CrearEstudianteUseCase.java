@@ -38,9 +38,9 @@ public class CrearEstudianteUseCase {
                             command.getEstudianteID(),
                             command.getNombre()
                     );
-                    blockchain.saveBlock(estudiante,"estudianteCreado",estudiante.get_id());
+
                     return mongoViewRepository.crearEstudiante(estudiante);
                 }
-        );
+        ).doOnSuccess(vistaEstudiante -> blockchain.saveBlock(vistaEstudiante, "unote.estudianteCreado", vistaEstudiante.get_id()));
     }
 }

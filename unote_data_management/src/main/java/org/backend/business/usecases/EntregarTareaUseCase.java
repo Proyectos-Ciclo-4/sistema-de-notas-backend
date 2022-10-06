@@ -3,8 +3,8 @@ package org.backend.business.usecases;
 import org.backend.application.bus.RabbitMQEventBus;
 import org.backend.application.bus.notificationmodels.NotificationTareaEntregada;
 import org.backend.application.repository.MongoViewRepository;
+import org.backend.business.models.vistasmaterializadas.Blockchain;
 import org.backend.business.models.vistasmaterializadas.VistaEstudiante;
-import org.backend.business.models.vistasmaterializadas.generics.EstadoTareaGeneric;
 import org.backend.domain.commands.EntregarTarea;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -14,9 +14,12 @@ public class EntregarTareaUseCase {
     private final MongoViewRepository mongoViewRepository;
     private final RabbitMQEventBus rabbitMQEventBus;
 
-    public EntregarTareaUseCase(MongoViewRepository mongoViewRepository, RabbitMQEventBus rabbitMQEventBus) {
+    private final Blockchain blockchain;
+
+    public EntregarTareaUseCase(MongoViewRepository mongoViewRepository, RabbitMQEventBus rabbitMQEventBus, Blockchain blockchain) {
         this.mongoViewRepository = mongoViewRepository;
         this.rabbitMQEventBus = rabbitMQEventBus;
+        this.blockchain = blockchain;
     }
 
     public Mono<EstadoTareaGeneric> apply(Mono<EntregarTarea> entregarTareaMono) {
@@ -50,6 +53,6 @@ public class EntregarTareaUseCase {
                                         )
                                 )
                                  */
-                );
+                ).doOnSuccess(vistaEstudiante -> blockchain.saveBlock(vistaEstudiante,"unote.tareaEntregada", vistaEstudiante.get_id()));
     }
 }

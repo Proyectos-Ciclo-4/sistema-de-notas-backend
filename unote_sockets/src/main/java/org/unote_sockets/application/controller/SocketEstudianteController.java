@@ -3,6 +3,8 @@ package org.unote_sockets.application.controller;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.unote_sockets.application.bus.notificationmodels.NotificationNuevaTarea;
+import org.unote_sockets.application.bus.notificationmodels.NotificationTareaActualizada;
 import org.unote_sockets.models.generics.EstadoTareaGeneric;
 import org.unote_sockets.models.vistasmaterializadas.VistaEstudiante;
 import org.unote_sockets.models.vistasmaterializadas.VistaTarea;
@@ -72,19 +74,19 @@ public class SocketEstudianteController {
 
     }
 
-    public void emitirCreacionTarea(String estudianteID, EstadoTareaGeneric estadoTareaGeneric) {
+    public void emitirCreacionTarea(String estudianteID, NotificationNuevaTarea notificationNuevaTarea) {
         if (Objects.nonNull(estudianteID) && sessions.containsKey(estudianteID)) {
-            broadcastJSON(gson.toJson(estadoTareaGeneric), estudianteID);
+            broadcastJSON(gson.toJson(notificationNuevaTarea), estudianteID);
             log.info("Creación de tarea emitida desde el websocket");
         }
     }
 
-    public void emitirCalificacionTarea(String estudianteID, EstadoTareaGeneric estadoTareaGeneric) {
+    public void emitirCalificacionTarea(String estudianteID, NotificationTareaActualizada notificationTareaActualizada) {
         if (Objects.nonNull(estudianteID) && sessions.containsKey(estudianteID)) {
-            broadcastJSON(gson.toJson(estadoTareaGeneric), estudianteID);
+            broadcastJSON(gson.toJson(notificationTareaActualizada), estudianteID);
             log.info(String.format(
                     "Calificación de tarea %s para estudiante %s emitida desde el websocket",
-                    estadoTareaGeneric.getTareaID(),
+                    notificationTareaActualizada.getEstadoTareaGeneric().getTareaID(),
                     estudianteID
             ));
         }

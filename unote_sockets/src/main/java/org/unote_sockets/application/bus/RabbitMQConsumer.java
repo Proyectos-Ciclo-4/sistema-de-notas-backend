@@ -43,7 +43,7 @@ public class RabbitMQConsumer {
 
         socketEstudianteController.emitirCreacionTarea(
                 notificationNuevaTarea.getEstudianteID(),
-                notificationNuevaTarea.getEstadoTareaGeneric()
+                notificationNuevaTarea
         );
 
     }
@@ -60,7 +60,7 @@ public class RabbitMQConsumer {
 
         socketEstudianteController.emitirCalificacionTarea(
                 notificationTareaActualizada.getEstudianteID(),
-                notificationTareaActualizada.getEstadoTareaGeneric()
+                notificationTareaActualizada
         );
     }
 
@@ -76,7 +76,7 @@ public class RabbitMQConsumer {
 
         socketProfesorController.emitirNuevaInscripcion(
                 notificationNuevaInscripcion.getProfesorID(),
-                notificationNuevaInscripcion.getVistaEstudiante()
+                notificationNuevaInscripcion
         );
     }
 
@@ -90,7 +90,7 @@ public class RabbitMQConsumer {
 
         socketProfesorController.emtirNuevaEntrega(
                 notificationTareaEntregada.getProfesorID(),
-                notificationTareaEntregada.getEstadoTareaGeneric()
+                notificationTareaEntregada
         );
     }
 

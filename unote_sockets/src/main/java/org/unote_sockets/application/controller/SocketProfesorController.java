@@ -3,6 +3,9 @@ package org.unote_sockets.application.controller;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.unote_sockets.application.bus.notificationmodels.NotificationNuevaInscripcion;
+import org.unote_sockets.application.bus.notificationmodels.NotificationNuevaTarea;
+import org.unote_sockets.application.bus.notificationmodels.NotificationTareaEntregada;
 import org.unote_sockets.models.generics.EstadoTareaGeneric;
 import org.unote_sockets.models.vistasmaterializadas.VistaEstudiante;
 
@@ -69,16 +72,16 @@ public class SocketProfesorController {
         log.error(throwable.getMessage());
     }
 
-    public void emitirNuevaInscripcion(String profesorID, VistaEstudiante vistaEstudiante) {
+    public void emitirNuevaInscripcion(String profesorID, NotificationNuevaInscripcion notificationNuevaInscripcion) {
         if (Objects.nonNull(profesorID) && sessions.containsKey(profesorID)) {
-            broadcastJSON(gson.toJson(vistaEstudiante), profesorID);
+            broadcastJSON(gson.toJson(notificationNuevaInscripcion), profesorID);
             log.info("Nueva inscripción emitida desde el web socket");
         }
     }
 
-    public void emtirNuevaEntrega(String profesorID, EstadoTareaGeneric estadoTareaGeneric) {
+    public void emtirNuevaEntrega(String profesorID, NotificationTareaEntregada notificationTareaEntregada) {
         if (Objects.nonNull(profesorID) && sessions.containsKey(profesorID)) {
-            broadcastJSON(gson.toJson(estadoTareaGeneric), profesorID);
+            broadcastJSON(gson.toJson(notificationTareaEntregada), profesorID);
             log.info("Nueva entrega emitida desde el web socket");
         }
     }

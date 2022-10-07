@@ -13,3 +13,9 @@ y
 Isrc/main/java/org/backend/application/repository/MongoViewRepository.java,4/a/4a687fcd21344968728b435d5f18783102d49c26
 o
 ?src/main/java/org/backend/business/gateways/ViewRepository.java,6/9/698cd9e59451b15863c486a5d02c067f720cd85a
+è
+_src/main/java/org/backend/business/models/vistasmaterializadas/generics/EstadoTareaGeneric.java,c/a/ca213ba700de5b405c9a3f3a4148b608a9f06abb
+u
+Esrc/main/java/org/backend/business/usecases/EntregarTareaUseCase.java,8/6/868768f160260579b332b5f187659600a35b9653
+o
+?src/main/java/org/backend/application/bus/RabbitMQEventBus.java,4/2/4272501460ad8882d5da5905ecdd782c979a87bf

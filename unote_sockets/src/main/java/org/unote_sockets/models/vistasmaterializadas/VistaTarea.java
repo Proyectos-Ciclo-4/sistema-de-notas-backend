@@ -11,7 +11,7 @@ public class VistaTarea {
     private String titulo;
     private String descripcion;
     private Integer orden;
-    private LocalDate fechaLimite;
+    private String fechaLimite;
     private Float porcentaje;
 
     public VistaTarea(String _id, String cursoID, String temaID, String temaNombre, String titulo, String descripcion, Integer orden, String fechaLimite, Float porcentaje) {
@@ -23,7 +23,7 @@ public class VistaTarea {
         this.descripcion = descripcion;
         this.orden = orden;
         // TODO: fechaLimite debe ser regresada al front en formato dd/mm/yyy. Arreglar
-        this.fechaLimite = LocalDate.parse(fechaLimite, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        this.fechaLimite = fechaLimite;
         this.porcentaje = porcentaje;
     }
 
@@ -58,7 +58,7 @@ public class VistaTarea {
         return orden;
     }
 
-    public LocalDate getFechaLimite() {
+    public String getFechaLimite() {
         return fechaLimite;
     }
 

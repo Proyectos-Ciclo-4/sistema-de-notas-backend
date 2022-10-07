@@ -9,7 +9,7 @@ public class InscripcionGeneric {
     private String nombreCurso;
     private Float promedio;
     private Float avance;
-    private LocalDate fechaInscripcion;
+    private String fechaInscripcion;
 
     private Set<EstadoTareaGeneric> estadosTarea;
 
@@ -18,7 +18,7 @@ public class InscripcionGeneric {
         this.promedio = promedio;
         this.avance = avance;
         this.nombreCurso = nombreCurso;
-        this.fechaInscripcion = LocalDate.now();
+        this.fechaInscripcion = LocalDate.now().toString();
         this.estadosTarea = estadosTarea;
     }
 
@@ -27,7 +27,7 @@ public class InscripcionGeneric {
         this.promedio = (float) 0;
         this.avance = (float) 0;
         this.nombreCurso = nombreCurso;
-        this.fechaInscripcion = LocalDate.now();
+        this.fechaInscripcion = LocalDate.now().toString();
 
         this.estadosTarea = estadosTarea;
     }
@@ -37,14 +37,14 @@ public class InscripcionGeneric {
         this.nombreCurso = nombreCurso;
         this.promedio = (float) 0;
         this.avance = (float) 0;
-        this.fechaInscripcion = LocalDate.now();
+        this.fechaInscripcion = LocalDate.now().toString();
         this.estadosTarea = new HashSet<>();
     }
 
     public InscripcionGeneric() {
     }
 
-    public void setFechaInscripcion(LocalDate fechaInscripcion) {
+    public void setFechaInscripcion(String fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
     }
 
@@ -76,7 +76,7 @@ public class InscripcionGeneric {
         return nombreCurso;
     }
 
-    public LocalDate getFechaInscripcion() {
+    public String getFechaInscripcion() {
         return fechaInscripcion;
     }
 

@@ -1,16 +1,6 @@
 
 7
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
-~
-Nsrc/main/java/org/unote_sockets/models/vistasmaterializadas/VistaProfesor.java,b/5/b588e3b5fc2a1e556712bf536e640c3297cfddf0
-{
-Ksrc/main/java/org/unote_sockets/models/vistasmaterializadas/VistaTarea.java,6/b/6b2062ce89101a6c3c00928573cf00aadd3f791f
-w
-Gsrc/main/java/org/unote_sockets/models/generics/InscripcionGeneric.java,f/0/f04c190753fc6c3712c4983aac898ecb38652e3c
-p
-@src/main/java/org/unote_sockets/models/generics/StoredEvent.java,d/9/d964fd8d862dbb46c6fed90f30b8d39156eef71e
-p
-@src/main/java/org/unote_sockets/models/generics/TemaGeneric.java,8/2/82144ea00e68463df3968798a5f76f239f378f2a
 a
 1src/main/java/org/unote_sockets/domain/Curso.java,6/3/6398bd036e7ad81628d177c2acf16d1e73bdf1cf
 g
@@ -81,8 +71,6 @@ s
 Csrc/main/java/org/unote_sockets/domain/events/EstudianteCreado.java,e/5/e53484b0ee4c4f54de27b97cb5042466cf652b8f
 f
 6src/main/java/org/unote_sockets/domain/Estudiante.java,c/9/c91fd63a3c443ed09849a5380c0b93209cbd8f37
-{
-Ksrc/main/java/org/unote_sockets/models/vistasmaterializadas/VistaCurso.java,0/d/0d2ca435b77717dd4b244fe2c2b9a12c96093a5b
 p
 @src/main/java/org/unote_sockets/domain/entities/Inscripcion.java,c/6/c613da6623a81b446971cb0fabf1769cb19717ef
 j
@@ -93,7 +81,9 @@ Y
 )src/main/java/org/unote_sockets/Main.java,2/0/204bf7a16c5abc3fa2efbd9b83bba4ee7ab894ea
 w
 Gsrc/main/java/org/unote_sockets/application/config/WebSocketConfig.java,b/d/bdf3b14289be54721ca662494004bb0ae7d9fe7f
-w
-Gsrc/main/java/org/unote_sockets/models/generics/EstadoTareaGeneric.java,f/4/f43320af4a7fabb720406acf1d17eb01a41bde98
-€
-Psrc/main/java/org/unote_sockets/models/vistasmaterializadas/VistaEstudiante.java,8/8/882c9903f95ca117040df1f857192992d69ac8b2
+†
+Vsrc/main/java/org/unote_sockets/application/controller/SocketEstudianteController.java,7/8/7802ff2391aa8fa3fe14ca215a6202fc34b021b2
+u
+Esrc/main/java/org/unote_sockets/application/bus/RabbitMQConsumer.java,9/8/9885da14281117ebb908872c401c86ff44020082
+„
+Tsrc/main/java/org/unote_sockets/application/controller/SocketProfesorController.java,7/4/746b50a09974bd84e998227af2e390fbff938399

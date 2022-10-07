@@ -12,10 +12,10 @@ public class EstadoTareaGeneric {
 
     private Integer calificacion;
 
-    private String fechaLimite;
+    // private String fechaLimite;
 
 
-    private String fechaEntregado;
+    // private String fechaEntregado;
     private String archivoURL;
     private String estado;
 
@@ -31,14 +31,14 @@ public class EstadoTareaGeneric {
 // Constructor para crear objeto EstadoTareaGeneric por primera vez
 
 
-    public EstadoTareaGeneric(String tareaID, String titulo, String temaID, String temaNombre, String fechaLimite, Integer orden) {
+    public EstadoTareaGeneric(String tareaID, String titulo, String temaID, String temaNombre, Integer orden) {
         this.tareaID = tareaID;
         this.titulo = titulo;
         this.temaID = temaID;
         this.temaNombre = temaNombre;
         this.calificacion = 0;
-        this.fechaLimite = fechaLimite;
-        this.fechaEntregado = null;
+        // this.fechaLimite = fechaLimite;
+        // this.fechaEntregado = null;
         this.archivoURL = "";
         this.estado = "Sin entregar";
         this.orden = orden;
@@ -46,7 +46,7 @@ public class EstadoTareaGeneric {
     }
 
     public EstadoTareaGeneric(String tareaID, String archivoURL) {
-        this.fechaEntregado = LocalDate.now().toString();
+        //this.fechaEntregado = LocalDate.now().toString();
         this.archivoURL = archivoURL;
         this.estado = "Entregada";
         this.retroalimentacion = "";
@@ -95,26 +95,37 @@ public class EstadoTareaGeneric {
         return calificacion;
     }
 
+    /*
     public void setFechaLimite(String fechaLimite) {
         this.fechaLimite = fechaLimite;
     }
 
+     */
+
+    /*
     public String getFechaEntregado() {
         return fechaEntregado;
     }
+
+     */
 
     public String getTitulo() {
         return titulo;
     }
 
+    /*
     public String getFechaLimite() {
         return fechaLimite;
     }
+     */
 
 
+    /*
     public void setFechaEntregado(String fechaEntregado) {
         this.fechaEntregado = fechaEntregado;
     }
+
+     */
 
     public String getArchivoURL() {
         return archivoURL;
@@ -150,7 +161,7 @@ public class EstadoTareaGeneric {
 
     public EstadoTareaGeneric actualizarTarea(String archivoURL) {
         this.setArchivoURL(archivoURL);
-        this.setFechaEntregado(LocalDate.now().toString());
+        // this.setFechaEntregado(LocalDate.now().toString());
         this.setEstado("Entregada");
 
         return this;
